@@ -1,12 +1,13 @@
-import { StatusBar } from "expo-status-bar";
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React from "react";
-import { Text, View } from "react-native";
+
+import { ProductsScreen } from "./src/features/products/screens/products.screen";
 
 export default function App() {
   return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <ProductsScreen />
+      <ExpoStatusBar style="auto" />
+    </>
   );
 }
