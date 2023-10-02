@@ -4,9 +4,9 @@ import { Card } from "react-native-paper";
 
 export const ProductInfoCard = ( { product = {} } ) => {
     const {
-        name = 'Producto de chill',
+        name = 'Playeras',
         icon, 
-        photos = [require('./pruebaProducto.png')],
+        photos = [require('./playerasFoodBank.png')],
         price = 200, 
         isAvailable = true
         } = product;
