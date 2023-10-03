@@ -1,0 +1,28 @@
+import { Text, SafeAreaView, View, TextInput, ScrollView } from "react-native";
+import React from "react";
+import { StatusBar } from "expo-status-bar";
+import Categories from "../components/categories";
+import SearchBar from "../components/searchBar";
+import Featured from "../components/featuredRestaurants";
+
+export default function HomeScreen() {
+  return (
+    <SafeAreaView className="bg-white">
+      <StatusBar barStyle="dark-content" />
+      {/* Barra de búsqueda */}
+      <SearchBar />
+
+      {/* Principal */}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 20 }}
+      >
+        {/* Categorías */}
+        <Categories />
+
+        {/* Recomendados */}
+        <Featured />
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
