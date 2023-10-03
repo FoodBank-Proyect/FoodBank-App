@@ -11,10 +11,22 @@ import { useNavigation } from "@react-navigation/native";
 import * as Icon from "react-native-feather";
 import { themeColors } from "../theme";
 import { featured } from "../constants";
+import { useSelector, useDispatch } from "react-redux";
+import { selectProduct } from "../slices/productSlice";
+import {
+  removeFromCart,
+  selectCartItems,
+  selectCartTotal,
+  selectCartTotalQuantity,
+} from "../slices/cartSlice";
 
 export default function CartScreen() {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
-  const restaurant = featured.restaurants[0];
+  const restaurant = useSelector(selectProduct);
+  const cartItems = useSelector(selectCartItems);
+  const cartTotal = useSelector(selectCartTotal);
+  const deliveryFee = 2;
 
   return (
     <View className=" bg-white flex-1">
@@ -58,24 +70,24 @@ export default function CartScreen() {
           paddingBottom: 50,
         }}
       >
-        {restaurant.dishes.map((dish, key) => {
+        {cartItems.map((item, key) => {
           return (
             <View
               key={key}
               className="flex-row items-center space-x-3 py-2 px-4 bg-white rounded-3xl mx-2 mb-3 shadow-md"
             >
               <Text style={{ color: themeColors.text }} className="font-bold">
-                2 x{" "}
+                {item.quantity} x{" "}
               </Text>
-              <Image className="h-14 w-14 rounded-full" source={dish.image} />
+              <Image className="h-14 w-14 rounded-full" source={item.image} />
               <Text className="flex-1 font-bold text-gray-700">
-                {dish.name}
+                {item.name}
               </Text>
-              <Text className="font-semibold text-base">${dish.price}</Text>
+              <Text className="font-semibold text-base">${item.price}</Text>
               <TouchableOpacity
                 className="p-1 rounded-full"
                 style={{ backgroundColor: themeColors.bgColor(1) }}
-                // onPress={() => dispatch(removeFromBasket({ id: items[0]?.id }))}
+                onPress={() => dispatch(removeFromCart({ id: item.id }))}
               >
                 <Icon.Minus
                   strokeWidth={2}
@@ -95,15 +107,15 @@ export default function CartScreen() {
       >
         <View className="flex-row justify-between">
           <Text className="text-gray-700">Subtotal</Text>
-          <Text className="text-gray-700">$20</Text>
+          <Text className="text-gray-700">${cartTotal}</Text>
         </View>
         <View className="flex-row justify-between">
           <Text className="text-gray-700">Delivery Fee</Text>
-          <Text className="text-gray-700">$2</Text>
+          <Text className="text-gray-700">${deliveryFee}</Text>
         </View>
         <View className="flex-row justify-between">
           <Text className="font-extrabold">Order Total</Text>
-          <Text className="font-extrabold">$30</Text>
+          <Text className="font-extrabold">${cartTotal + deliveryFee}</Text>
         </View>
         <View>
           <TouchableOpacity

@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
 import * as Icon from "react-native-feather";
 import { themeColors } from "../theme";
@@ -7,12 +7,21 @@ import { useNavigation } from "@react-navigation/native";
 import DishRow from "../components/dishRow";
 import CartIcon from "../components/cartIcon";
 import { StatusBar } from "expo-status-bar";
+import { useDispatch } from "react-redux";
+import { setProduct } from "../slices/productSlice";
 
 export default function ProductScreen() {
   const navigation = useNavigation();
   const { params } = useRoute();
   let item = params;
+  const dispatch = useDispatch();
   // console.log(item);
+  useEffect(() => {
+    if (item && item.id) {
+      dispatch(setProduct({ ...item }));
+    }
+  }, []);
+
   return (
     <View>
       <CartIcon />
