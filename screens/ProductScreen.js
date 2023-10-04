@@ -72,6 +72,7 @@ export default function ProductScreen() {
           <Text className="px-4 py-4 text-2xl font-bold">Menu</Text>
           {/* dishes */}
           {item.dishes.map((dish, index) => {
+            // console.log(dish);
             return <DishRow item={{ ...dish }} key={index} />;
           })}
         </View>
