@@ -28,10 +28,7 @@ export default function searchBar() {
           <Text className="text-gray-600">New York, NYC</Text>
         </View>
       </View>
-      <View
-        style={{ backgroundColor: themeColors.bgColor(1) }}
-        className="p-3 rounded-full"
-      >
+      <View className="p-3 rounded-full bg-[#D70040]">
         <Icon.Sliders
           height={20}
           width={20}

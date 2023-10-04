@@ -115,7 +115,7 @@ export const featured = {
 
 export const utiles = {
   id: 1,
-  title: "Utilies",
+  title: "Útiles",
   description: "Utiles escolares",
   restaurants: [
     {
