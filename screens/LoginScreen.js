@@ -21,38 +21,15 @@ import {
   signInWithCredential,
 } from "firebase/auth";
 
-export default function LoginScreen() {
+export default function LoginScreen({ handleLoginGoogle }) {
   const navigation = useNavigation();
-
-  const [, googleResponse, promptAsyncGoogle] = useGoogleIdTokenAuthRequest({
-    selectAccount: true,
-    expoClientId: expoClientId,
-    iosClientId: iosClientId,
-  });
-
-  const handleLoginGoogle = async () => {
-    await promptAsyncGoogle();
-  };
-
-  // Function that logs into firebase using the credentials from an OAuth provider
-  const loginToFirebase = useCallback(async (credentials) => {
-    const signInResponse = await signInWithCredential(auth, credentials);
-  }, []);
-
-  useEffect(() => {
-    if (googleResponse?.type === "success") {
-      const credentials = GoogleAuthProvider.credential(
-        googleResponse.params.id_token
-      );
-      loginToFirebase(credentials);
-    }
-  }, [googleResponse]);
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(null);
   const [pass, setPass] = useState("");
   const [passError, setPassError] = useState(null);
 
+  // Listen for authentication state to change.
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {

@@ -9,20 +9,20 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Card, Icon, Image } from "@rneui/themed";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import TextField from "../components/TextField";
 import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
+import { useIdTokenAuthRequest as useGoogleIdTokenAuthRequest } from "expo-auth-session/providers/google";
+import { expoClientId, iosClientId } from "../firebaseConfig";
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  UserCredential,
   GoogleAuthProvider,
   signInWithCredential,
 } from "firebase/auth";
 
-export default function RegisterScreen() {
+export default function RegisterScreen({ handleLoginGoogle }) {
   const navigation = useNavigation();
 
   const [email, setEmail] = useState("");
@@ -36,7 +36,6 @@ export default function RegisterScreen() {
     createUserWithEmailAndPassword(auth, email, pass)
       .then(() => {
         navigation.navigate("Home");
-        // console.log(auth.currentUser?.uid);
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
@@ -199,9 +198,7 @@ export default function RegisterScreen() {
                   type="font-awesome"
                   color="#db3236"
                   size={45}
-                  onPress={() => {
-                    promptAsync();
-                  }}
+                  onPress={handleLoginGoogle}
                   style={{
                     borderRadius: "50%",
                     padding: 8,

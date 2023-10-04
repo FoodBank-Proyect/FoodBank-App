@@ -10,6 +10,7 @@ export default function searchBar() {
   const navigation = useNavigation();
   const handleLogout = useCallback(() => {
     auth.signOut();
+    auth.currentUser = null;
     navigation.navigate("Login");
   }, []);
 
