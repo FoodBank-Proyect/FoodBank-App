@@ -16,6 +16,7 @@ import {
   onAuthStateChanged,
   signInWithCredential,
 } from "firebase/auth";
+import SettingsScreen from "./screens/SettingsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -87,6 +88,11 @@ export default function Navigation() {
           name="Delivery"
           component={DeliveryScreen}
           options={{ presentation: "fullScreenModal" }}
+        />
+        <Stack.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{ presentation: "modal" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

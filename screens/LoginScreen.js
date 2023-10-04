@@ -20,6 +20,7 @@ import {
   onAuthStateChanged,
   signInWithCredential,
 } from "firebase/auth";
+import Toast from "react-native-toast-message";
 
 export default function LoginScreen({ handleLoginGoogle }) {
   const navigation = useNavigation();
@@ -29,11 +30,22 @@ export default function LoginScreen({ handleLoginGoogle }) {
   const [pass, setPass] = useState("");
   const [passError, setPassError] = useState(null);
 
+  const showToast = () => {
+    Toast.show({
+      type: "success",
+      text1: `Hola de nuevo! ${
+        auth.currentUser?.displayName || auth.currentUser?.email?.split("@")[0]
+      }`,
+      text2: "Inicio de sesión exitoso",
+    });
+  };
+
   // Listen for authentication state to change.
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         navigation.navigate("Home");
+        showToast();
       } else {
         navigation.navigate("Login");
       }

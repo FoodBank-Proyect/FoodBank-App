@@ -4,6 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import Categories from "../components/categories";
 import SearchBar from "../components/searchBar";
 import Featured from "../components/featuredRestaurants";
+import Navbar from "../components/navBar";
 
 export default function HomeScreen() {
   return (
@@ -15,7 +16,7 @@ export default function HomeScreen() {
       {/* Principal */}
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 20 }}
+        contentContainerStyle={{ paddingBottom: 100 }}
       >
         {/* Categorías */}
         <Categories />
@@ -23,6 +24,7 @@ export default function HomeScreen() {
         {/* Recomendados */}
         <Featured />
       </ScrollView>
+      <Navbar />
     </SafeAreaView>
   );
 }
