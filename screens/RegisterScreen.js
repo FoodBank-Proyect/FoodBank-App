@@ -5,65 +5,51 @@ import {
   ImageBackground,
   Dimensions,
   Button,
+  Alert,
   TouchableOpacity,
 } from "react-native";
 import { Card, Icon, Image } from "@rneui/themed";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TextField from "../components/TextField";
 import { StatusBar } from "expo-status-bar";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
-import * as Google from "expo-auth-session/providers/google";
-import * as WebBrowser from "expo-web-browser";
 import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  UserCredential,
   GoogleAuthProvider,
-  onAuthStateChanged,
   signInWithCredential,
 } from "firebase/auth";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-WebBrowser.maybeCompleteAuthSession();
-
-export default function LoginScreen() {
+export default function RegisterScreen() {
   const navigation = useNavigation();
-
-  const [userInfo, setUserInfo] = useState();
-  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-    clientId:
-      "594053350379-ci47vlk63479aesei0bfihhig08pegjj.apps.googleusercontent.com",
-  });
-
-  useEffect(() => {
-    if (response?.type === "success") {
-      const { id_token } = response.params;
-      const credential = GoogleAuthProvider.credential(id_token);
-      signInWithCredential(auth, credential);
-      navigation.navigate("Home");
-      // .then(() => {
-      //   // console.log(auth.currentUser);
-      //   // console.log(auth.currentUser?.uid);
-      //   AsyncStorage.setItem("user", auth.currentUser?.uid);
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      // });
-    }
-  }, [response]);
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(null);
   const [pass, setPass] = useState("");
   const [passError, setPassError] = useState(null);
+  const [confirmPass, setConfirmPass] = useState("");
+  const [confirmPassError, setConfirmPassError] = useState(null);
 
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       navigation.navigate("Home");
-  //     } else {
-  //       navigation.navigate("Login");
-  //     }
-  //   });
-
-  const handleSignInWithGoogle = () => {};
+  const handleSignUp = () => {
+    createUserWithEmailAndPassword(auth, email, pass)
+      .then(() => {
+        navigation.navigate("Home");
+        // console.log(auth.currentUser?.uid);
+      })
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          setEmailError("That email address is already in use!");
+        } else if (error.code === "auth/invalid-email") {
+          setEmailError("That email address is invalid!");
+        } else if (error.code === "auth/weak-password") {
+          setPassError("Password must be at least 6 characters");
+        } else {
+          Alert.alert("Error", error.message);
+        }
+      });
+  };
 
   return (
     <View>
@@ -81,25 +67,23 @@ export default function LoginScreen() {
 
       <SafeAreaView
         className="z-[2] absolute w-full"
-        style={{ height: Dimensions.get("window").height / 2.5 }}
+        style={{ height: Dimensions.get("window").height / 4 }}
       >
-        <View className="top-6 flex flex-col items-center">
+        <View className="top-10 flex flex-row items-center justify-center">
           <Image
             source={require("../assets/foodbank-light.png")}
-            style={{ width: 80, height: 80 }}
+            style={{ width: 45, height: 45 }}
           />
-          <Text className="text-white text-4xl font-bold mt-2 ">
+          <Text className="text-white text-3xl font-bold mt-2 ">
             FoodBank E-Shop
           </Text>
-
-          <Text className="text-white text-base">Please login to continue</Text>
         </View>
       </SafeAreaView>
 
       <View
         className="bg-white h-full rounded-t-3xl w-full z-[3]"
         style={{
-          bottom: 60,
+          bottom: 150,
           borderTopStartRadius: 40,
           borderTopEndRadius: 40,
         }}
@@ -109,15 +93,15 @@ export default function LoginScreen() {
             style={{ color: "#D70040", fontSize: 34 }}
             className="font-bold"
           >
-            Welcome
+            Register
           </Text>
           <Text>
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <Text
-              onPress={() => navigation.navigate("Register")}
+              onPress={() => navigation.goBack()}
               className="text-blue-500 italic underline"
             >
-              Register Now
+              Login
             </Text>
           </Text>
           <View style={{ marginTop: 15 }}>
@@ -154,33 +138,29 @@ export default function LoginScreen() {
                 }
               }}
             />
-          </View>
-          <View className="flex-row justify-end mt-6">
-            <Text
-              className="text-blue-500 italic underline mb-10"
-              onPress={() => {
-                if (!email) {
-                  setEmailError("Email is required");
-                  Alert.alert("Reset Password", "Email is required");
-                } else if (!email.includes("@")) {
-                  setEmailError("Email is not valid");
-                  Alert.alert("Reset Password", "Email is not valid");
-                } else if (emailError == null && email.length > 0) {
-                  Alert.alert("Reset Password", `Email sent to ${email}`);
-                  sendPasswordResetEmail(auth, email);
+            <TextField
+              className="font-bold mt-5 text-gray-500"
+              label="Confirm Password*"
+              secureTextEntry={true}
+              value={confirmPass}
+              onChangeText={(text) => setConfirmPass(text)}
+              errorText={confirmPassError}
+              onBlur={() => {
+                if (confirmPass != pass) {
+                  setConfirmPassError("Passwords are not the same");
+                } else {
+                  setConfirmPassError(null);
                 }
               }}
-            >
-              Forgot Password?
-            </Text>
+            />
           </View>
-
           <View
             style={{
               height: 100,
               justifyContent: "center",
               alignItems: "center",
             }}
+            className="mt-16"
           >
             <TouchableOpacity
               onPress={() => {
@@ -199,7 +179,7 @@ export default function LoginScreen() {
                   email.length > 0 &&
                   pass.length > 0
                 ) {
-                  handleSignIn();
+                  handleSignUp();
                 }
               }}
               style={{ width: "100%" }}
@@ -208,7 +188,7 @@ export default function LoginScreen() {
               className="flex justify-center items-center rounded-full w-3/4 mx-0 mt-10 bg-[#D70040]"
             >
               <Text className="text-white self-center font-bold p-3 text-lg">
-                Login
+                Register
               </Text>
             </TouchableOpacity>
             <View className="justify-center mt-7">
@@ -219,7 +199,9 @@ export default function LoginScreen() {
                   type="font-awesome"
                   color="#db3236"
                   size={45}
-                  onPress={() => promptAsync()}
+                  onPress={() => {
+                    promptAsync();
+                  }}
                   style={{
                     borderRadius: "50%",
                     padding: 8,
