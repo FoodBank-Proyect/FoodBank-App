@@ -53,21 +53,21 @@ export const featured = {
       category: "Fast Food",
       dishes: [
         {
-          id: 1,
+          id: 3,
           name: "Color rojo",
           description: "Sudadera color rojo",
           price: 10,
           image: require("../assets/images/sudadera_roja.png"),
         },
         {
-          id: 2,
+          id: 4,
           name: "Color azul",
           description: "Sudadera color azul marino",
           price: 10,
           image: require("../assets/images/sudadera_azul.png"),
         },
         {
-          id: 3,
+          id: 5,
           name: "Color gris",
           description: "Sudadra color gris",
           price: 10,
@@ -88,21 +88,21 @@ export const featured = {
       category: "Fast Food",
       dishes: [
         {
-          id: 1,
+          id: 6,
           name: "Color negro",
           description: "Gorra color negro mate",
           price: 10,
           image: require("../assets/images/gorra_negra_v2.png"),
         },
         {
-          id: 2,
+          id: 7,
           name: "Color rojo",
           description: "Gorra color rojo avivado",
           price: 10,
           image: require("../assets/images/gorra_roja_frontal.png"),
         },
         {
-          id: 3,
+          id: 8,
           name: "Color blanco",
           description: "Gorra color blanco nieve",
           price: 10,
