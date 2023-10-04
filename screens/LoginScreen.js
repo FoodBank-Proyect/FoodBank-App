@@ -8,62 +8,60 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Card, Icon, Image } from "@rneui/themed";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import TextField from "../components/TextField";
 import { StatusBar } from "expo-status-bar";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
-import * as Google from "expo-auth-session/providers/google";
-import * as WebBrowser from "expo-web-browser";
+import { useIdTokenAuthRequest as useGoogleIdTokenAuthRequest } from "expo-auth-session/providers/google";
+import { expoClientId, iosClientId } from "../firebaseConfig";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithCredential,
 } from "firebase/auth";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-WebBrowser.maybeCompleteAuthSession();
 
 export default function LoginScreen() {
   const navigation = useNavigation();
 
-  const [userInfo, setUserInfo] = useState();
-  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-    clientId:
-      "594053350379-ci47vlk63479aesei0bfihhig08pegjj.apps.googleusercontent.com",
+  const [, googleResponse, promptAsyncGoogle] = useGoogleIdTokenAuthRequest({
+    selectAccount: true,
+    expoClientId: expoClientId,
+    iosClientId: iosClientId,
   });
 
+  const handleLoginGoogle = async () => {
+    await promptAsyncGoogle();
+  };
+
+  // Function that logs into firebase using the credentials from an OAuth provider
+  const loginToFirebase = useCallback(async (credentials) => {
+    const signInResponse = await signInWithCredential(auth, credentials);
+  }, []);
+
   useEffect(() => {
-    if (response?.type === "success") {
-      const { id_token } = response.params;
-      const credential = GoogleAuthProvider.credential(id_token);
-      signInWithCredential(auth, credential);
-      navigation.navigate("Home");
-      // .then(() => {
-      //   // console.log(auth.currentUser);
-      //   // console.log(auth.currentUser?.uid);
-      //   AsyncStorage.setItem("user", auth.currentUser?.uid);
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      // });
+    if (googleResponse?.type === "success") {
+      const credentials = GoogleAuthProvider.credential(
+        googleResponse.params.id_token
+      );
+      loginToFirebase(credentials);
     }
-  }, [response]);
+  }, [googleResponse]);
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(null);
   const [pass, setPass] = useState("");
   const [passError, setPassError] = useState(null);
 
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       navigation.navigate("Home");
-  //     } else {
-  //       navigation.navigate("Login");
-  //     }
-  //   });
-
-  const handleSignInWithGoogle = () => {};
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigation.navigate("Home");
+      } else {
+        navigation.navigate("Login");
+      }
+    });
+  }, []);
 
   return (
     <View>
@@ -219,7 +217,7 @@ export default function LoginScreen() {
                   type="font-awesome"
                   color="#db3236"
                   size={45}
-                  onPress={() => promptAsync()}
+                  onPress={handleLoginGoogle}
                   style={{
                     borderRadius: "50%",
                     padding: 8,

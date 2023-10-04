@@ -13,6 +13,11 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 
+export const expoClientId =
+  "479079092981-2trdosje08nn5cte4jlv5oq9vva0l0db.apps.googleusercontent.com";
+export const iosClientId =
+  "479079092981-ob9rfl4ekq2v2iosqtb0ebku85arf1ld.apps.googleusercontent.com";
+
 export const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage),
 });
