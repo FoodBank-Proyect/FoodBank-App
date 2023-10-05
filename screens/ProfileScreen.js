@@ -19,11 +19,12 @@ export default function ProfileSCcreen() {
 
   const navigation = useNavigation();
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         flexDirection: "column",
       }}
+      className="bg-white py-10"
     >
       {/* View for the first half of the screen */}
       {/* <TouchableOpacity
@@ -38,7 +39,7 @@ export default function ProfileSCcreen() {
           width: "100%",
           justifyContent: "center",
         }}
-        className=" rounded-2xl py-6"
+        className=" rounded-2xl py-6 bg-white"
       >
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -51,27 +52,21 @@ export default function ProfileSCcreen() {
             height={25}
           />
         </TouchableOpacity>
-        <Text className="font-bold text-3xl self-center">Perfil</Text>
 
-        <View className="flex-col justify-center items-center mt-6">
+        <View className="flex-col justify-center mt-6 ml-4">
           {/* User image */}
-          <View className="bg-gray-300 w-32 h-32 rounded-full">
-            <Image
-              source={{
-                uri:
-                  auth.currentUser.photoURL ||
-                  "https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png",
-              }}
-              className="w-32 h-32 rounded-full"
-            />
-          </View>
           {/* User name */}
-          <Text className="text-2xl mt-3">Hola,</Text>
-          <Text className="text-2xl font-bold">
+          <Text className="text-xl mt-3">Hola</Text>
+          <Text className="text-2xl font-extrabold mt-2">
             {auth.currentUser.displayName ||
               auth.currentUser.email.split("@")[0]}
           </Text>
         </View>
+
+        <View className="flex w-11/12 flex-col self-center rounded-2xl justify-center items-center mt-6 border border-gray-200 shadow-lg   bg-white">
+          <Text className="text-xl">Información</Text>
+        </View>
+
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("EditProfileScreen");
@@ -99,6 +94,6 @@ export default function ProfileSCcreen() {
           </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
