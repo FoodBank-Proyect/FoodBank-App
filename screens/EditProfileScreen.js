@@ -37,7 +37,7 @@ export default function EditProfileScreen() {
           height: halfScreen,
           width: "100%",
           backgroundColor: "#fff",
-          justifyContent: "center",
+          justifyContent: "start",
         }}
         className=" rounded-2xl py-6"
       >
@@ -56,14 +56,14 @@ export default function EditProfileScreen() {
 
         <View className="flex-col justify-center items-center mt-6">
           {/* User image */}
-          <View className="bg-gray-300 w-32 h-32 rounded-full">
+          <View className="bg-gray-300 w-24 h-24 rounded-full shadow-lg shadow-gray-300">
             <Image
               source={{
                 uri:
                   auth.currentUser.photoURL ||
                   "https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png",
               }}
-              className="w-32 h-32 rounded-full"
+              className="w-24 h-24 rounded-full"
             />
           </View>
           {/* User name */}
@@ -72,33 +72,6 @@ export default function EditProfileScreen() {
             {auth.currentUser.displayName ||
               auth.currentUser.email.split("@")[0]}
           </Text>
-        </View>
-        <TouchableOpacity
-          onPress={() => {
-            // Agrega aquí la lógica para navegar a la pantalla de edición de perfil
-            // Puedes usar navigation.navigate para navegar a la pantalla de edición.
-          }}
-          className="bg-blue-500 rounded-md p-3 w-1/2 mt-5 self-center"
-        >
-          <Text className="text-white text-center font-bold text-lg">
-            Editar perfil
-          </Text>
-        </TouchableOpacity>
-
-        {/* Sign Out Button at the bottom */}
-        <View className="flex-1 mt-6 items-center">
-          <TouchableOpacity
-            onPress={() => {
-              auth.signOut();
-              auth.currentUser = null;
-              navigation.navigate("Login");
-            }}
-            className="bg-red-500 rounded-md p-3 w-1/2"
-          >
-            <Text className="text-white text-center font-bold text-lg">
-              Cerrar sesión
-            </Text>
-          </TouchableOpacity>
         </View>
       </View>
     </View>
