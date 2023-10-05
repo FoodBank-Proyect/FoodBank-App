@@ -79,6 +79,7 @@ export default function Navigation({ currentLocation }) {
         <Stack.Screen
           name="Home"
           children={() => <HomeScreen currentLocation={currentLocation} />}
+          options={{ gestureEnabled: false }}
         />
         <Stack.Screen name="Product" component={ProductScreen} />
         <Stack.Screen
@@ -96,11 +97,16 @@ export default function Navigation({ currentLocation }) {
           children={() => <DeliveryScreen currentLocation={currentLocation} />}
           options={{ presentation: "fullScreenModal" }}
         />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
+
         <Stack.Screen
           name="Support"
           component={SupportScreen}
           options={{ presentation: "modal" }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{ presentation: "fullScreenModal" }}
         />
         {/* Half modal */}
         <Stack.Group

@@ -21,7 +21,7 @@ export default function Categories() {
       >
         {categories.map((category, index) => {
           let isActive = category.id == activeCategory;
-          let btnClass = isActive ? " bg-gray-200" : "bg-transparent";
+          let btnClass = isActive ? " bg-red-100" : "bg-white";
           let textClass = isActive ? " text-red-600" : " text-gray-500";
           let borderClass = isActive ? " border-red-500" : "border-white";
           return (
@@ -35,7 +35,7 @@ export default function Categories() {
                     ? setActiveCategory(null)
                     : setActiveCategory(category.id);
                 }}
-                className={`border-[1px]  p-3 rounded-full bg-white shadow flex justify-center items-center ${borderClass}`}
+                className={`border-[1px] p-3 rounded-full  shadow flex justify-center items-center ${borderClass} ${btnClass}`}
               >
                 <Image
                   style={{ width: 35, height: 35 }}

@@ -41,7 +41,7 @@ export default function CartScreen() {
         </TouchableOpacity>
         <View>
           <Text className="text-center font-bold text-xl">Your cart</Text>
-          <Text className="text-center text-gray-500">{restaurant.name}</Text>
+          <Text className="text-center text-gray-500">FoodBank E-Shop</Text>
         </View>
       </View>
 

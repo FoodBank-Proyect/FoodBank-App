@@ -25,24 +25,17 @@ export default function ProfileSCcreen() {
       }}
       className="bg-white py-10"
     >
-      {/* View for the first half of the screen */}
-      {/* <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={{ height: halfScreen }}
-        className="bg-transparent"
-      ></TouchableOpacity> */}
-
       <View
         style={{
           height: "100%",
           width: "100%",
           justifyContent: "center",
         }}
-        className=" rounded-2xl py-6 bg-white"
+        className="rounded-2xl bg-white"
       >
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          className="absolute z-10 rounded-full p-3 top-3 left-1 bg-transparent"
+          className="absolute z-10 rounded-full p-2 top-3 left-3 bg-gray-200 "
         >
           <Icon.ArrowLeft
             strokeWidth={2.5}
@@ -52,64 +45,116 @@ export default function ProfileSCcreen() {
           />
         </TouchableOpacity>
 
-        <View className="flex-col justify-center mt-6 ml-4">
-          {/* User image */}
-          {/* User name */}
-          <Text className="text-xl mt-3">Hola</Text>
-          <Text className="text-2xl font-extrabold mt-2">
-            {auth.currentUser.displayName ||
-              auth.currentUser.email.split("@")[0]}
-          </Text>
-        </View>
+        <View>
+          <View className="flex-col justify-center ml-4">
+            {/* User name */}
+            <Text className="text-xl mt-3">Hola</Text>
+            <Text className="text-2xl font-extrabold mt-2">
+              {auth.currentUser.displayName ||
+                auth.currentUser.email.split("@")[0]}
+            </Text>
+          </View>
 
-        <View className="flex w-11/12 flex-col self-center rounded-2xl mt-6 border border-gray-200 shadow-lg   bg-white">
-          <View>
+          <View className="flex w-11/12 flex-row justify-center items-center self-center rounded-2xl my-20 border p-4 border-gray-200 shadow-lg bg-white">
             <TouchableOpacity
-              className="ml-6 mt-4"
-              style={{
-                width: 50,
-                height: 50,
-                borderRadius: 25,
-                backgroundColor: "#d3d3d3",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+              className="flex flex-col items-center w-1/4 mr-6"
               onPress={() => {
                 navigation.navigate("EditProfileScreen");
               }}
             >
-              {<Icon.User height={30} width={30} stroke="black" />}
+              <View
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 25,
+
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                className="bg-gray-100"
+              >
+                {<Icon.User height={30} width={30} stroke="black" />}
+              </View>
+              <Text className="text-gray-500 text-sm mt-1">Datos</Text>
+              <Text className="text-gray-500 text-sm">personales</Text>
             </TouchableOpacity>
-            <Text className="text-sm">Datos</Text>
-            <Text className="text-sm">Personales</Text>
+            <TouchableOpacity className="flex flex-col items-center w-1/4 mr-6 ">
+              <View
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 25,
+
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                className="bg-gray-100"
+              >
+                {<Icon.FileText height={30} width={30} stroke="black" />}
+              </View>
+              <Text className="text-gray-500 text-sm mt-1">Historial </Text>
+              <Text className="text-gray-500 text-sm">de pedidos</Text>
+            </TouchableOpacity>
+            <TouchableOpacity className="flex flex-col items-center w-1/4">
+              <View
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 25,
+
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                className="bg-gray-100"
+              >
+                {<Icon.CreditCard height={30} width={30} stroke="black" />}
+              </View>
+              <Text className="text-gray-500 text-sm mt-1">Métodos</Text>
+              <Text className="text-gray-500 text-sm">de pago</Text>
+            </TouchableOpacity>
           </View>
-        </View>
 
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("EditProfileScreen");
-          }}
-          className="bg-blue-500 rounded-md p-3 w-1/2 mt-5 self-center"
-        >
-          <Text className="text-white text-center font-bold text-lg">
-            Editar perfil
-          </Text>
-        </TouchableOpacity>
-
-        {/* Sign Out Button at the bottom */}
-        <View className="flex-1 mt-6 items-center">
-          <TouchableOpacity
-            onPress={() => {
-              auth.signOut();
-              auth.currentUser = null;
-              navigation.navigate("Login");
-            }}
-            className="bg-red-500 rounded-md p-3 w-1/2"
-          >
-            <Text className="text-white text-center font-bold text-lg">
-              Cerrar sesión
-            </Text>
-          </TouchableOpacity>
+          {/* Información */}
+          <View className="flex-col justify-center ml-4">
+            <Text className="text-xl font-extrabold mt-2">Información</Text>
+            <TouchableOpacity className="flex w-11/12 flex-row items-center mt-4 pb-1 border-b border-gray-200 ">
+              <Icon.Heart
+                className="mr-2 "
+                stroke="black"
+                fill="red"
+                width={20}
+                height={20}
+              />
+              <Text className="text-lg font-light">
+                Quiero apoyar el proyecto
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity className="flex w-11/12 flex-row items-center mt-4 pb-1 border-b border-gray-200 ">
+              <Icon.AlertCircle
+                className="mr-2 "
+                stroke="black"
+                width={20}
+                height={20}
+              />
+              <Text className="text-lg font-light">Términos y condiciones</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              className="flex w-11/12 flex-row items-center mt-4 pb-1 border-b border-gray-200 "
+              onPress={() => {
+                auth.signOut();
+                auth.currentUser = null;
+                navigation.navigate("Login");
+              }}
+            >
+              <Icon.LogOut
+                className="mr-2 "
+                stroke="black"
+                width={20}
+                height={20}
+              />
+              <Text className="text-lg font-light">Cerrar sesión</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
