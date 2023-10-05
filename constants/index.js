@@ -53,21 +53,21 @@ export const featured = {
       category: "Fast Food",
       dishes: [
         {
-          id: 3,
+          id: 4,
           name: "Color rojo",
           description: "Sudadera color rojo",
           price: 10,
           image: require("../assets/images/sudadera_roja.png"),
         },
         {
-          id: 4,
+          id: 5,
           name: "Color azul",
           description: "Sudadera color azul marino",
           price: 10,
           image: require("../assets/images/sudadera_azul.png"),
         },
         {
-          id: 5,
+          id: 6,
           name: "Color gris",
           description: "Sudadra color gris",
           price: 10,
@@ -88,21 +88,21 @@ export const featured = {
       category: "Fast Food",
       dishes: [
         {
-          id: 6,
+          id: 7,
           name: "Color negro",
           description: "Gorra color negro mate",
           price: 10,
           image: require("../assets/images/gorra_negra_v2.png"),
         },
         {
-          id: 7,
+          id: 8,
           name: "Color rojo",
           description: "Gorra color rojo avivado",
           price: 10,
           image: require("../assets/images/gorra_roja_frontal.png"),
         },
         {
-          id: 8,
+          id: 9,
           name: "Color blanco",
           description: "Gorra color blanco nieve",
           price: 10,
@@ -131,21 +131,21 @@ export const utiles = {
       category: "Fast Food",
       dishes: [
         {
-          id: 1,
+          id: 10,
           name: "Libreta amarila",
           description: "Libreta amarilla con diseño integrado",
           price: 10,
           image: require("../assets/images/Libretas_1.png"),
         },
         {
-          id: 2,
+          id: 11,
           name: "Libreta blanca",
           description: "Libreta blanca con diseño integrado",
           price: 10,
           image: require("../assets/images/Libretas_2.png"),
         },
         {
-          id: 3,
+          id: 12,
           name: "Libreta cafe claro",
           description: "Libreta color cafe claro con diseño integrado",
           price: 10,
@@ -166,21 +166,21 @@ export const utiles = {
       category: "Fast Food",
       dishes: [
         {
-          id: 1,
+          id: 13,
           name: "Color azul",
           description: "Agenda mini color azul 80 hojas",
           price: 10,
           image: require("../assets/images/agenda_azul.png"),
         },
         {
-          id: 2,
+          id: 14,
           name: "Color rosa",
           description: "Agenda mini color azul 80 hojas",
           price: 10,
           image: require("../assets/images/agenda_rosa.png"),
         },
         {
-          id: 3,
+          id: 15,
           name: "Color verde lima",
           description: "Agenda mini color verde lima 80 hojas",
           price: 10,
@@ -201,21 +201,21 @@ export const utiles = {
       category: "Fast Food",
       dishes: [
         {
-          id: 1,
+          id: 16,
           name: "pizza",
           description: "cheezy garlic pizza",
           price: 10,
           image: require("../assets/images/pizzaDish.png"),
         },
         {
-          id: 2,
+          id: 17,
           name: "pizza",
           description: "cheezy garlic pizza",
           price: 10,
           image: require("../assets/images/pizzaDish.png"),
         },
         {
-          id: 3,
+          id: 18,
           name: "pizza",
           description: "cheezy garlic pizza",
           price: 10,
@@ -244,21 +244,21 @@ export const hogar = {
       category: "Fast Food",
       dishes: [
         {
-          id: 1,
+          id: 19,
           name: "pizza",
           description: "cheezy garlic pizza",
           price: 10,
           image: require("../assets/images/pizzaDish.png"),
         },
         {
-          id: 2,
+          id: 20,
           name: "pizza",
           description: "cheezy garlic pizza",
           price: 10,
           image: require("../assets/images/pizzaDish.png"),
         },
         {
-          id: 3,
+          id: 21,
           name: "pizza",
           description: "cheezy garlic pizza",
           price: 10,
@@ -279,21 +279,21 @@ export const hogar = {
       category: "Fast Food",
       dishes: [
         {
-          id: 1,
+          id: 22,
           name: "pizza",
           description: "cheezy garlic pizza",
           price: 10,
           image: require("../assets/images/pizzaDish.png"),
         },
         {
-          id: 2,
+          id: 23,
           name: "pizza",
           description: "cheezy garlic pizza",
           price: 10,
           image: require("../assets/images/pizzaDish.png"),
         },
         {
-          id: 3,
+          id: 24,
           name: "pizza",
           description: "cheezy garlic pizza",
           price: 10,
@@ -321,14 +321,14 @@ export const hogar = {
           image: require("../assets/images/pizzaDish.png"),
         },
         {
-          id: 2,
+          id: 25,
           name: "pizza",
           description: "cheezy garlic pizza",
           price: 10,
           image: require("../assets/images/pizzaDish.png"),
         },
         {
-          id: 3,
+          id: 26,
           name: "pizza",
           description: "cheezy garlic pizza",
           price: 10,
