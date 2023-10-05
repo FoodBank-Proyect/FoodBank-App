@@ -6,12 +6,12 @@ import SearchBar from "../components/searchBar";
 import Featured from "../components/featuredRestaurants";
 import Navbar from "../components/navBar";
 
-export default function HomeScreen() {
+export default function HomeScreen({ currentLocation }) {
   return (
     <SafeAreaView className="bg-white">
       <StatusBar barStyle="dark-content" />
       {/* Barra de búsqueda */}
-      <SearchBar />
+      <SearchBar currentLocation={currentLocation} />
 
       {/* Principal */}
       <ScrollView

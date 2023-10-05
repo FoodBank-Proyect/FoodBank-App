@@ -20,7 +20,7 @@ import SettingsScreen from "./screens/SettingsScreen";
 
 const Stack = createNativeStackNavigator();
 
-export default function Navigation() {
+export default function Navigation({ currentLocation }) {
   /* START GOOGLE AUTH */
 
   // Get the Google Auth Request and function to trigger promptAsync
@@ -72,7 +72,10 @@ export default function Navigation() {
             <RegisterScreen handleLoginGoogle={handleLoginGoogle} />
           )}
         />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          name="Home"
+          children={() => <HomeScreen currentLocation={currentLocation} />}
+        />
         <Stack.Screen name="Product" component={ProductScreen} />
         <Stack.Screen
           name="Cart"
@@ -86,14 +89,19 @@ export default function Navigation() {
         />
         <Stack.Screen
           name="Delivery"
-          component={DeliveryScreen}
+          children={() => <DeliveryScreen currentLocation={currentLocation} />}
           options={{ presentation: "fullScreenModal" }}
         />
-        <Stack.Screen
-          name="Settings"
-          component={SettingsScreen}
-          options={{ presentation: "modal" }}
-        />
+        {/* Half modal */}
+        <Stack.Group
+          screenOptions={{
+            presentation: "modal",
+            contentStyle: { backgroundColor: "transparent" },
+            gestureDirection: "vertical",
+          }}
+        >
+          <Stack.Screen name="Settings" component={SettingsScreen} />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );

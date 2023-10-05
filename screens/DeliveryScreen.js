@@ -16,7 +16,15 @@ import { selectProduct } from "../slices/productSlice";
 import { useDispatch } from "react-redux";
 import { emptyCart } from "../slices/cartSlice";
 
-export default function DeliveryScreen() {
+export default function DeliveryScreen({ currentLocation }) {
+  let location = currentLocation
+    ? currentLocation
+    : {
+        name: "Lahore",
+        lat: 31.5204,
+        lng: 74.3587,
+      };
+
   const navigation = useNavigation();
   const resturant = useSelector(selectProduct);
   const dispatch = useDispatch();
@@ -30,8 +38,8 @@ export default function DeliveryScreen() {
     <View className="flex-1">
       <MapView
         initialRegion={{
-          latitude: resturant.lat,
-          longitude: resturant.lng,
+          latitude: location.latitude,
+          longitude: location.longitude,
           latitudeDelta: 0.01,
           longitudeDelta: 0.01,
         }}
@@ -40,8 +48,8 @@ export default function DeliveryScreen() {
       >
         <Marker
           coordinate={{
-            latitude: resturant.lat,
-            longitude: resturant.lng,
+            latitude: location.latitude,
+            longitude: location.longitude,
           }}
           title={resturant.name}
           description={resturant.description}

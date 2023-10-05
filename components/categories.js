@@ -6,7 +6,7 @@ export default function Categories() {
   const [activeCategory, setActiveCategory] = useState(null);
 
   return (
-    <View className="mt-4">
+    <View>
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}

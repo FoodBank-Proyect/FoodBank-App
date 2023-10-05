@@ -2,9 +2,9 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
   TouchableWithoutFeedback,
 } from "react-native";
+import { Image } from "expo-image";
 import React from "react";
 import { themeColors } from "../theme";
 import * as Icon from "react-native-feather";
@@ -12,6 +12,10 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function ResturantCard({ item }) {
   const navigation = useNavigation();
+
+  const blurhash =
+    "|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[";
+
   return (
     <TouchableWithoutFeedback
       onPress={() => navigation.navigate("Product", { ...item })}
@@ -20,7 +24,11 @@ export default function ResturantCard({ item }) {
         style={{ shadowColor: themeColors.bgColor(0.2), shadowRadius: 7 }}
         className="mr-6 bg-white rounded-3xl shadow-lg "
       >
-        <Image className="h-40 w-72 rounded-t-3xl" source={item.image} />
+        <Image
+          className="h-40 w-72 rounded-t-3xl"
+          source={item.image}
+          placeholder={blurhash}
+        />
 
         <View className="px-3 pb-4 space-y-2">
           <Text className="text-lg font-bold pt-2">{item.name}</Text>
