@@ -67,8 +67,8 @@ export default function EditProfileScreen() {
             />
           </View>
           {/* User name */}
-          <Text className="text-2xl mt-3">Hola,</Text>
-          <Text className="text-2xl font-bold">
+          <Text className="text-xl mt-3">Hola,</Text>
+          <Text className="text-xl font-bold">
             {auth.currentUser.displayName ||
               auth.currentUser.email.split("@")[0]}
           </Text>
