@@ -11,6 +11,7 @@ import RegisterScreen from "./screens/RegisterScreen";
 import { useEffect, useCallback } from "react";
 import { useIdTokenAuthRequest as useGoogleIdTokenAuthRequest } from "expo-auth-session/providers/google";
 import { auth, expoClientId, iosClientId } from "./firebaseConfig";
+import EditProfileScreen from "./screens/EditProfileScreen";
 import db from "./firebaseConfig";
 import {
   GoogleAuthProvider,
@@ -94,6 +95,7 @@ export default function Navigation({ currentLocation }) {
           children={() => <DeliveryScreen currentLocation={currentLocation} />}
           options={{ presentation: "fullScreenModal" }}
         />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
         {/* Half modal */}
         <Stack.Group
           screenOptions={{
@@ -102,7 +104,10 @@ export default function Navigation({ currentLocation }) {
             gestureDirection: "vertical",
           }}
         >
-          <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen
+            name="EditProfileScreen"
+            component={EditProfileScreen}
+          />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

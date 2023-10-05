@@ -11,31 +11,32 @@ import * as Icon from "react-native-feather";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
 import { Image } from "expo-image";
-import { EditProfileScreen } from "./EditProfileScreen";
 
-export default function ProfileSCcreen() {
-  // Define the half of the screen
+export default function EditProfileScreen() {
   const halfScreen = Math.round(Dimensions.get("window").height / 1.5);
 
   const navigation = useNavigation();
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         flexDirection: "column",
+        justifyContent: "flex-end",
       }}
+      className="bg-transparent"
     >
       {/* View for the first half of the screen */}
-      {/* <TouchableOpacity
+      <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={{ height: halfScreen }}
         className="bg-transparent"
-      ></TouchableOpacity> */}
+      ></TouchableOpacity>
 
       <View
         style={{
-          height: "100%",
+          height: halfScreen,
           width: "100%",
+          backgroundColor: "#fff",
           justifyContent: "center",
         }}
         className=" rounded-2xl py-6"
@@ -51,7 +52,7 @@ export default function ProfileSCcreen() {
             height={25}
           />
         </TouchableOpacity>
-        <Text className="font-bold text-3xl self-center">Perfil</Text>
+        <Text className="font-bold text-3xl self-center">Editar Perfil</Text>
 
         <View className="flex-col justify-center items-center mt-6">
           {/* User image */}
@@ -74,7 +75,8 @@ export default function ProfileSCcreen() {
         </View>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("EditProfileScreen");
+            // Agrega aquí la lógica para navegar a la pantalla de edición de perfil
+            // Puedes usar navigation.navigate para navegar a la pantalla de edición.
           }}
           className="bg-blue-500 rounded-md p-3 w-1/2 mt-5 self-center"
         >
@@ -99,6 +101,6 @@ export default function ProfileSCcreen() {
           </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
