@@ -21,6 +21,7 @@ import {
   GoogleAuthProvider,
   signInWithCredential,
 } from "firebase/auth";
+import getPermissions from "../utils/getPermissions";
 
 export default function RegisterScreen({ handleLoginGoogle }) {
   const navigation = useNavigation();

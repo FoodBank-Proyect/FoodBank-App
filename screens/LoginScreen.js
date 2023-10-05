@@ -13,44 +13,59 @@ import TextField from "../components/TextField";
 import { StatusBar } from "expo-status-bar";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
-import { useIdTokenAuthRequest as useGoogleIdTokenAuthRequest } from "expo-auth-session/providers/google";
-import { expoClientId, iosClientId } from "../firebaseConfig";
-import {
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signInWithCredential,
-} from "firebase/auth";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import Toast from "react-native-toast-message";
+import getPermissions from "../utils/getPermissions";
 
 export default function LoginScreen({ handleLoginGoogle }) {
   const navigation = useNavigation();
+
+  // We define it here as it is our initial route
+  // Permanent login
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigation.navigate("Home");
+        showToast();
+        getPermissions();
+      } else {
+        navigation.navigate("Login");
+      }
+    });
+  }, []);
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(null);
   const [pass, setPass] = useState("");
   const [passError, setPassError] = useState(null);
 
-  const showToast = () => {
-    Toast.show({
-      type: "success",
-      text1: `Hola de nuevo! ${
-        auth.currentUser?.displayName || auth.currentUser?.email?.split("@")[0]
-      }`,
-      text2: "Inicio de sesión exitoso",
-    });
-  };
-
-  // Listen for authentication state to change.
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigation.navigate("Home");
-        showToast();
+  const handleSignIn = () => {
+    try {
+      signInWithEmailAndPassword(auth, email, pass);
+      navigation.navigate("Home");
+    } catch (error) {
+      if (error.code == "auth/user-not-found") {
+        Toast.show({
+          type: "error",
+          text1: "Error",
+          text2: "Usuario no encontrado",
+        });
+      } else if (error.code == "auth/wrong-password") {
+        Toast.show({
+          type: "error",
+          text1: "Error",
+          text2: "Contraseña incorrecta",
+        });
       } else {
-        navigation.navigate("Login");
+        console.log(error);
+        Toast.show({
+          type: "error",
+          text1: "Error",
+          text2: "Ocurrió un error",
+        });
       }
-    });
-  }, []);
+    }
+  };
 
   return (
     <View>
@@ -223,3 +238,13 @@ export default function LoginScreen({ handleLoginGoogle }) {
     </View>
   );
 }
+
+const showToast = () => {
+  Toast.show({
+    type: "success",
+    text1: `Hola de nuevo! ${
+      auth.currentUser?.displayName || auth.currentUser?.email?.split("@")[0]
+    }`,
+    text2: "Inicio de sesión exitoso",
+  });
+};

@@ -13,8 +13,6 @@ import { auth } from "../firebaseConfig";
 import { Image } from "expo-image";
 
 export default function ProfileSCcreen() {
-  console.log(auth.currentUser);
-
   // Define the half of the screen
   const halfScreen = Math.round(Dimensions.get("window").height / 2);
 

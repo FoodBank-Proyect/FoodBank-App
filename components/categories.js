@@ -25,18 +25,17 @@ export default function Categories() {
           let textClass = isActive ? " text-red-600" : " text-gray-500";
           let borderClass = isActive ? " border-red-500" : " border-gray-300";
           return (
-            <View key={index} className="flex justify-center items-center mr-6">
+            <View
+              key={index}
+              className="flex justify-center items-center mr-6 bg-white"
+            >
               <TouchableOpacity
                 onPress={() => {
                   activeCategory == category.id
                     ? setActiveCategory(null)
                     : setActiveCategory(category.id);
                 }}
-                className={
-                  "border-[1px] p-3 rounded-full shadow flex justify-center items-center" +
-                  btnClass +
-                  borderClass
-                }
+                className={`border-[1px] p-3 rounded-full shadow flex justify-center items-center ${borderClass} ${btnClass}`}
               >
                 <Image
                   style={{ width: 35, height: 35 }}

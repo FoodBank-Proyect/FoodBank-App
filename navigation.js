@@ -11,12 +11,14 @@ import RegisterScreen from "./screens/RegisterScreen";
 import { useEffect, useCallback } from "react";
 import { useIdTokenAuthRequest as useGoogleIdTokenAuthRequest } from "expo-auth-session/providers/google";
 import { auth, expoClientId, iosClientId } from "./firebaseConfig";
+import db from "./firebaseConfig";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithCredential,
 } from "firebase/auth";
 import ProfileScreen from "./screens/ProfileScreen";
+import getPermissions from "./utils/getPermissions";
 
 const Stack = createNativeStackNavigator();
 
