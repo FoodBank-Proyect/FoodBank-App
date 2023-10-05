@@ -20,6 +20,7 @@ import {
 } from "firebase/auth";
 import ProfileScreen from "./screens/ProfileScreen";
 import getPermissions from "./utils/getPermissions";
+import SupportScreen from "./screens/SupportScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -96,6 +97,11 @@ export default function Navigation({ currentLocation }) {
           options={{ presentation: "fullScreenModal" }}
         />
         <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen
+          name="Support"
+          component={SupportScreen}
+          options={{ presentation: "modal" }}
+        />
         {/* Half modal */}
         <Stack.Group
           screenOptions={{

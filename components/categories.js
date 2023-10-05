@@ -23,7 +23,7 @@ export default function Categories() {
           let isActive = category.id == activeCategory;
           let btnClass = isActive ? " bg-gray-200" : "bg-transparent";
           let textClass = isActive ? " text-red-600" : " text-gray-500";
-          let borderClass = isActive ? " border-red-500" : " border-gray-300";
+          let borderClass = isActive ? " border-red-500" : "border-white";
           return (
             <View
               key={index}
@@ -35,7 +35,7 @@ export default function Categories() {
                     ? setActiveCategory(null)
                     : setActiveCategory(category.id);
                 }}
-                className={`border-[1px] p-3 rounded-full shadow flex justify-center items-center ${borderClass} ${btnClass}`}
+                className={`border-[1px]  p-3 rounded-full bg-white shadow flex justify-center items-center ${borderClass}`}
               >
                 <Image
                   style={{ width: 35, height: 35 }}
