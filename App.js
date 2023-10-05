@@ -6,6 +6,9 @@ import AnimatedSplash from "react-native-animated-splash-screen";
 import Toast from "react-native-toast-message";
 import * as Location from "expo-location";
 import { Alert } from "react-native";
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs(["Constants.platform.ios.model"]);
 
 export default function App() {
   const [isLoaded, setIsLoaded] = React.useState(false);

@@ -31,11 +31,11 @@ export default function CartScreen() {
   return (
     <View className=" bg-white flex-1">
       {/* top button */}
-      <View className="relative py-4 shadow-sm">
+      <View className="relative py-4">
         <TouchableOpacity
           style={{ backgroundColor: themeColors.bgColor(1) }}
           onPress={() => navigation.goBack()}
-          className="absolute z-10 rounded-full p-1 shadow top-5 left-2"
+          className="absolute z-10 rounded-full p-1 bg-white shadow top-5 left-2"
         >
           <Icon.ArrowLeft strokeWidth={3} stroke="white" />
         </TouchableOpacity>
