@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { themeColors } from "../theme";
 import * as Icon from "react-native-feather";
@@ -8,11 +8,15 @@ import {
   removeFromCart,
   selectCartItemById,
 } from "../slices/cartSlice";
+import { Image } from "expo-image";
 
 export default function DishRow({ item }) {
   const dispatch = useDispatch();
   let id = item.id;
   const cartItem = useSelector((state) => selectCartItemById(state, id));
+
+  const blurhash =
+    "|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[";
 
   const handleIncrease = () => {
     dispatch(addToCart({ ...item }));
@@ -27,6 +31,7 @@ export default function DishRow({ item }) {
         className="rounded-3xl"
         style={{ height: 100, width: 100 }}
         source={item.image}
+        placeholder={blurhash}
       />
       <View className="flex flex-1 space-y-3">
         <View className="pl-3">

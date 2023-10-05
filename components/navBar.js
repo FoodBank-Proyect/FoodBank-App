@@ -38,10 +38,10 @@ export default function Navbar() {
       </TouchableOpacity>
       <TouchableOpacity
         className="flex flex-col items-center w-1/3"
-        onPress={() => navigation.navigate("Settings")}
+        onPress={() => navigation.navigate("Profile")}
       >
-        <Icon.Settings height={20} width={20} stroke="gray" />
-        <Text className="text-xs text-gray-600">Settings</Text>
+        <Icon.User height={20} width={20} stroke="gray" />
+        <Text className="text-xs text-gray-600">Perfil</Text>
       </TouchableOpacity>
     </View>
   );

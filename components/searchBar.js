@@ -25,8 +25,10 @@ export default function searchBar({ currentLocation }) {
         />
         <View className="flex-row items-center space-x-1 border-0 border-l-2 pl-2 border-l-gray-300 w-1/2 ">
           <Icon.MapPin height="20" width="20" stroke="gray" />
-          <Text className="text-gray-600 text-xs">
-            {currentLocation?.address.name}
+          <Text className="text-gray-600 text-xs max-w-[130px]">
+            {currentLocation?.address.name.length > 20
+              ? currentLocation?.address.name.substring(0, 20) + "..."
+              : currentLocation?.address.name}
           </Text>
         </View>
       </View>

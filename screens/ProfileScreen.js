@@ -10,9 +10,10 @@ import React, { useEffect } from "react";
 import * as Icon from "react-native-feather";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
+import { Image } from "expo-image";
 
-export default function SettingsScreen() {
-  // If the user clicks in the first half of the screen from the top, go back
+export default function ProfileSCcreen() {
+  console.log(auth.currentUser);
 
   // Define the half of the screen
   const halfScreen = Math.round(Dimensions.get("window").height / 2);
@@ -54,7 +55,26 @@ export default function SettingsScreen() {
             height={25}
           />
         </TouchableOpacity>
-        <Text className="font-bold text-3xl self-center">Ajustes</Text>
+        <Text className="font-bold text-3xl self-center">Perfil</Text>
+
+        <View className="flex-col justify-center items-center mt-6">
+          {/* User image */}
+          <View className="bg-gray-300 w-32 h-32 rounded-full">
+            <Image
+              source={{
+                uri:
+                  auth.currentUser.photoURL ||
+                  "https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png",
+              }}
+              className="w-32 h-32 rounded-full"
+            />
+          </View>
+          {/* User name */}
+          <Text className="text-2xl font-bold">
+            {auth.currentUser.displayName ||
+              auth.currentUser.email.split("@")[0]}
+          </Text>
+        </View>
 
         {/* Sign Out Button at the bottom */}
         <View className="flex-1 mt-6 items-center">

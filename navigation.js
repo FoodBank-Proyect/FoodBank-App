@@ -16,7 +16,7 @@ import {
   onAuthStateChanged,
   signInWithCredential,
 } from "firebase/auth";
-import SettingsScreen from "./screens/SettingsScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -100,7 +100,7 @@ export default function Navigation({ currentLocation }) {
             gestureDirection: "vertical",
           }}
         >
-          <Stack.Screen name="Settings" component={SettingsScreen} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

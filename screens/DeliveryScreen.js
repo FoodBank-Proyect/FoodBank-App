@@ -6,7 +6,7 @@ import {
   Image,
   SafeAreaView,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
 import { themeColors } from "../theme";
@@ -21,13 +21,34 @@ export default function DeliveryScreen({ currentLocation }) {
     ? currentLocation
     : {
         name: "Lahore",
-        lat: 31.5204,
-        lng: 74.3587,
+        latitude: 31.5204,
+        longitude: 74.3587,
       };
 
   const navigation = useNavigation();
   const resturant = useSelector(selectProduct);
   const dispatch = useDispatch();
+
+  let markerRef = useRef(null);
+  let mapRef = useRef(null);
+
+  useEffect(() => {
+    // Move the map to the location of the user
+    // This is needed to automatically open the callout
+    if (mapRef.current) {
+      mapRef.current.animateToRegion({
+        latitude: location.latitude,
+        longitude: location.longitude,
+        latitudeDelta: 0.0025,
+        longitudeDelta: 0.0025,
+      });
+    }
+    setTimeout(() => {
+      if (markerRef.current) {
+        markerRef.current.showCallout();
+      }
+    }, 1000);
+  });
 
   const cancelOrder = () => {
     navigation.navigate("Home");
@@ -40,20 +61,24 @@ export default function DeliveryScreen({ currentLocation }) {
         initialRegion={{
           latitude: location.latitude,
           longitude: location.longitude,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
+          latitudeDelta: 0.0025,
+          longitudeDelta: 0.0025,
         }}
+        showsUserLocation={true}
         className="flex-1"
         mapType="standard"
+        ref={mapRef}
       >
         <Marker
           coordinate={{
             latitude: location.latitude,
             longitude: location.longitude,
           }}
-          title={resturant.name}
-          description={resturant.description}
+          title="Tú"
+          description={location.address.name}
+          identifier="destination"
           pinColor={themeColors.bgColor(1)}
+          ref={markerRef}
         />
       </MapView>
 

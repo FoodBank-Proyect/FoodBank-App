@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
 import * as Icon from "react-native-feather";
@@ -8,10 +8,13 @@ import DishRow from "../components/dishRow";
 import CartIcon from "../components/cartIcon";
 import { StatusBar } from "expo-status-bar";
 import { useDispatch } from "react-redux";
+import { Image } from "expo-image";
 import { setProduct } from "../slices/productSlice";
 
 export default function ProductScreen() {
   const navigation = useNavigation();
+  const blurhash =
+    "|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[";
   const { params } = useRoute();
   let item = params;
   const dispatch = useDispatch();
@@ -28,7 +31,11 @@ export default function ProductScreen() {
       <StatusBar style="light" />
       <ScrollView>
         <View className="relative">
-          <Image className="w-full h-72" source={item.image} />
+          <Image
+            className="w-full h-72"
+            source={item.image}
+            placeholder={blurhash}
+          />
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             className="absolute top-14 left-4 bg-gray-50 p-2 rounded-full shadow"
@@ -48,6 +55,7 @@ export default function ProductScreen() {
                 <Image
                   source={require("../assets/images/fullStar.png")}
                   className="h-4 w-4"
+                  placeholder={blurhash}
                 />
                 <Text className="text-xs">
                   <Text className="text-green-700">{item.stars}</Text>

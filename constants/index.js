@@ -1,9 +1,35 @@
-export const categories = [];
+export const categories = [
+  {
+    id: 1,
+    name: "Ropa",
+    image: require("../assets/categories/ropa.png"),
+  },
+  {
+    id: 2,
+    name: "Papelería",
+    image: require("../assets/categories/papeleria.png"),
+  },
+  {
+    id: 3,
+    name: "Hogar",
+    image: require("../assets/categories/hogar.png"),
+  },
+  {
+    id: 4,
+    name: "Electrónicos",
+    image: require("../assets/categories/electronicos.png"),
+  },
+  {
+    id: 5,
+    name: "Accesorios",
+    image: require("../assets/categories/accesorios.png"),
+  },
+];
 
 export const featured = {
   id: 1,
-  title: "Prendas",
-  description: "Prendas de vestir",
+  title: "Ropa",
+  description: "Ropa de vestir",
   restaurants: [
     {
       id: 1,
@@ -115,7 +141,7 @@ export const featured = {
 
 export const utiles = {
   id: 1,
-  title: "Útiles",
+  title: "Papelería",
   description: "Utiles escolares",
   restaurants: [
     {
@@ -228,7 +254,7 @@ export const utiles = {
 
 export const hogar = {
   id: 1,
-  title: "Amenidades",
+  title: "Hogar",
   description: "Amenidades para el hogar",
   restaurants: [
     {
@@ -338,3 +364,6 @@ export const hogar = {
     },
   ],
 };
+
+export const electronicos = {};
+export const accesorios = {};
