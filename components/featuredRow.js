@@ -4,8 +4,6 @@ import RestaurantCard from "./restaurantCard";
 import { themeColors } from "../theme";
 
 export default function FeatureRow({ title, description, restaurants }) {
-  // const [resturants, setResturants] = useState([]);
-
   return (
     <View>
       <View className="flex-row justify-between items-center px-4">

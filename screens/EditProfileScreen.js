@@ -52,7 +52,7 @@ export default function EditProfileScreen() {
             height={25}
           />
         </TouchableOpacity>
-        <Text className="font-bold text-3xl self-center">Mi Perfil</Text>
+        <Text className="font-bold text-2xl self-center">Mi Perfil</Text>
 
         <View className="flex-col justify-center items-center mt-6">
           {/* User image */}

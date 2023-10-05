@@ -17,7 +17,7 @@ export default function Navbar() {
 
   return (
     <TouchableOpacity
-      className={`p-4 rounded-full shadow-2xl shadow-black flex justify-center items-center absolute bottom-20 right-6 border-[1.5px] border-red-500 bg-white/80`}
+      className={`p-4 rounded-full bg-white/80  flex justify-center items-center absolute bottom-20 right-6 border-[1.5px] border-red-500 `}
       onPress={() => navigation.navigate("Support")}
     >
       <Icon.Heart height={25} width={25} stroke="red" fill="red" />

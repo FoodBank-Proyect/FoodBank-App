@@ -35,7 +35,7 @@ export default function Categories() {
                     ? setActiveCategory(null)
                     : setActiveCategory(category.id);
                 }}
-                className={`border-[1px] p-3 rounded-full  shadow flex justify-center items-center ${borderClass} ${btnClass}`}
+                className={`border-[1px] p-3 rounded-2xl ${btnClass} shadow flex justify-center items-center ${borderClass} `}
               >
                 <Image
                   style={{ width: 35, height: 35 }}

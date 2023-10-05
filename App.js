@@ -9,6 +9,7 @@ import { Alert } from "react-native";
 import { LogBox } from "react-native";
 
 LogBox.ignoreLogs(["Constants.platform.ios.model"]);
+LogBox.ignoreLogs(["The useProxy option is deprecated"]);
 
 export default function App() {
   const [isLoaded, setIsLoaded] = React.useState(false);

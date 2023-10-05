@@ -5,6 +5,7 @@ import {
   Button,
   TouchableOpacity,
   Dimensions,
+  Alert,
 } from "react-native";
 import React, { useEffect } from "react";
 import * as Icon from "react-native-feather";
