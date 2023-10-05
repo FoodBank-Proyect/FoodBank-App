@@ -12,7 +12,6 @@ import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
 import { Image } from "expo-image";
 import { EditProfileScreen } from "./EditProfileScreen";
-
 export default function ProfileSCcreen() {
   // Define the half of the screen
   const halfScreen = Math.round(Dimensions.get("window").height / 1.5);
@@ -63,8 +62,27 @@ export default function ProfileSCcreen() {
           </Text>
         </View>
 
-        <View className="flex w-11/12 flex-col self-center rounded-2xl justify-center items-center mt-6 border border-gray-200 shadow-lg   bg-white">
-          <Text className="text-xl">Información</Text>
+        <View className="flex w-11/12 flex-col self-center rounded-2xl mt-6 border border-gray-200 shadow-lg   bg-white">
+          <View>
+            <TouchableOpacity
+              className="ml-6 mt-4"
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 25,
+                backgroundColor: "#d3d3d3",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={() => {
+                navigation.navigate("EditProfileScreen");
+              }}
+            >
+              {<Icon.User height={30} width={30} stroke="black" />}
+            </TouchableOpacity>
+            <Text className="text-sm">Datos</Text>
+            <Text className="text-sm">Personales</Text>
+          </View>
         </View>
 
         <TouchableOpacity
