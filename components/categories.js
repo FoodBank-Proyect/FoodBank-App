@@ -27,7 +27,11 @@ export default function Categories() {
           return (
             <View key={index} className="flex justify-center items-center mr-6">
               <TouchableOpacity
-                onPress={() => setActiveCategory(category.id)}
+                onPress={() => {
+                  activeCategory == category.id
+                    ? setActiveCategory(null)
+                    : setActiveCategory(category.id);
+                }}
                 className={
                   "border-[1px] p-3 rounded-full shadow flex justify-center items-center" +
                   btnClass +
