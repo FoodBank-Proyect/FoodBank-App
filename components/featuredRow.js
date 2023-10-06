@@ -28,7 +28,7 @@ export default function FeatureRow({ title, description, restaurants }) {
         className="overflow-visible py-5"
       >
         {restaurants.map((restaurant, index) => {
-          return <RestaurantCard item={restaurant} key={index} />;
+          return <RestaurantCard item={restaurant} key={index} title={title} />;
         })}
       </ScrollView>
     </View>

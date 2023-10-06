@@ -10,7 +10,7 @@ import { themeColors } from "../theme";
 import * as Icon from "react-native-feather";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ResturantCard({ item }) {
+export default function ResturantCard({ item, title }) {
   const navigation = useNavigation();
 
   const blurhash =
@@ -18,7 +18,7 @@ export default function ResturantCard({ item }) {
 
   return (
     <TouchableWithoutFeedback
-      onPress={() => navigation.navigate("Product", { ...item })}
+      onPress={() => navigation.navigate("Product", { ...item, title })}
     >
       <View
         style={{ shadowColor: themeColors.bgColor(0.2), shadowRadius: 7 }}
@@ -26,7 +26,7 @@ export default function ResturantCard({ item }) {
       >
         <Image
           className="h-40 w-72 rounded-t-3xl"
-          source={item.image}
+          source={{ uri: item.image }}
           placeholder={blurhash}
         />
 
@@ -43,9 +43,7 @@ export default function ResturantCard({ item }) {
                 {" "}
                 ({item.reviews} review)
               </Text> ·{" "}
-              <Text className="font-semibold text-gray-700">
-                {item.category}
-              </Text>
+              <Text className="font-semibold text-gray-700">{title}</Text>
             </Text>
           </View>
           <View className="flex-row items-center space-x-1">

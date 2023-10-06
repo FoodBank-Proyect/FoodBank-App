@@ -18,11 +18,10 @@ export default function ProductScreen() {
   const { params } = useRoute();
   let item = params;
   const dispatch = useDispatch();
-  // console.log(item);
   useEffect(() => {
-    if (item && item.id) {
+    if (item) {
       dispatch(setProduct({ ...item }));
-    }
+    } else navigation.goBack();
   }, []);
 
   return (
@@ -59,17 +58,14 @@ export default function ProductScreen() {
                 />
                 <Text className="text-xs">
                   <Text className="text-green-700">{item.stars}</Text>
-                  <Text className="text-gray-700"> (4.6k review)</Text> ·{" "}
+                  <Text className="text-gray-700">
+                    {" "}
+                    ({item.reviews} reviews)
+                  </Text>{" "}
+                  ·{" "}
                   <Text className="font-semibold text-gray-700">
-                    {item.category}
+                    {item.title}
                   </Text>
-                </Text>
-              </View>
-              <View className="flex-row items-center space-x-1">
-                <Icon.MapPin color="gray" width={15} height={15} />
-                <Text className="text-gray-800 text-xs">
-                  {" "}
-                  Nearby · {item.address}
                 </Text>
               </View>
             </View>

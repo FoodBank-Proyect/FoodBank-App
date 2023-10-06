@@ -1,251 +1,230 @@
-export const categories = [
-  {
-    id: 1,
-    name: "Ropa",
-    image: require("../assets/categories/ropa.png"),
-  },
-  {
-    id: 2,
-    name: "Papelería",
-    image: require("../assets/categories/papeleria.png"),
-  },
-  {
-    id: 3,
-    name: "Hogar",
-    image: require("../assets/categories/hogar.png"),
-  },
-  {
-    id: 4,
-    name: "Electrónicos",
-    image: require("../assets/categories/electronicos.png"),
-  },
-  {
-    id: 5,
-    name: "Accesorios",
-    image: require("../assets/categories/accesorios.png"),
-  },
-];
-
-export const featured = {
+export const ropa = {
   id: 1,
   title: "Ropa",
   description: "Ropa de vestir",
-  restaurants: [
+  image:
+    "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/categories/ropa.png",
+  items: [
     {
-      id: 1,
       name: "Playeras",
-      image: require("../assets/images/playerasFoodBank.png"),
-      description: "Hot and spicy pizzas",
-      lng: -85.5324269,
-      lat: 38.2145602,
-      address: "434 second street",
+      image:
+        "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/playerasFoodBank.png",
+      description: "Playeras de algodón hechas en México",
       stars: 4,
       reviews: "4.4k",
-      category: "Fast Food",
       dishes: [
         {
           id: 1,
           name: "Color azul marino",
           description: "Playera con diseño integral azul marino",
           price: 10,
-          image: require("../assets/images/playera_disenio.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/playera_disenio.png",
         },
         {
           id: 2,
           name: "Color rosa",
           description: "Playera color rosa",
           price: 10,
-          image: require("../assets/images/playera_rosa.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/playera_rosa.png",
         },
         {
           id: 3,
           name: "Color naranja",
           description: "Playera color naranja",
           price: 10,
-          image: require("../assets/images/playera_naranja.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/playera_naranja.png",
         },
       ],
     },
     {
-      id: 2,
       name: "Sudaderas",
-      image: require("../assets/images/SudaderaFoodBank.png"),
+      image:
+        "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/SudaderaFoodBank.png",
       description: "Hot and spicy pizzas",
       lng: -85.5324269,
       lat: 38.2145602,
       address: "434 second street",
       stars: 4,
       reviews: "4.4k",
-      category: "Fast Food",
       dishes: [
         {
           id: 4,
           name: "Color rojo",
           description: "Sudadera color rojo",
           price: 10,
-          image: require("../assets/images/sudadera_roja.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/sudadera_roja.png",
         },
         {
           id: 5,
           name: "Color azul",
           description: "Sudadera color azul marino",
           price: 10,
-          image: require("../assets/images/sudadera_azul.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/sudadera_azul.png",
         },
         {
           id: 6,
           name: "Color gris",
           description: "Sudadra color gris",
           price: 10,
-          image: require("../assets/images/sudadera_gris.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/sudadera_gris.png",
         },
       ],
     },
     {
-      id: 3,
       name: "Gorras",
-      image: require("../assets/images/logo_gorras_v4.png"),
+      image:
+        "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/logo_gorras_v4.png",
       description: "Hot and spicy pizzas",
       lng: -85.5324269,
       lat: 38.2145602,
       address: "434 second street",
       stars: 4,
       reviews: "4.4k",
-      category: "Fast Food",
       dishes: [
         {
           id: 7,
           name: "Color negro",
           description: "Gorra color negro mate",
           price: 10,
-          image: require("../assets/images/gorra_negra_v2.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/gorra_negra_v2.png",
         },
         {
           id: 8,
           name: "Color rojo",
           description: "Gorra color rojo avivado",
           price: 10,
-          image: require("../assets/images/gorra_roja_frontal.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/gorra_roja_frontal.png",
         },
         {
           id: 9,
           name: "Color blanco",
           description: "Gorra color blanco nieve",
           price: 10,
-          image: require("../assets/images/gorra_blanca_frontal.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/gorra_blanca_frontal.png",
         },
       ],
     },
   ],
 };
 
-export const utiles = {
+export const papeleria = {
   id: 1,
   title: "Papelería",
   description: "Utiles escolares",
-  restaurants: [
+  image:
+    "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/categories/papeleria.png",
+  items: [
     {
-      id: 1,
       name: "Libretas",
-      image: require("../assets/images/Libretas_1.png"),
+      image:
+        "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/Libretas_1.png",
       description: "Hot and spicy pizzas",
-      lng: -85.5324269,
-      lat: 38.2145602,
-      address: "434 second street",
       stars: 4,
       reviews: "4.4k",
-      category: "Fast Food",
       dishes: [
         {
           id: 10,
           name: "Libreta amarila",
           description: "Libreta amarilla con diseño integrado",
           price: 10,
-          image: require("../assets/images/Libretas_1.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/Libretas_1.png",
         },
         {
           id: 11,
           name: "Libreta blanca",
           description: "Libreta blanca con diseño integrado",
           price: 10,
-          image: require("../assets/images/Libretas_2.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/Libretas_2.png",
         },
         {
           id: 12,
           name: "Libreta cafe claro",
           description: "Libreta color cafe claro con diseño integrado",
           price: 10,
-          image: require("../assets/images/Libretas_3.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/Libretas_3.png",
         },
       ],
     },
     {
-      id: 2,
       name: "Agendas",
-      image: require("../assets/images/portada_agendas.png"),
+      image:
+        "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/portada_agendas.png",
       description: "Hot and spicy pizzas",
-      lng: -85.5324269,
-      lat: 38.2145602,
-      address: "434 second street",
+
       stars: 4,
       reviews: "4.4k",
-      category: "Fast Food",
+
       dishes: [
         {
           id: 13,
           name: "Color azul",
           description: "Agenda mini color azul 80 hojas",
           price: 10,
-          image: require("../assets/images/agenda_azul.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/agenda_azul.png",
         },
         {
           id: 14,
           name: "Color rosa",
           description: "Agenda mini color azul 80 hojas",
           price: 10,
-          image: require("../assets/images/agenda_rosa.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/agenda_rosa.png",
         },
         {
           id: 15,
           name: "Color verde lima",
           description: "Agenda mini color verde lima 80 hojas",
           price: 10,
-          image: require("../assets/images/agenda_verde.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/agenda_verde.png",
         },
       ],
     },
     {
-      id: 3,
       name: "Plumas",
-      image: require("../assets/images/portada_plumas.png"),
+      image:
+        "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/portada_plumas.png",
       description: "Hot and spicy pizzas",
-      lng: -85.5324269,
-      lat: 38.2145602,
-      address: "434 second street",
+
       stars: 4,
       reviews: "4.4k",
-      category: "Fast Food",
       dishes: [
         {
           id: 16,
           name: "pizza",
           description: "cheezy garlic pizza",
           price: 10,
-          image: require("../assets/images/pizzaDish.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/pizzaDish.png",
         },
         {
           id: 17,
           name: "pizza",
           description: "cheezy garlic pizza",
           price: 10,
-          image: require("../assets/images/pizzaDish.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/pizzaDish.png",
         },
         {
           id: 18,
           name: "pizza",
           description: "cheezy garlic pizza",
           price: 10,
-          image: require("../assets/images/pizzaDish.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/pizzaDish.png",
         },
       ],
     },
@@ -256,222 +235,226 @@ export const hogar = {
   id: 1,
   title: "Hogar",
   description: "Amenidades para el hogar",
-  restaurants: [
+  image:
+    "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/categories/hogar.png",
+  items: [
     {
-      id: 1,
       name: "Tazas",
-      image: require("../assets/images/taza_blanca.png"),
+      image:
+        "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/taza_blanca.png",
       description: "Hot and spicy pizzas",
-      lng: -85.5324269,
-      lat: 38.2145602,
-      address: "434 second street",
+
       stars: 4,
       reviews: "4.4k",
-      category: "Fast Food",
+
       dishes: [
         {
           id: 19,
           name: "Color negro",
           description: "Taza color negro con nuestro logo integrado",
           price: 10,
-          image: require("../assets/images/taza_negra.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/taza_negra.png",
         },
         {
           id: 20,
           name: "Color blanco",
           description: "Taza color blanco con nuestro logo integrado",
           price: 10,
-          image: require("../assets/images/taza_blanca_sin_fondo.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/taza_blanca_sin_fondo.png",
         },
         {
           id: 21,
           name: "Color azul",
           description: "Taza color azul cielo con nuestro logo integrado",
           price: 10,
-          image: require("../assets/images/taza_azul.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/taza_azul.png",
         },
       ],
     },
     {
-      id: 2,
       name: "Toallas",
-      image: require("../assets/images/portada_toallas.png"),
+      image:
+        "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/portada_toallas.png",
       description: "Hot and spicy pizzas",
-      lng: -85.5324269,
-      lat: 38.2145602,
-      address: "434 second street",
+
       stars: 4,
       reviews: "4.4k",
-      category: "Fast Food",
       dishes: [
         {
           id: 22,
           name: "Color blanco",
           description: "Toalla de manos color blanco",
           price: 10,
-          image: require("../assets/images/toalla_blanca.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/toalla_blanca.png",
         },
         {
           id: 23,
           name: "Color azul",
           description: "Toalla de manos color azul marino",
           price: 10,
-          image: require("../assets/images/toalla_azul.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/toalla_azul.png",
         },
         {
           id: 24,
           name: "Color rosa",
           description: "Toalla de manos color rosa obscuro",
           price: 10,
-          image: require("../assets/images/toalla_rosa.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/toalla_rosa.png",
         },
       ],
     },
     {
-      id: 3,
       name: "Velas",
-      image: require("../assets/images/portada_velas2.png"),
+      image:
+        "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/portada_velas2.png",
       description: "Hot and spicy pizzas",
-      lng: -85.5324269,
-      lat: 38.2145602,
-      address: "434 second street",
+
       stars: 4,
       reviews: "4.4k",
-      category: "Fast Food",
       dishes: [
         {
-          id: 1,
+          id: 25,
           name: "Color blanco",
           description: "Vela color blanco con aroma a vainilla",
           price: 10,
-          image: require("../assets/images/vela_blanca.png"),
-        },
-        {
-          id: 25,
-          name: "Color rojo",
-          description: "Vela color rojo con aroma a fresa",
-          price: 10,
-          image: require("../assets/images/vela_roja.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/vela_blanca.png",
         },
         {
           id: 26,
+          name: "Color rojo",
+          description: "Vela color rojo con aroma a fresa",
+          price: 10,
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/vela_roja.png",
+        },
+        {
+          id: 27,
           name: "Color azul",
           description: "Vela color azul con aroma a lavanda",
           price: 10,
-          image: require("../assets/images/vela_azul.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/vela_azul.png",
         },
       ],
     },
   ],
 };
-
 export const electronicos = {
   id: 1,
   title: "Electrónicos",
   description: "Dispositivos u objetos relacionados con la electrónica",
-  restaurants: [
+  image:
+    "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/categories/electronicos.png",
+  items: [
     {
-      id: 1,
       name: "Tapetes",
-      image: require("../assets/images/tapete_negro.png"),
+      image:
+        "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/tapete_negro.png",
       description: "Hot and spicy pizzas",
-      lng: -85.5324269,
-      lat: 38.2145602,
-      address: "434 second street",
+
       stars: 4,
       reviews: "4.4k",
-      category: "Fast Food",
       dishes: [
         {
-          id: 27,
+          id: 28,
           name: "Color negro",
           description: "Taza color negro con nuestro logo integrado",
           price: 10,
-          image: require("../assets/images/taza_negra.png"),
-        },
-        {
-          id: 28,
-          name: "Color blanco",
-          description: "Taza color blanco con nuestro logo integrado",
-          price: 10,
-          image: require("../assets/images/taza_blanca_sin_fondo.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/taza_negra.png",
         },
         {
           id: 29,
+          name: "Color blanco",
+          description: "Taza color blanco con nuestro logo integrado",
+          price: 10,
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/taza_blanca_sin_fondo.png",
+        },
+        {
+          id: 30,
           name: "Color azul",
           description: "Taza color azul cielo con nuestro logo integrado",
           price: 10,
-          image: require("../assets/images/taza_azul.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/taza_azul.png",
         },
       ],
     },
     {
-      id: 2,
       name: "Memorias usb",
-      image: require("../assets/images/portada_usb.png"),
+      image:
+        "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/portada_usb.png",
       description: "Hot and spicy pizzas",
-      lng: -85.5324269,
-      lat: 38.2145602,
-      address: "434 second street",
+
       stars: 4,
       reviews: "4.4k",
-      category: "Fast Food",
       dishes: [
         {
-          id: 30,
+          id: 31,
           name: "Color blanco",
           description: "Toalla de manos color blanco",
           price: 10,
-          image: require("../assets/images/toalla_blanca.png"),
-        },
-        {
-          id: 31,
-          name: "Color azul",
-          description: "Toalla de manos color azul marino",
-          price: 10,
-          image: require("../assets/images/toalla_azul.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/toalla_blanca.png",
         },
         {
           id: 32,
+          name: "Color azul",
+          description: "Toalla de manos color azul marino",
+          price: 10,
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/toalla_azul.png",
+        },
+        {
+          id: 33,
           name: "Color rosa",
           description: "Toalla de manos color rosa obscuro",
           price: 10,
-          image: require("../assets/images/toalla_rosa.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/toalla_rosa.png",
         },
       ],
     },
     {
-      id: 3,
       name: "Audifonos",
-      image: require("../assets/images/audifonos.png"),
+      image:
+        "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/audifonos.png",
       description: "Hot and spicy pizzas",
-      lng: -85.5324269,
-      lat: 38.2145602,
-      address: "434 second street",
+
       stars: 4,
       reviews: "4.4k",
-      category: "Fast Food",
       dishes: [
         {
-          id: 1,
+          id: 34,
           name: "Color blanco",
           description: "Vela color blanco con aroma a vainilla",
           price: 10,
-          image: require("../assets/images/vela_blanca.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/vela_blanca.png",
         },
         {
-          id: 33,
+          id: 35,
           name: "Color rojo",
           description: "Vela color rojo con aroma a fresa",
           price: 10,
-          image: require("../assets/images/vela_roja.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/vela_roja.png",
         },
         {
-          id: 34,
+          id: 36,
           name: "Color azul",
           description: "Vela color azul con aroma a lavanda",
           price: 10,
-          image: require("../assets/images/vela_azul.png"),
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/vela_azul.png",
         },
       ],
     },
