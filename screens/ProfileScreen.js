@@ -60,7 +60,7 @@ export default function ProfileSCcreen() {
             <TouchableOpacity
               className="flex flex-col items-center w-1/4 mr-6"
               onPress={() => {
-                navigation.navigate("EditProfileScreen");
+                navigation.navigate("EditProfile");
               }}
             >
               <View
@@ -96,7 +96,12 @@ export default function ProfileSCcreen() {
               <Text className="text-gray-500 text-sm mt-1">Historial </Text>
               <Text className="text-gray-500 text-sm">de pedidos</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="flex flex-col items-center w-1/4">
+            <TouchableOpacity
+              className="flex flex-col items-center w-1/4"
+              onPress={() => {
+                navigation.navigate("PaymentMethods");
+              }}
+            >
               <View
                 style={{
                   width: 50,
