@@ -23,7 +23,7 @@ import getPermissions from "./utils/getPermissions";
 import SupportScreen from "./screens/SupportScreen";
 import PaymentMethodsScreen from "./screens/PaymentMethodsScreen";
 import AddPaymentMethodScreen from "./screens/AddPaymentMethodScreen";
-import getDataBase from "./utils/getDataBase";
+import getDataBase from "./utils/getDataBaseOnce";
 import GoogleAuth from "./utils/googleAuth";
 import { useSelector, useDispatch } from "react-redux";
 import { setDB } from "./slices/dbSlice";

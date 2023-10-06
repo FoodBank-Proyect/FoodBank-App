@@ -18,14 +18,10 @@ import Toast from "react-native-toast-message";
 import getPermissions from "../utils/getPermissions";
 import GoogleAuth from "../utils/googleAuth";
 import { useDispatch, useSelector } from "react-redux";
-import { setDB } from "../slices/dbSlice";
-import { selectDB } from "../slices/dbSlice";
-import getDataBase from "../utils/getDataBase";
-import PermanentLogin from "../utils/permanentLogin";
+import PermanentLogin_RealtimeDB from "../utils/permanentLogin_RealtimeDB";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(null);
@@ -62,7 +58,7 @@ export default function LoginScreen() {
 
   return (
     <View>
-      <PermanentLogin />
+      <PermanentLogin_RealtimeDB />
       <StatusBar style="light" />
       <ImageBackground
         source={require("../assets/images/login-kids-bg.jpeg")}

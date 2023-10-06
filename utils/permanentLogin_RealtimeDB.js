@@ -3,22 +3,32 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebaseConfig";
-import getDataBase from "./getDataBase";
 import { setDB } from "../slices/dbSlice";
 import getPermissions from "./getPermissions";
 import Toast from "react-native-toast-message";
 import { View } from "react-native";
+import { collection, onSnapshot } from "firebase/firestore";
+import db from "../firebaseConfig";
 
 export default function PermanentLogin() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  // We define it here as it is our initial route
-  // Permanent login
   useEffect(() => {
+    // Realtime DB
+    const readOnRealtime = onSnapshot(
+      collection(db, "products"),
+      (querySnapshot) => {
+        const products = [];
+        querySnapshot.forEach((doc) => {
+          products.push(doc.data());
+        });
+        dispatch(setDB(products.reverse()));
+      }
+    );
+    // Permanent login
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        getDataBase().then((data) => dispatch(setDB(data)));
         navigation.navigate("Home");
         showToast();
         getPermissions();

@@ -3,25 +3,17 @@ import React, { useEffect, useState } from "react";
 import { Image } from "expo-image";
 import db from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
+import { useSelector } from "react-redux";
+import { selectDB } from "../slices/dbSlice";
 
 export default function Categories() {
-  const [categories, setCategories] = useState([]);
-
-  const getCategories = async () => {
-    const querySnapshot = await getDocs(collection(db, "products"));
-    let categories = [];
-    querySnapshot.forEach((doc) => {
-      categories.push({
-        id: doc.id,
-        name: doc.data().name,
-        image: doc.data().image,
-      });
+  const categories = useSelector(selectDB)?.reduce((acc, curr) => {
+    acc.push({
+      title: curr.title,
+      id: curr.id,
+      image: curr.image,
     });
-    setCategories(categories.reverse());
-  };
-
-  useEffect(() => {
-    getCategories();
+    return acc.reverse();
   }, []);
 
   const [activeCategory, setActiveCategory] = useState(null);
@@ -63,7 +55,7 @@ export default function Categories() {
                   source={{ uri: category.image }}
                 />
               </TouchableOpacity>
-              <Text className={"text-sm " + textClass}>{category.name}</Text>
+              <Text className={"text-sm " + textClass}>{category.title}</Text>
             </View>
           );
         })}

@@ -74,10 +74,9 @@ export default function ProductScreen() {
         </View>
         <View className="pb-36 bg-white">
           <Text className="px-4 py-4 text-2xl font-bold">Menu</Text>
-          {/* dishes */}
-          {item.dishes.map((dish, index) => {
-            // console.log(dish);
-            return <DishRow item={{ ...dish }} key={index} />;
+          {/* products */}
+          {item.products.map((product, index) => {
+            return <DishRow item={{ ...product }} key={index} />;
           })}
         </View>
       </ScrollView>

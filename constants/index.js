@@ -12,7 +12,7 @@ export const ropa = {
       description: "Playeras de algodón hechas en México",
       stars: 4,
       reviews: "4.4k",
-      dishes: [
+      products: [
         {
           id: 1,
           name: "Color azul marino",
@@ -44,12 +44,10 @@ export const ropa = {
       image:
         "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/SudaderaFoodBank.png",
       description: "Hot and spicy pizzas",
-      lng: -85.5324269,
-      lat: 38.2145602,
-      address: "434 second street",
+
       stars: 4,
       reviews: "4.4k",
-      dishes: [
+      products: [
         {
           id: 4,
           name: "Color rojo",
@@ -81,12 +79,10 @@ export const ropa = {
       image:
         "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/logo_gorras_v4.png",
       description: "Hot and spicy pizzas",
-      lng: -85.5324269,
-      lat: 38.2145602,
-      address: "434 second street",
+
       stars: 4,
       reviews: "4.4k",
-      dishes: [
+      products: [
         {
           id: 7,
           name: "Color negro",
@@ -130,7 +126,7 @@ export const papeleria = {
       description: "Hot and spicy pizzas",
       stars: 4,
       reviews: "4.4k",
-      dishes: [
+      products: [
         {
           id: 10,
           name: "Libreta amarila",
@@ -166,7 +162,7 @@ export const papeleria = {
       stars: 4,
       reviews: "4.4k",
 
-      dishes: [
+      products: [
         {
           id: 13,
           name: "Color azul",
@@ -201,7 +197,7 @@ export const papeleria = {
 
       stars: 4,
       reviews: "4.4k",
-      dishes: [
+      products: [
         {
           id: 16,
           name: "pizza",
@@ -247,7 +243,7 @@ export const hogar = {
       stars: 4,
       reviews: "4.4k",
 
-      dishes: [
+      products: [
         {
           id: 19,
           name: "Color negro",
@@ -282,7 +278,7 @@ export const hogar = {
 
       stars: 4,
       reviews: "4.4k",
-      dishes: [
+      products: [
         {
           id: 22,
           name: "Color blanco",
@@ -317,7 +313,7 @@ export const hogar = {
 
       stars: 4,
       reviews: "4.4k",
-      dishes: [
+      products: [
         {
           id: 25,
           name: "Color blanco",
@@ -361,7 +357,7 @@ export const electronicos = {
 
       stars: 4,
       reviews: "4.4k",
-      dishes: [
+      products: [
         {
           id: 28,
           name: "Color negro",
@@ -396,7 +392,7 @@ export const electronicos = {
 
       stars: 4,
       reviews: "4.4k",
-      dishes: [
+      products: [
         {
           id: 31,
           name: "Color blanco",
@@ -431,7 +427,7 @@ export const electronicos = {
 
       stars: 4,
       reviews: "4.4k",
-      dishes: [
+      products: [
         {
           id: 34,
           name: "Color blanco",
@@ -460,7 +456,107 @@ export const electronicos = {
     },
   ],
 };
-export const accesorios = {};
+export const accesorios = {
+  id: 5,
+  title: "Accesorios",
+  description: "Accesorios para para el uso diario",
+  image:
+    "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/categories/accesorios.png",
+  items: [
+    {
+      name: "",
+      image: "",
+      description: "",
+      stars: 4,
+      reviews: "4.4k",
+      products: [
+        {
+          id: 37,
+          name: "",
+          description: "",
+          price: 10,
+          image: "",
+        },
+        {
+          id: 38,
+          name: "",
+          description: "",
+          price: 10,
+          image: "",
+        },
+        {
+          id: 39,
+          name: "",
+          description: "",
+          price: 10,
+          image: "",
+        },
+      ],
+    },
+    {
+      name: "",
+      image: "",
+      description: "",
+
+      stars: 4,
+      reviews: "4.4k",
+      products: [
+        {
+          id: 40,
+          name: "",
+          description: "",
+          price: 10,
+          image: "",
+        },
+        {
+          id: 41,
+          name: "",
+          description: "",
+          price: 10,
+          image: "",
+        },
+        {
+          id: 42,
+          name: "",
+          description: "",
+          price: 10,
+          image: "",
+        },
+      ],
+    },
+    {
+      name: "",
+      image: "",
+      description: "",
+
+      stars: 4,
+      reviews: "4.4k",
+      products: [
+        {
+          id: 43,
+          name: "",
+          description: "",
+          price: 10,
+          image: "",
+        },
+        {
+          id: 44,
+          name: "",
+          description: "",
+          price: 10,
+          image: "",
+        },
+        {
+          id: 45,
+          name: "",
+          description: "",
+          price: 10,
+          image: "",
+        },
+      ],
+    },
+  ],
+};
 
 export const metodosPago = [
   {
@@ -480,4 +576,4 @@ export const metodosPago = [
   },
 ];
 
-export default [ropa, papeleria, hogar, electronicos];
+export default [ropa, papeleria, hogar, electronicos, accesorios];
