@@ -367,3 +367,21 @@ export const hogar = {
 
 export const electronicos = {};
 export const accesorios = {};
+
+export const metodosPago = [
+  {
+    id: 1,
+    banco: "Visa",
+    numeroTarjeta: "1234123412341234",
+  },
+  {
+    id: 2,
+    banco: "Mastercard",
+    numeroTarjeta: "1234123412341234",
+  },
+  {
+    id: 3,
+    banco: "American Express",
+    numeroTarjeta: "1234123412341234",
+  },
+];

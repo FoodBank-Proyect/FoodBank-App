@@ -1,36 +1,49 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { auth } from "../firebaseConfig";
+import { Image } from "expo-image";
 
-export default function CreditCard({ index }) {
+export default function CreditCard({
+  bank,
+  cardNumber,
+  expiry,
+  cvv,
+  fixedCard = false,
+}) {
   const [margin, setMargin] = useState();
   const [bgColor, setBgColor] = useState("bg-white");
+  const [imageLogo, setImageLogo] = useState();
 
   useEffect(() => {
-    if (index === 0) {
-      setMargin("mt-[14vh]");
-      setBgColor("bg-blue-600");
-    } else if (index === 1) {
-      setMargin("mt-[22vh]");
-      setBgColor("bg-gray-500");
-    } else if (index === 2) {
-      setMargin("mt-[30vh]");
-      setBgColor("bg-black");
+    if (bank === "Visa") {
+      setMargin("mt-[16vh]");
+      setBgColor("bg-blue-600 z-0");
+      setImageLogo(require("../assets/images/logos/visa.png"));
+    } else if (bank === "Mastercard") {
+      setMargin("mt-[24vh]");
+      setBgColor("bg-yellow-500 z-10");
+      setImageLogo(require("../assets/images/logos/mastercard.png"));
+    } else if (bank === "American Express") {
+      setMargin("mt-[32vh]");
+      setBgColor("bg-gray-800 z-20");
+      setImageLogo(require("../assets/images/logos/american-express.png"));
+    } else if (bank === "Paypal") {
+      setMargin("mt-[40vh]");
+      setBgColor("bg-violet-500");
+      setImageLogo(require("../assets/images/logos/paypal.png"));
     } else {
-      setMargin("mt-[38vh]");
-      setBgColor("bg-red-500");
+      setMargin("mt-[46vh]");
+      setBgColor("bg-gray-500");
+      setImageLogo(null);
     }
-  }, []);
+  }, [bank]);
 
   return (
     <View
-      className={`w-full h-56 ${bgColor} ${margin} rounded-xl absolute text-white shadow-2xl transition-transform transform hover:scale-110`}
+      className={`w-full h-56 ${bgColor} ${
+        fixedCard ? "mt-[30vh]" : margin
+      } rounded-xl absolute shadow-md shadow-gray-500 border-2 border-white/20 transition-transform transform hover:scale-110`}
     >
-      {/* <Image
-        source={{ uri: "https://i.imgur.com/kGkSg1v.png" }}
-        style={{ flex: 1, resizeMode: "cover" }}
-        className="rounded-xl"
-      /> */}
       <View
         style={{
           position: "absolute",
@@ -45,19 +58,18 @@ export default function CreditCard({ index }) {
               className="text-white"
               style={{ fontSize: 16, fontWeight: "300" }}
             >
-              Nombre
+              {/* Nombre */}
+              {bank}
             </Text>
             <Text
               className="text-white"
               style={{ fontSize: 18, fontWeight: "600", letterSpacing: 1 }}
             >
-              {auth.currentUser.displayName}
+              {auth.currentUser.displayName ||
+                auth.currentUser.email.split("@")[0]}
             </Text>
           </View>
-          <Image
-            source={{ uri: "https://i.imgur.com/bbPHJVe.png" }}
-            style={{ width: 56, height: 56 }}
-          />
+          <Image style={{ width: 35, height: 35 }} source={imageLogo} />
         </View>
         <View style={{ paddingTop: 4 }}>
           <Text
@@ -70,7 +82,7 @@ export default function CreditCard({ index }) {
             className="text-white"
             style={{ fontSize: 18, fontWeight: "600", letterSpacing: 2 }}
           >
-            {"****  ****  ****  7632"}
+            {"****  ****  ****  " + cardNumber.slice(12, 16)}
           </Text>
         </View>
         <View style={{ paddingTop: 24, paddingRight: 16 }}>
