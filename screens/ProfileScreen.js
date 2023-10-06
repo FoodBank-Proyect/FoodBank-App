@@ -11,12 +11,9 @@ import React, { useEffect } from "react";
 import * as Icon from "react-native-feather";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
-import { Image } from "expo-image";
-import { EditProfileScreen } from "./EditProfileScreen";
-export default function ProfileSCcreen() {
-  // Define the half of the screen
-  const halfScreen = Math.round(Dimensions.get("window").height / 1.5);
+import updateFirestore from "../utils/updateFirestore";
 
+export default function ProfileSCcreen() {
   const navigation = useNavigation();
   return (
     <View
@@ -54,6 +51,23 @@ export default function ProfileSCcreen() {
               {auth.currentUser.displayName ||
                 auth.currentUser.email.split("@")[0]}
             </Text>
+            {/* Button to upload the db */}
+            {auth.currentUser.type === "admin" && (
+              <TouchableOpacity
+                className="flex flex-row items-center mt-4 pb-1 border-b border-gray-200 "
+                onPress={() => {
+                  updateFirestore();
+                }}
+              >
+                <Icon.Upload
+                  className="mr-2 "
+                  stroke="black"
+                  width={20}
+                  height={20}
+                />
+                <Text className="text-lg font-light">Subir base de datos</Text>
+              </TouchableOpacity>
+            )}
           </View>
 
           <View className="flex w-11/12 flex-row justify-center items-center self-center rounded-2xl my-20 border p-4 border-gray-200 shadow-lg bg-white">

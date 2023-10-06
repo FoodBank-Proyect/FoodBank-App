@@ -117,7 +117,7 @@ export const ropa = {
 };
 
 export const papeleria = {
-  id: 1,
+  id: 2,
   title: "Papelería",
   description: "Utiles escolares",
   image:
@@ -232,7 +232,7 @@ export const papeleria = {
 };
 
 export const hogar = {
-  id: 1,
+  id: 3,
   title: "Hogar",
   description: "Amenidades para el hogar",
   image:
@@ -347,7 +347,7 @@ export const hogar = {
   ],
 };
 export const electronicos = {
-  id: 1,
+  id: 4,
   title: "Electrónicos",
   description: "Dispositivos u objetos relacionados con la electrónica",
   image:
@@ -479,3 +479,5 @@ export const metodosPago = [
     numeroTarjeta: "1234123412341234",
   },
 ];
+
+export default [ropa, papeleria, hogar, electronicos];

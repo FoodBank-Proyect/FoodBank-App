@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { accesorios, papeleria, ropa, hogar, electronicos } from "../constants";
 import FeaturedRow from "./featuredRow";
 
