@@ -55,7 +55,7 @@ export default function EditProfileScreen() {
           height: halfScreen,
           width: "100%",
           backgroundColor: "#fff",
-          justifyContent: "center",
+          justifyContent: "start",
         }}
         className=" rounded-2xl py-6"
       >
@@ -77,19 +77,21 @@ export default function EditProfileScreen() {
 
         <View className="flex-col justify-center items-center mt-6">
           {/* User image */}
-          <View className="bg-gray-300 w-32 h-32 rounded-full">
+          <View className="bg-gray-300 w-24 h-24 rounded-full shadow-lg shadow-gray-300">
             <Image
               source={{
                 uri:
                   auth.currentUser.photoURL ||
                   "https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png",
               }}
-              className="w-32 h-32 rounded-full"
+              className="w-24 h-24 rounded-full"
             />
           </View>
           {/* User name */}
-          <Text className="text-base mt-4 self-start ml-11 text-gray-300">
-            Nombre de usuario
+          <Text className="text-2xl mt-3">Hola,</Text>
+          <Text className="text-2xl font-bold">
+            {auth.currentUser.displayName ||
+              auth.currentUser.email.split("@")[0]}
           </Text>
 
           {/* Input para el nuevo nombre de usuario */}
@@ -110,6 +112,17 @@ export default function EditProfileScreen() {
             }}
           />
         </View>
+        <TouchableOpacity
+          onPress={() => {
+            // Agrega aquí la lógica para navegar a la pantalla de edición de perfil
+            // Puedes usar navigation.navigate para navegar a la pantalla de edición.
+          }}
+          className="bg-blue-500 rounded-md p-3 w-1/2 mt-5 self-center"
+        >
+          <Text className="text-white text-center font-bold text-lg">
+            Editar perfil
+          </Text>
+        </TouchableOpacity>
 
         {/* Sign Out Button at the bottom */}
         <View className="flex-1 mt-6 items-center">
@@ -117,12 +130,12 @@ export default function EditProfileScreen() {
             onPress={() => {
               auth.signOut();
               auth.currentUser = null;
-              navigation.navigate("Login"); // Change to eliminate account
+              navigation.navigate("Login");
             }}
             className="bg-red-500 rounded-md p-3 w-1/2"
           >
             <Text className="text-white text-center font-bold text-lg">
-              Eliminar cuenta
+              Cerrar sesión
             </Text>
           </TouchableOpacity>
         </View>

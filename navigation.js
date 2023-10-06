@@ -21,6 +21,7 @@ import {
 import ProfileScreen from "./screens/ProfileScreen";
 import getPermissions from "./utils/getPermissions";
 import SupportScreen from "./screens/SupportScreen";
+import PaymentMethodsScreen from "./screens/PaymentMethodsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -116,11 +117,13 @@ export default function Navigation({ currentLocation }) {
             gestureDirection: "vertical",
           }}
         >
-          <Stack.Screen
-            name="EditProfileScreen"
-            component={EditProfileScreen}
-          />
+          <Stack.Screen name="EditProfile" component={EditProfileScreen} />
         </Stack.Group>
+        <Stack.Screen
+          name="PaymentMethods"
+          component={PaymentMethodsScreen}
+          options={{ presentation: "modal" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
