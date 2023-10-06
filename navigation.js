@@ -22,6 +22,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import getPermissions from "./utils/getPermissions";
 import SupportScreen from "./screens/SupportScreen";
 import PaymentMethodsScreen from "./screens/PaymentMethodsScreen";
+import AddPaymentMethodScreen from "./screens/AddPaymentMethodScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -122,6 +123,11 @@ export default function Navigation({ currentLocation }) {
         <Stack.Screen
           name="PaymentMethods"
           component={PaymentMethodsScreen}
+          options={{ presentation: "modal" }}
+        />
+        <Stack.Screen
+          name="AddPaymentMethod"
+          component={AddPaymentMethodScreen}
           options={{ presentation: "modal" }}
         />
       </Stack.Navigator>
