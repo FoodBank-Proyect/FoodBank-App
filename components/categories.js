@@ -1,9 +1,29 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
-import { categories } from "../constants";
+import React, { useEffect, useState } from "react";
 import { Image } from "expo-image";
+import db from "../firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
 
 export default function Categories() {
+  const [categories, setCategories] = useState([]);
+
+  const getCategories = async () => {
+    const querySnapshot = await getDocs(collection(db, "products"));
+    let categories = [];
+    querySnapshot.forEach((doc) => {
+      categories.push({
+        id: doc.id,
+        name: doc.data().name,
+        image: doc.data().image,
+      });
+    });
+    setCategories(categories.reverse());
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   const [activeCategory, setActiveCategory] = useState(null);
 
   const blurhash =
@@ -19,7 +39,7 @@ export default function Categories() {
           paddingHorizontal: 15,
         }}
       >
-        {categories.map((category, index) => {
+        {categories?.map((category, index) => {
           let isActive = category.id == activeCategory;
           let btnClass = isActive ? " bg-red-100" : "bg-white";
           let textClass = isActive ? " text-red-600" : " text-gray-500";
@@ -39,8 +59,8 @@ export default function Categories() {
               >
                 <Image
                   style={{ width: 35, height: 35 }}
-                  source={category.image}
                   placeholder={blurhash}
+                  source={{ uri: category.image }}
                 />
               </TouchableOpacity>
               <Text className={"text-sm " + textClass}>{category.name}</Text>

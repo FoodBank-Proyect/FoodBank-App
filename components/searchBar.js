@@ -7,8 +7,12 @@ import { auth } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
+import { useSelector } from "react-redux";
+import { selectCartTotalQuantity } from "../slices/cartSlice";
 
 export default function searchBar({ currentLocation }) {
+  const cartLength = useSelector(selectCartTotalQuantity);
+
   const navigation = useNavigation();
   return (
     <View className="flex-row items-center space-x-2 px-6 pb-2 max-h-20 justify-between">
@@ -47,10 +51,18 @@ export default function searchBar({ currentLocation }) {
         </Text>
         <Icon.ArrowDown height={15} width={15} stroke="black" strokeWidth={3} />
       </TouchableOpacity>
+
       <TouchableOpacity
         className={`p-2 rounded-full shadow-md bg-white flex justify-center items-center `}
         onPress={() => navigation.navigate("Cart")}
       >
+        {/* Items indicator on the top right of the shopping cart icon */}
+        <View
+          className="absolute top-0 right-0 w-4 h-4 rounded-full bg-red-500 flex justify-center items-center"
+          style={{ zIndex: 1 }}
+        >
+          <Text className="text-white text-xs font-bold">{cartLength}</Text>
+        </View>
         <Icon.ShoppingBag height={25} width={25} stroke="black" />
       </TouchableOpacity>
     </View>

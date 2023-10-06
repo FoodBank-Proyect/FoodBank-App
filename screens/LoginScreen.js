@@ -16,23 +16,16 @@ import { auth } from "../firebaseConfig";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import Toast from "react-native-toast-message";
 import getPermissions from "../utils/getPermissions";
+import GoogleAuth from "../utils/googleAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { setDB } from "../slices/dbSlice";
+import { selectDB } from "../slices/dbSlice";
+import getDataBase from "../utils/getDataBase";
+import PermanentLogin from "../utils/permanentLogin";
 
-export default function LoginScreen({ handleLoginGoogle }) {
+export default function LoginScreen() {
   const navigation = useNavigation();
-
-  // We define it here as it is our initial route
-  // Permanent login
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigation.navigate("Home");
-        showToast();
-        getPermissions();
-      } else {
-        navigation.navigate("Login");
-      }
-    });
-  }, []);
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(null);
@@ -69,6 +62,7 @@ export default function LoginScreen({ handleLoginGoogle }) {
 
   return (
     <View>
+      <PermanentLogin />
       <StatusBar style="light" />
       <ImageBackground
         source={require("../assets/images/login-kids-bg.jpeg")}
@@ -216,20 +210,7 @@ export default function LoginScreen({ handleLoginGoogle }) {
             <View className="justify-center mt-7">
               <Text className="text-gray-500 mb-4">Or Login with</Text>
               <View className="flex-row justify-center">
-                <Icon
-                  name="google"
-                  type="font-awesome"
-                  color="#db3236"
-                  size={45}
-                  onPress={handleLoginGoogle}
-                  style={{
-                    borderRadius: "50%",
-                    padding: 8,
-                    paddingHorizontal: 12,
-                    borderWidth: 1,
-                    borderColor: "#db3236",
-                  }}
-                />
+                <GoogleAuth />
               </View>
             </View>
           </View>
@@ -238,13 +219,3 @@ export default function LoginScreen({ handleLoginGoogle }) {
     </View>
   );
 }
-
-const showToast = () => {
-  Toast.show({
-    type: "success",
-    text1: `Hola de nuevo! ${
-      auth.currentUser?.displayName || auth.currentUser?.email?.split("@")[0]
-    }`,
-    text2: "Inicio de sesión exitoso",
-  });
-};

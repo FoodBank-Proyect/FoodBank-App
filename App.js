@@ -7,6 +7,8 @@ import Toast from "react-native-toast-message";
 import * as Location from "expo-location";
 import { Alert } from "react-native";
 import { LogBox } from "react-native";
+import uploadToFirestore from "./utils/uploadToFirestore";
+import { categories } from "./constants";
 
 LogBox.ignoreLogs(["Constants.platform.ios.model"]);
 LogBox.ignoreLogs(["The useProxy option is deprecated"]);

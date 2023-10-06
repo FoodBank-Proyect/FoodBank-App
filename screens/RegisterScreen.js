@@ -22,8 +22,9 @@ import {
   signInWithCredential,
 } from "firebase/auth";
 import getPermissions from "../utils/getPermissions";
+import GoogleAuth from "../utils/googleAuth";
 
-export default function RegisterScreen({ handleLoginGoogle }) {
+export default function RegisterScreen() {
   const navigation = useNavigation();
 
   const [email, setEmail] = useState("");
@@ -194,20 +195,7 @@ export default function RegisterScreen({ handleLoginGoogle }) {
             <View className="justify-center mt-7">
               <Text className="text-gray-500 mb-4">Or Login with</Text>
               <View className="flex-row justify-center">
-                <Icon
-                  name="google"
-                  type="font-awesome"
-                  color="#db3236"
-                  size={45}
-                  onPress={handleLoginGoogle}
-                  style={{
-                    borderRadius: "50%",
-                    padding: 8,
-                    paddingHorizontal: 12,
-                    borderWidth: 1,
-                    borderColor: "#db3236",
-                  }}
-                />
+                <GoogleAuth />
               </View>
             </View>
           </View>

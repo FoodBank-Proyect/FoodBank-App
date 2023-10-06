@@ -33,9 +33,8 @@ export default function CartScreen() {
       {/* top button */}
       <View className="relative py-4">
         <TouchableOpacity
-          style={{ backgroundColor: themeColors.bgColor(1) }}
           onPress={() => navigation.goBack()}
-          className="absolute z-10 rounded-full p-1 bg-white shadow top-5 left-2"
+          className="absolute z-10 rounded-full p-1 bg-emerald-500 shadow top-5 left-2"
         >
           <Icon.ArrowLeft strokeWidth={3} stroke="white" />
         </TouchableOpacity>
@@ -46,19 +45,14 @@ export default function CartScreen() {
       </View>
 
       {/* delivery time */}
-      <View
-        style={{ backgroundColor: themeColors.bgColor(0.2) }}
-        className="flex-row px-4 items-center"
-      >
+      <View className="flex-row px-4 py-2 mx-3 rounded-xl items-center justify-between bg-emerald-500/30">
         <Image
           source={require("../assets/images/bikeGuy.png")}
-          className="w-20 h-20 rounded-full"
+          className="w-14 h-14 rounded-full"
         />
-        <Text className="flex-1 pl-4">Deliver in 20-30 minutes</Text>
+        <Text>Deliver in 20-30 minutes</Text>
         <TouchableOpacity>
-          <Text style={{ color: themeColors.text }} className="font-bold">
-            Change
-          </Text>
+          <Text className="font-bold text-teal-700">Change</Text>
         </TouchableOpacity>
       </View>
 
@@ -76,7 +70,7 @@ export default function CartScreen() {
               key={key}
               className="flex-row items-center space-x-3 py-2 px-4 bg-white rounded-3xl mx-2 mb-3 shadow-md"
             >
-              <Text style={{ color: themeColors.text }} className="font-bold">
+              <Text className="font-bold text-emerald-500">
                 {item.quantity} x{" "}
               </Text>
               <Image className="h-14 w-14 rounded-full" source={item.image} />
@@ -101,10 +95,7 @@ export default function CartScreen() {
         })}
       </ScrollView>
       {/* totals */}
-      <View
-        style={{ backgroundColor: themeColors.bgColor(0.2) }}
-        className=" p-6 px-8 rounded-t-3xl space-y-4"
-      >
+      <View className=" p-6 px-8 rounded-t-3xl space-y-4 bg-emerald-500/30">
         <View className="flex-row justify-between">
           <Text className="text-gray-700">Subtotal</Text>
           <Text className="text-gray-700">${cartTotal}</Text>
@@ -119,9 +110,8 @@ export default function CartScreen() {
         </View>
         <View>
           <TouchableOpacity
-            style={{ backgroundColor: themeColors.bgColor(1) }}
             onPress={() => navigation.navigate("OrderPreparing")}
-            className="p-3 rounded-full"
+            className="p-3 rounded-full bg-emerald-500 shadow-lg shadow-gray-400"
           >
             <Text className="text-white text-center font-bold text-lg">
               Place Order

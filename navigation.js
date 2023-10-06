@@ -23,41 +23,15 @@ import getPermissions from "./utils/getPermissions";
 import SupportScreen from "./screens/SupportScreen";
 import PaymentMethodsScreen from "./screens/PaymentMethodsScreen";
 import AddPaymentMethodScreen from "./screens/AddPaymentMethodScreen";
+import getDataBase from "./utils/getDataBase";
+import GoogleAuth from "./utils/googleAuth";
+import { useSelector, useDispatch } from "react-redux";
+import { setDB } from "./slices/dbSlice";
+import { selectDB } from "./slices/dbSlice";
 
 const Stack = createNativeStackNavigator();
 
 export default function Navigation({ currentLocation }) {
-  /* START GOOGLE AUTH */
-
-  // Get the Google Auth Request and function to trigger promptAsync
-  const [, googleResponse, promptAsyncGoogle] = useGoogleIdTokenAuthRequest({
-    selectAccount: true,
-    expoClientId: expoClientId,
-    iosClientId: iosClientId,
-  });
-
-  // Function that triggers the Google OAuth flow
-  const handleLoginGoogle = async () => {
-    await promptAsyncGoogle();
-  };
-
-  // Function that logs into firebase using the credentials from an OAuth provider
-  const loginToFirebase = useCallback(async (credentials) => {
-    const signInResponse = await signInWithCredential(auth, credentials);
-  }, []);
-
-  // When the user successfully logs in with Google, authenticate with Firebase
-  useEffect(() => {
-    if (googleResponse?.type === "success") {
-      const credentials = GoogleAuthProvider.credential(
-        googleResponse.params.id_token
-      );
-      loginToFirebase(credentials);
-    }
-  }, [googleResponse]);
-
-  /* END GOOGLE AUTH */
-
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -69,14 +43,12 @@ export default function Navigation({ currentLocation }) {
         <Stack.Screen
           name="Login"
           options={{ gestureEnabled: false }}
-          children={() => <LoginScreen handleLoginGoogle={handleLoginGoogle} />}
+          children={() => <LoginScreen />}
         />
         <Stack.Screen
           name="Register"
           options={{ gestureEnabled: false }}
-          children={() => (
-            <RegisterScreen handleLoginGoogle={handleLoginGoogle} />
-          )}
+          children={() => <RegisterScreen />}
         />
         <Stack.Screen
           name="Home"
