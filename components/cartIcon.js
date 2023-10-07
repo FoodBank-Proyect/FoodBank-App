@@ -18,11 +18,10 @@ export default function CartIcon() {
   if (!cartItems.length) return;
 
   return (
-    <View className="absolute bottom-5 w-full z-50">
+    <View className="absolute bottom-24 w-full z-50">
       <TouchableOpacity
-        style={{ backgroundColor: themeColors.bgColor(1) }}
         onPress={() => navigation.navigate("Cart")}
-        className="flex-row justify-between items-center mx-5 rounded-full p-4 py-3 shadow-lg"
+        className="flex-row justify-between items-center mx-5 rounded-full p-4 py-3 shadow-lg bg-red-500"
       >
         <View
           className="p-2 px-4 rounded-full"

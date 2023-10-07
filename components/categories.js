@@ -3,20 +3,27 @@ import React, { useEffect, useState } from "react";
 import { Image } from "expo-image";
 import db from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
-import { useSelector } from "react-redux";
-import { selectDB } from "../slices/dbSlice";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectDB,
+  filterDBbyCategory,
+  unfilterDBbyCategory,
+  selectCategories,
+} from "../slices/dbSlice";
 
 export default function Categories() {
-  const categories = useSelector(selectDB)?.reduce((acc, curr) => {
-    acc.push({
-      title: curr.title,
-      id: curr.id,
-      image: curr.image,
-    });
-    return acc.reverse();
-  }, []);
+  const dispatch = useDispatch();
+  const categories = useSelector(selectCategories);
 
   const [activeCategory, setActiveCategory] = useState(null);
+
+  useEffect(() => {
+    if (activeCategory) {
+      dispatch(filterDBbyCategory(activeCategory));
+    } else {
+      dispatch(unfilterDBbyCategory());
+    }
+  }, [activeCategory]);
 
   const blurhash =
     "|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[";
@@ -32,7 +39,7 @@ export default function Categories() {
         }}
       >
         {categories?.map((category, index) => {
-          let isActive = category.id == activeCategory;
+          let isActive = category.title == activeCategory;
           let btnClass = isActive ? " bg-red-100" : "bg-white";
           let textClass = isActive ? " text-red-600" : " text-gray-500";
           let borderClass = isActive ? " border-red-500" : "border-white";
@@ -43,9 +50,9 @@ export default function Categories() {
             >
               <TouchableOpacity
                 onPress={() => {
-                  activeCategory == category.id
+                  activeCategory == category.title
                     ? setActiveCategory(null)
-                    : setActiveCategory(category.id);
+                    : setActiveCategory(category.title);
                 }}
                 className={`border-[1px] p-3 rounded-2xl ${btnClass} shadow flex justify-center items-center ${borderClass} `}
               >

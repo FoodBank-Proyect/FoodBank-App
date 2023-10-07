@@ -28,10 +28,10 @@ export default function ProductScreen() {
     <View>
       <CartIcon />
       <StatusBar style="light" />
-      <ScrollView>
+      <View>
         <View className="relative">
           <Image
-            className="w-full h-72"
+            className="w-full h-60"
             source={item.image}
             placeholder={blurhash}
           />
@@ -69,17 +69,17 @@ export default function ProductScreen() {
                 </Text>
               </View>
             </View>
-            <Text className="text-gray-500 mt-2">{item.description}</Text>
+            <Text className="text-gray-500 mt-2 mb-4">{item.description}</Text>
           </View>
         </View>
-        <View className="pb-36 bg-white">
-          <Text className="px-4 py-4 text-2xl font-bold">Menu</Text>
+        <ScrollView className="pb-36 bg-white">
+          <Text className="px-4 pb-4 text-2xl font-bold">Menu</Text>
           {/* products */}
           {item.products.map((product, index) => {
             return <DishRow item={{ ...product }} key={index} />;
           })}
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </View>
   );
 }

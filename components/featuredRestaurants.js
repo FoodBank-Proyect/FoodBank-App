@@ -9,7 +9,7 @@ export default function featuredRestaurants() {
   const products = useSelector(selectDB);
 
   return (
-    <View className="mt-6">
+    <View className="mt-6 min-h-[65vh]">
       {products &&
         products.length > 0 &&
         products.map((item, index) => {

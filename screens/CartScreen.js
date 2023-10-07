@@ -73,7 +73,10 @@ export default function CartScreen() {
               <Text className="font-bold text-emerald-500">
                 {item.quantity} x{" "}
               </Text>
-              <Image className="h-14 w-14 rounded-full" source={item.image} />
+              <Image
+                className="h-14 w-14 rounded-full"
+                source={{ uri: item.image }}
+              />
               <Text className="flex-1 font-bold text-gray-700">
                 {item.name}
               </Text>
