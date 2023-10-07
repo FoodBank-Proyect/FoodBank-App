@@ -5,7 +5,7 @@ import FeaturedRow from "./featuredRow";
 import { useSelector } from "react-redux";
 import { selectDB } from "../slices/dbSlice";
 
-export default function featuredRestaurants() {
+export default function featuredProducts() {
   const products = useSelector(selectDB);
 
   return (

@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-import RestaurantCard from "./restaurantCard";
+import RestaurantCard from "./productCard";
 import { themeColors } from "../theme";
 import Animated, {
   useSharedValue,

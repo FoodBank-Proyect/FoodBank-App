@@ -3,7 +3,7 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import Categories from "../components/categories";
 import SearchBar from "../components/searchBar";
-import Featured from "../components/featuredRestaurants";
+import Featured from "../components/featuredProducts";
 import Navbar from "../components/navBar";
 
 export default function HomeScreen({ currentLocation }) {
