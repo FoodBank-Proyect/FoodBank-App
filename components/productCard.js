@@ -21,8 +21,8 @@ export default function ResturantCard({ item, title }) {
       onPress={() => navigation.navigate("Product", { ...item, title })}
     >
       <View
-        style={{ shadowColor: themeColors.bgColor(0.2), shadowRadius: 7 }}
-        className="mr-6 bg-white rounded-3xl shadow-lg "
+        style={{ shadowRadius: 7 }}
+        className="mr-6 bg-white rounded-3xl shadow-lg shadow-red-500/20"
       >
         <Image
           className="h-40 w-72 rounded-t-3xl"

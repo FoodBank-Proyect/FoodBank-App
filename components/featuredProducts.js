@@ -17,7 +17,7 @@ export default function featuredProducts() {
             <FeaturedRow
               key={index}
               title={item.title}
-              restaurants={item.items}
+              items={item.items}
               description={item.description}
             />
           );

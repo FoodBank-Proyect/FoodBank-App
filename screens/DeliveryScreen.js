@@ -26,7 +26,6 @@ export default function DeliveryScreen({ currentLocation }) {
       };
 
   const navigation = useNavigation();
-  const resturant = useSelector(selectProduct);
   const dispatch = useDispatch();
 
   let markerRef = useRef(null);

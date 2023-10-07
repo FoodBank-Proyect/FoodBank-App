@@ -6,7 +6,7 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as Icon from "react-native-feather";
 import { themeColors } from "../theme";
@@ -23,10 +23,13 @@ import {
 export default function CartScreen() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const restaurant = useSelector(selectProduct);
   const cartItems = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
   const deliveryFee = 2;
+
+  useEffect(() => {
+    if (!cartItems.length) navigation.goBack();
+  }, [cartItems]);
 
   return (
     <View className=" bg-white flex-1">
@@ -50,7 +53,7 @@ export default function CartScreen() {
           source={require("../assets/images/bikeGuy.png")}
           className="w-14 h-14 rounded-full"
         />
-        <Text>Deliver in 20-30 minutes</Text>
+        <Text>Entrega de 2-3 días</Text>
         <TouchableOpacity>
           <Text className="font-bold text-teal-700">Change</Text>
         </TouchableOpacity>
@@ -104,11 +107,11 @@ export default function CartScreen() {
           <Text className="text-gray-700">${cartTotal}</Text>
         </View>
         <View className="flex-row justify-between">
-          <Text className="text-gray-700">Delivery Fee</Text>
+          <Text className="text-gray-700">Tarifa de envío</Text>
           <Text className="text-gray-700">${deliveryFee}</Text>
         </View>
         <View className="flex-row justify-between">
-          <Text className="font-extrabold">Order Total</Text>
+          <Text className="font-extrabold">Total</Text>
           <Text className="font-extrabold">${cartTotal + deliveryFee}</Text>
         </View>
         <View>

@@ -9,7 +9,7 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
-export default function FeatureRow({ title, description, restaurants }) {
+export default function FeatureRow({ title, description, items }) {
   // Fade in animation
   const opacity = useSharedValue(0);
 
@@ -49,8 +49,8 @@ export default function FeatureRow({ title, description, restaurants }) {
         }}
         className="overflow-visible py-5"
       >
-        {restaurants.map((restaurant, index) => {
-          return <RestaurantCard item={restaurant} key={index} title={title} />;
+        {items.map((item, index) => {
+          return <RestaurantCard item={item} key={index} title={title} />;
         })}
       </ScrollView>
     </Animated.View>

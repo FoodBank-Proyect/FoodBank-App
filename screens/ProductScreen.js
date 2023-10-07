@@ -4,7 +4,7 @@ import { useRoute } from "@react-navigation/native";
 import * as Icon from "react-native-feather";
 import { themeColors } from "../theme";
 import { useNavigation } from "@react-navigation/native";
-import DishRow from "../components/dishRow";
+import ProductRow from "../components/productRow";
 import CartIcon from "../components/cartIcon";
 import { StatusBar } from "expo-status-bar";
 import { useDispatch } from "react-redux";
@@ -76,7 +76,7 @@ export default function ProductScreen() {
           <Text className="px-4 pb-4 text-2xl font-bold">Menu</Text>
           {/* products */}
           {item.products.map((product, index) => {
-            return <DishRow item={{ ...product }} key={index} />;
+            return <ProductRow item={{ ...product }} key={index} />;
           })}
         </ScrollView>
       </View>
