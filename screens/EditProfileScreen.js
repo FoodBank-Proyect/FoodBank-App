@@ -16,22 +16,7 @@ import { Image } from "expo-image";
 export default function EditProfileScreen() {
   const halfScreen = Math.round(Dimensions.get("window").height / 1.5);
   const [newDisplayName, setNewDisplayName] = useState("");
-  const updateDisplayName = () => {
-    if (newDisplayName.trim() !== "") {
-      auth.currentUser
-        .updateProfile({
-          displayName: newDisplayName,
-        })
-        .then(() => {
-          console.log("Nombre de usuario actualizado con éxito");
-          // Puedes realizar otras acciones aquí, como mostrar una notificación de éxito
-        })
-        .catch((error) => {
-          console.error("Error al actualizar el nombre de usuario:", error);
-          // Manejo de errores
-        });
-    }
-  };
+  const [selectedGender, setSelectedGender] = useState(""); // Género seleccionado
 
   const navigation = useNavigation();
   return (
@@ -71,9 +56,7 @@ export default function EditProfileScreen() {
           />
         </TouchableOpacity>
         <Text className="font-bold text-2xl self-center">Mi Perfil</Text>
-        <Text className="text-2xl self-center mt-2">
-          Actualiza tus datos personales
-        </Text>
+        <Text className="text-2xl self-center mt-2">Sus datos personales</Text>
 
         <View className="flex-col justify-center items-center mt-6">
           {/* User image */}
@@ -88,13 +71,9 @@ export default function EditProfileScreen() {
             />
           </View>
           {/* User name */}
-          <Text className="text-2xl mt-3">Hola,</Text>
-          <Text className="text-2xl font-bold">
-            {auth.currentUser.displayName ||
-              auth.currentUser.email.split("@")[0]}
+          <Text className="font-bold text-base self-start mt-5 ml-10">
+            Nombre de usuario
           </Text>
-
-          {/* Input para el nuevo nombre de usuario */}
           <TextInput
             placeholder={
               auth.currentUser.displayName ||
@@ -110,22 +89,73 @@ export default function EditProfileScreen() {
               width: "80%",
               borderRadius: 10,
             }}
+            editable={false}
           />
         </View>
-        <TouchableOpacity
-          onPress={() => {
-            // Agrega aquí la lógica para navegar a la pantalla de edición de perfil
-            // Puedes usar navigation.navigate para navegar a la pantalla de edición.
-          }}
-          className="bg-blue-500 rounded-md p-3 w-1/2 mt-5 self-center"
-        >
-          <Text className="text-white text-center font-bold text-lg">
-            Editar perfil
+
+        <View className="flex-col justify-center items-center mt-3">
+          <Text className="font-bold text-base self-start mt-3 ml-10">
+            E-mail
           </Text>
-        </TouchableOpacity>
+          <TextInput
+            placeholder={auth.currentUser.email}
+            value={newDisplayName}
+            onChangeText={(text) => setNewDisplayName(text)}
+            style={{
+              borderWidth: 0.5,
+              borderColor: "gray",
+              padding: 10,
+              marginTop: 10,
+              width: "80%",
+              borderRadius: 10,
+            }}
+            editable={false}
+          />
+        </View>
+
+        <View className="flex-col justify-center items-center mt-6">
+          <Text className="font-bold text-base self-start mt-3 ml-10">
+            Sexo
+          </Text>
+          <View className="flex-row mt-2 ml-10">
+            <TouchableOpacity
+              onPress={() => setSelectedGender("Hombre")}
+              style={{
+                marginRight: 20,
+                backgroundColor: selectedGender === "Hombre" ? "#333" : "#fff",
+                padding: 10,
+                borderRadius: 10,
+              }}
+            >
+              <Text
+                style={{
+                  color: selectedGender === "Hombre" ? "#fff" : "#000",
+                }}
+              >
+                Hombre
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setSelectedGender("Mujer")}
+              style={{
+                backgroundColor: selectedGender === "Mujer" ? "#333" : "#fff",
+                padding: 10,
+                borderRadius: 10,
+              }}
+            >
+              <Text
+                style={{
+                  color: selectedGender === "Mujer" ? "#fff" : "#000",
+                }}
+              >
+                Mujer
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
 
         {/* Sign Out Button at the bottom */}
-        <View className="flex-1 mt-6 items-center">
+        {/* <View className="flex-1 mt-6 items-center">
           <TouchableOpacity
             onPress={() => {
               auth.signOut();
@@ -138,7 +168,7 @@ export default function EditProfileScreen() {
               Cerrar sesión
             </Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     </View>
   );
