@@ -8,26 +8,11 @@ import OrderPreparingScreen from "./screens/OrderPreparingScreen";
 import DeliveryScreen from "./screens/DeliveryScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
-import { useEffect, useCallback } from "react";
-import { useIdTokenAuthRequest as useGoogleIdTokenAuthRequest } from "expo-auth-session/providers/google";
-import { auth, expoClientId, iosClientId } from "./firebaseConfig";
 import EditProfileScreen from "./screens/EditProfileScreen";
-import db from "./firebaseConfig";
-import {
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signInWithCredential,
-} from "firebase/auth";
 import ProfileScreen from "./screens/ProfileScreen";
-import getPermissions from "./utils/getPermissions";
 import SupportScreen from "./screens/SupportScreen";
 import PaymentMethodsScreen from "./screens/PaymentMethodsScreen";
 import AddPaymentMethodScreen from "./screens/AddPaymentMethodScreen";
-import getDataBase from "./utils/getDataBaseOnce";
-import GoogleAuth from "./utils/googleAuth";
-import { useSelector, useDispatch } from "react-redux";
-import { setDB } from "./slices/dbSlice";
-import { selectDB } from "./slices/dbSlice";
 
 const Stack = createNativeStackNavigator();
 
@@ -75,7 +60,7 @@ export default function Navigation({ currentLocation }) {
         <Stack.Screen
           name="Support"
           component={SupportScreen}
-          options={{ presentation: "modal" }}
+          options={{ presentation: "fullScreenModal" }}
         />
         <Stack.Screen
           name="Profile"

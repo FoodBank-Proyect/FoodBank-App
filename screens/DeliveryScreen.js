@@ -86,13 +86,13 @@ export default function DeliveryScreen({ currentLocation }) {
         <View className="flex-row justify-between px-5 pt-10">
           <View>
             <Text className="text-lg text-gray-700 font-semibold">
-              Estimated Arrival
+              Fecha de entrega
             </Text>
             <Text className="text-3xl font-extrabold text-gray-700">
-              20-30 Minutes
+              2 - 3 días
             </Text>
             <Text className="mt-2 text-gray-700 font-semibold">
-              Your Order is own its way
+              {location.address.name}
             </Text>
           </View>
           <Image
@@ -101,11 +101,8 @@ export default function DeliveryScreen({ currentLocation }) {
           />
         </View>
 
-        <View
-          style={{ backgroundColor: themeColors.bgColor(0.8) }}
-          className="p-2 flex-row justify-between items-center rounded-full my-5 mx-2"
-        >
-          <View
+        <View className="p-2 flex-row justify-between items-center rounded-full my-5 mx-2 bg-gray-400/20">
+          {/* <View
             style={{ backgroundColor: "rgba(255,255,255,0.4)" }}
             className="p-1 rounded-full"
           >
@@ -114,28 +111,40 @@ export default function DeliveryScreen({ currentLocation }) {
               className="w-16 h-16 rounded-full"
               source={require("../assets/images/deliveryGuy.png")}
             />
-          </View>
+          </View> */}
 
-          <View className="flex-1 ml-3">
-            <Text className="text-lg font-bold text-white">Syed Noman</Text>
-            <Text className="text-white font-semibold">Your Rider</Text>
-          </View>
-          <View className="flex-row items-center space-x-3 mr-3">
-            <TouchableOpacity className="bg-white p-2 rounded-full">
-              <Icon.Phone
-                fill={themeColors.bgColor(1)}
-                stroke={themeColors.bgColor(1)}
-                strokeWidth="1"
-              />
-            </TouchableOpacity>
+          {/* <View className="flex-1 ml-3">
+            <Text className="text-lg font-bold text-gray-700">Syed Noman</Text>
+            <Text className="text-gray-700 font-semibold">Your Rider</Text>
+          </View> */}
 
-            <TouchableOpacity
-              onPress={cancelOrder}
-              className="bg-white p-2 rounded-full"
-            >
-              <Icon.X stroke={"red"} strokeWidth="5" />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            className="bg-white p-5 rounded-full w-28 items-center"
+            onPress={() => navigation.navigate("Home")}
+          >
+            <Text className="text-gray-700 font-semibold self-center">
+              Regresar
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            className="bg-red-500 p-5 rounded-full w-28"
+            onPress={cancelOrder}
+          >
+            <Text className="text-white font-semibold self-center">
+              Cancelar
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            className="bg-white p-5 rounded-full items-center flex flex-row w-28"
+            onPress={() => navigation.navigate("Support")}
+          >
+            <Icon.Heart color="red" width={18} height={18} />
+            <Text className="text-gray-700 font-semibold ml-1 self-center">
+              Apoyar
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
