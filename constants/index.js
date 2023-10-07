@@ -464,94 +464,94 @@ export const accesorios = {
     "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/categories/accesorios.png",
   items: [
     {
-      name: "",
+      name: "Pulseras",
       image: "",
-      description: "",
+      description: "Pulseras de tela para apoyar a nuestra causa",
       stars: 4,
       reviews: "4.4k",
       products: [
         {
           id: 37,
-          name: "",
-          description: "",
+          name: "Color rojo",
+          description: "Pulsera de tela color rojo",
           price: 10,
-          image: "",
+          image: "", //pulsera_roja.png
         },
         {
           id: 38,
-          name: "",
-          description: "",
+          name: "Color azul",
+          description: "Pulsera de tela color azul",
           price: 10,
-          image: "",
+          image: "", //pulsera_azul.png
         },
         {
           id: 39,
-          name: "",
-          description: "",
+          name: "Color negro",
+          description: "Pulsera de tela color negro",
           price: 10,
-          image: "",
+          image: "", //pulsera_negra.png
         },
       ],
     },
     {
-      name: "",
+      name: "Collares",
       image: "",
-      description: "",
+      description: "Collares de tela para apoyar a nuestra causa",
 
       stars: 4,
       reviews: "4.4k",
       products: [
         {
           id: 40,
-          name: "",
-          description: "",
+          name: "Color rojo",
+          description: "Collar rojo de tela",
           price: 10,
-          image: "",
+          image: "", //collar_rojo.png
         },
         {
           id: 41,
-          name: "",
-          description: "",
+          name: "Color blanco",
+          description: "Collar blanco",
           price: 10,
-          image: "",
+          image: "", // collar_blanco
         },
         {
           id: 42,
-          name: "",
-          description: "",
+          name: "Color negro",
+          description: "Collar negro",
           price: 10,
-          image: "",
+          image: "", //collar_negro.png
         },
       ],
     },
     {
-      name: "",
-      image: "",
-      description: "",
+      name: "Bolsas",
+      image: "", //portada_bolsas
+      description: "Bolsas de tela",
 
       stars: 4,
       reviews: "4.4k",
       products: [
         {
           id: 43,
-          name: "",
-          description: "",
+          name: "Color blanco",
+          description: "Bolsa de tela blanca ideal para ir a hacer las compras",
           price: 10,
-          image: "",
+          image: "", //bolsa_blanca
         },
         {
           id: 44,
-          name: "",
-          description: "",
+          name: "Color naranja",
+          description: "Bolsa de tela naranja ideal para hacer las compras",
           price: 10,
-          image: "",
+          image: "", //bolsa_naranja
         },
         {
           id: 45,
-          name: "",
-          description: "",
+          name: "Color verde",
+          description: "Bolsa de tela verde ideal para hacer las compras",
           price: 10,
-          image: "",
+          image: "", //bolsa verde
         },
       ],
     },
