@@ -20,6 +20,22 @@ export default function EditProfileScreen() {
   const [newDisplayName, setNewDisplayName] = useState("");
   const [selectedGender, setSelectedGender] = useState(""); // Género seleccionado
 
+  // Obtener el género almacenado en Firestore al cargar el componente
+  const fetchGenderFromFirestore = async () => {
+    try {
+      const userUid = auth.currentUser.uid; // Obtiene el UID del usuario actual
+      const userRef = doc(db, "userPermissions", userUid); // Referencia al documento del usuario en Firestore
+
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        const gender = docSnap.data().gender;
+        setSelectedGender(gender); // Establece el género en el estado
+      }
+    } catch (error) {
+      console.error("Error al obtener el género desde Firestore:", error);
+    }
+  };
+
   // Guardar el género en la base de datos
   const saveGenderToFirestore = async (gender) => {
     try {
@@ -31,11 +47,18 @@ export default function EditProfileScreen() {
         gender: gender,
       });
 
+      setSelectedGender(gender);
+
       console.log("Sexo actualizado exitosamente en Firestore.");
     } catch (error) {
       console.error("Error al actualizar el sexo en Firestore:", error);
     }
   };
+
+  // Obtener el género desde Firestore al cargar la página
+  useEffect(() => {
+    fetchGenderFromFirestore();
+  }, []); // La lista de dependencias está vacía para que se ejecute solo una vez al montar el componente
 
   const navigation = useNavigation();
   return (
