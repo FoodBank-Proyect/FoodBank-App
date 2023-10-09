@@ -16,9 +16,26 @@ import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { Image } from "expo-image";
 
 export default function EditProfileScreen() {
-  const halfScreen = Math.round(Dimensions.get("window").height / 1.5);
+  const halfScreen = Math.round(Dimensions.get("window").height / 1.2);
   const [newDisplayName, setNewDisplayName] = useState("");
   const [selectedGender, setSelectedGender] = useState(""); // Género seleccionado
+  const [isEditingDisplayName, setIsEditingDisplayName] = useState(false); // Estado para habilitar la edición del nombre
+
+  // Obtener el género almacenado en Firestore al cargar el componente
+  const fetchGenderFromFirestore = async () => {
+    try {
+      const userUid = auth.currentUser.uid; // Obtiene el UID del usuario actual
+      const userRef = doc(db, "userPermissions", userUid); // Referencia al documento del usuario en Firestore
+
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        const gender = docSnap.data().gender;
+        setSelectedGender(gender); // Establece el género en el estado
+      }
+    } catch (error) {
+      console.error("Error al obtener el género desde Firestore:", error);
+    }
+  };
 
   // Guardar el género en la base de datos
   const saveGenderToFirestore = async (gender) => {
@@ -30,11 +47,55 @@ export default function EditProfileScreen() {
         gender: gender,
       });
 
-      console.log("Sexo actualizado exitosamente en Firestore.");
+      setSelectedGender(gender);
+
+      console.log("Gender actualizado exitosamente en Firestore.");
     } catch (error) {
       console.error("Error al actualizar el sexo en Firestore:", error);
     }
   };
+
+  // Obtener el nombre de usuario almacenado en Firestore al cargar el componente
+  const fetchDisplayNameFromFirestore = async () => {
+    try {
+      const userUid = auth.currentUser.uid; // Obtiene el UID del usuario actual
+      const userRef = doc(db, "userPermissions", userUid); // Referencia al documento del usuario en Firestore
+
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        const displayName = docSnap.data().displayName;
+        setNewDisplayName(displayName); // Establece el nombre de usuario en el estado
+      }
+    } catch (error) {
+      console.error(
+        "Error al obtener el nombre de usuario desde Firestore:",
+        error
+      );
+    }
+  };
+
+  // Guardar el nombre de usuario en la base de datos
+  const saveDisplayNameToFirestore = async () => {
+    try {
+      const userUid = auth.currentUser.uid; // Obtiene el UID del usuario actual
+      const userRef = doc(db, "userPermissions", userUid); // Referencia al documento del usuario en Firestore
+
+      // Actualiza el campo 'displayName' en Firestore
+      await updateDoc(userRef, {
+        displayName: newDisplayName,
+      });
+
+      console.log("Nombre de usuario actualizado exitosamente en Firestore.");
+    } catch (error) {
+      console.error("Error al actualizar el nombre en Firestore:", error);
+    }
+  };
+
+  // Obtener el género desde Firestore al cargar la página
+  useEffect(() => {
+    fetchDisplayNameFromFirestore();
+    fetchGenderFromFirestore();
+  }, []); // La lista de dependencias está vacía para que se ejecute solo una vez al montar el componente
 
   const navigation = useNavigation();
   return (
@@ -77,17 +138,6 @@ export default function EditProfileScreen() {
         <Text className="text-2xl self-center mt-2">Sus datos personales</Text>
 
         <View className="flex-col justify-center items-center mt-6">
-          {/* User image */}
-          <View className="bg-gray-300 w-24 h-24 rounded-full shadow-lg shadow-gray-300">
-            <Image
-              source={{
-                uri:
-                  auth.currentUser.photoURL ||
-                  "https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png",
-              }}
-              className="w-24 h-24 rounded-full"
-            />
-          </View>
           {/* User name */}
           <Text className="font-bold text-base self-start mt-5 ml-10">
             Nombre de usuario
@@ -99,6 +149,7 @@ export default function EditProfileScreen() {
             }
             value={newDisplayName}
             onChangeText={(text) => setNewDisplayName(text)}
+            onBlur={saveDisplayNameToFirestore} // Guardar cambios cuando el usuario deje de escribir
             style={{
               borderWidth: 0.5,
               borderColor: "gray",
@@ -107,7 +158,6 @@ export default function EditProfileScreen() {
               width: "80%",
               borderRadius: 10,
             }}
-            editable={false}
           />
         </View>
 
@@ -117,7 +167,6 @@ export default function EditProfileScreen() {
           </Text>
           <TextInput
             placeholder={auth.currentUser.email}
-            value={newDisplayName}
             onChangeText={(text) => setNewDisplayName(text)}
             style={{
               borderWidth: 0.5,
