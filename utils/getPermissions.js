@@ -17,6 +17,10 @@ export default getPermissions = async () => {
       bornDate: "",
     });
     auth.currentUser.type = "user";
+    auth.currentUser.gender = "";
+    auth.currentUser.bornDate = "";
+    auth.currentUser.name =
+      auth.currentUser.displayName || auth.currentUser.email.split("@")[0];
   }
 
   console.log("User Permission: ", auth.currentUser.type);

@@ -11,12 +11,31 @@ import React, { useEffect, useState } from "react";
 import * as Icon from "react-native-feather";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
+import db from "../firebaseConfig";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { Image } from "expo-image";
 
 export default function EditProfileScreen() {
   const halfScreen = Math.round(Dimensions.get("window").height / 1.5);
   const [newDisplayName, setNewDisplayName] = useState("");
   const [selectedGender, setSelectedGender] = useState(""); // Género seleccionado
+
+  // Guardar el género en la base de datos
+  const saveGenderToFirestore = async (gender) => {
+    try {
+      const userUid = auth.currentUser.uid; // Obtiene el UID del usuario actual
+      const userRef = doc(db, "userPermissions", userUid); // Referencia al documento del usuario en Firestore
+
+      // Actualiza el campo 'gender' en Firestore
+      await updateDoc(userRef, {
+        gender: gender,
+      });
+
+      console.log("Sexo actualizado exitosamente en Firestore.");
+    } catch (error) {
+      console.error("Error al actualizar el sexo en Firestore:", error);
+    }
+  };
 
   const navigation = useNavigation();
   return (
@@ -117,9 +136,12 @@ export default function EditProfileScreen() {
           <Text className="font-bold text-base self-start mt-3 ml-10">
             Sexo
           </Text>
-          <View className="flex-row mt-2 ml-10">
+          <View className="flex-row ml-1">
             <TouchableOpacity
-              onPress={() => setSelectedGender("Hombre")}
+              onPress={() => {
+                setSelectedGender("Hombre");
+                saveGenderToFirestore("Hombre");
+              }}
               style={{
                 marginRight: 20,
                 backgroundColor: selectedGender === "Hombre" ? "#333" : "#fff",
@@ -136,7 +158,10 @@ export default function EditProfileScreen() {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => setSelectedGender("Mujer")}
+              onPress={() => {
+                setSelectedGender("Mujer");
+                saveGenderToFirestore("Mujer");
+              }}
               style={{
                 backgroundColor: selectedGender === "Mujer" ? "#333" : "#fff",
                 padding: 10,
