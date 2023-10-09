@@ -15,19 +15,18 @@ export default function PermanentLogin() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Realtime DB
-    const readOnRealtime = onSnapshot(
-      collection(db, "products"),
-      (querySnapshot) => {
-        const products = [];
-        querySnapshot.forEach((doc) => {
-          products.push(doc.data());
-        });
-        dispatch(setDB(products.reverse()));
-      }
-    );
     // Permanent login
     onAuthStateChanged(auth, (user) => {
+      const readOnRealtime = onSnapshot(
+        collection(db, "products"),
+        (querySnapshot) => {
+          const products = [];
+          querySnapshot.forEach((doc) => {
+            products.push(doc.data());
+          });
+          dispatch(setDB(products.reverse()));
+        }
+      );
       if (user) {
         navigation.navigate("Home");
         showToast();
