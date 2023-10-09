@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "backgroundColor": "#ffffff",
     "splash": {
       "backgroundColor": "#ffffff"
     },
@@ -29,7 +30,22 @@
         "projectId": "3bfa1763-4194-4575-a059-4907a809562c"
       }
     },
+    "plugins": [
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "",
+          "enableGooglePay": false
+        }
+      ]
+    ],
     "scheme": "foodbank-app",
-    "owner": "apeiron-dev"
+    "owner": "apeiron-dev",
+    "currentFullName": "@apeiron-dev/foodbank-app",
+    "originalFullName": "@apeiron-dev/foodbank-app",
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/3bfa1763-4194-4575-a059-4907a809562c"
+    }
   }
 }

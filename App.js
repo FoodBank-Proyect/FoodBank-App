@@ -7,8 +7,7 @@ import Toast from "react-native-toast-message";
 import * as Location from "expo-location";
 import { Alert } from "react-native";
 import { LogBox } from "react-native";
-import uploadToFirestore from "./utils/uploadToFirestore";
-import { categories } from "./constants";
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 LogBox.ignoreLogs(["Constants.platform.ios.model"]);
 LogBox.ignoreLogs(["The useProxy option is deprecated"]);
@@ -67,8 +66,14 @@ export default function App() {
       logoWidth={200}
     >
       <Provider store={store}>
-        <Navigation currentLocation={currentLocation} />
-        <Toast />
+        <StripeProvider
+          publishableKey="pk_test_51KOZh6FdnCXohRp9VBt2xN8tznUqyorgUVyXDZxuTgL8LaCyOCl1FjbGxX1UXOl7KUZhBiigOTamG7SmtpI0QqA300dQwmgauG"
+          merchantIdentifier="merchant.identifier" // required for Apple Pay
+          urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
+        >
+          <Navigation currentLocation={currentLocation} />
+          <Toast />
+        </StripeProvider>
       </Provider>
     </AnimatedSplash>
   );

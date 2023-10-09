@@ -23,10 +23,9 @@ export default function EditProfileScreen() {
   // Guardar el género en la base de datos
   const saveGenderToFirestore = async (gender) => {
     try {
-      const userUid = auth.currentUser.uid; // Obtiene el UID del usuario actual
-      const userRef = doc(db, "userPermissions", userUid); // Referencia al documento del usuario en Firestore
+      const userUid = auth.currentUser.uid;
+      const userRef = doc(db, "userPermissions", userUid);
 
-      // Actualiza el campo 'gender' en Firestore
       await updateDoc(userRef, {
         gender: gender,
       });
