@@ -11,6 +11,10 @@ export default getPermissions = async () => {
   } else {
     setDoc(doc(db, "userPermissions", auth.currentUser?.uid), {
       type: "user",
+      name:
+        auth.currentUser.displayName || auth.currentUser.email.split("@")[0],
+      gender: "",
+      bornDate: "",
     });
     auth.currentUser.type = "user";
   }
