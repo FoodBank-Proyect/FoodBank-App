@@ -30,7 +30,7 @@ export default getPermissions = async () => {
       .finally(async () => {
         console.log("Creating customer...");
         const response = await fetch(
-          "http://192.168.100.11:8000/create-customer",
+          "http://10.43.45.204:8000/create-customer",
           {
             method: "POST",
             body: JSON.stringify({

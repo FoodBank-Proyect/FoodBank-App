@@ -36,7 +36,7 @@ export default function CartScreen() {
   }, [cartItems]);
 
   const proceedToPayment = async () => {
-    const response = await fetch("http://192.168.100.11:8000/payment", {
+    const response = await fetch("http://10.43.45.204:8000/payment", {
       method: "POST",
       body: JSON.stringify({
         email: auth.currentUser.email,
