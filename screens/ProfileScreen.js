@@ -69,7 +69,9 @@ export default function ProfileSCcreen() {
             {/* User name */}
             <Text className="text-xl mt-3">Hola</Text>
             <Text className="text-2xl font-extrabold mt-2">
-              {displayName || auth.currentUser.email.split("@")[0]}
+              {displayName ||
+                auth.currentUser.displayName ||
+                auth.currentUser.email.split("@")[0]}
             </Text>
             {/* Button to upload the db */}
             {auth.currentUser.type === "admin" && (
