@@ -2,44 +2,77 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { auth } from "../firebaseConfig";
 import { Image } from "expo-image";
-
+import Animated, {
+  useSharedValue,
+  withTiming,
+  useAnimatedStyle,
+  Easing,
+} from "react-native-reanimated";
 export default function CreditCard({
   bank,
   cardNumber,
   expiry,
   cvv,
   fixedCard = false,
+  index,
 }) {
   const [margin, setMargin] = useState();
   const [bgColor, setBgColor] = useState("bg-white");
   const [imageLogo, setImageLogo] = useState();
 
+  // Fade in animation
+  const opacity = useSharedValue(0);
+
   useEffect(() => {
-    if (bank === "Visa") {
-      setMargin("mt-[16vh]");
-      setBgColor("bg-blue-600 z-0");
+    opacity.value = withTiming(1, {
+      duration: 350,
+      easing: Easing.ease,
+    });
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value,
+    };
+  });
+
+  useEffect(() => {
+    if (bank === "visa") {
+      setBgColor("bg-blue-600");
       setImageLogo(require("../assets/images/logos/visa.png"));
-    } else if (bank === "Mastercard") {
-      setMargin("mt-[24vh]");
-      setBgColor("bg-yellow-500 z-10");
+    } else if (bank === "mastercard") {
+      setBgColor("bg-yellow-500");
       setImageLogo(require("../assets/images/logos/mastercard.png"));
-    } else if (bank === "American Express") {
-      setMargin("mt-[32vh]");
-      setBgColor("bg-gray-800 z-20");
+    } else if (bank === "american express") {
+      setBgColor("bg-gray-800 ");
       setImageLogo(require("../assets/images/logos/american-express.png"));
-    } else if (bank === "Paypal") {
-      setMargin("mt-[40vh]");
+    } else if (bank === "paypal") {
       setBgColor("bg-violet-500");
       setImageLogo(require("../assets/images/logos/paypal.png"));
     } else {
-      setMargin("mt-[46vh]");
+      setMargin("mt-[52vh]");
       setBgColor("bg-gray-500");
       setImageLogo(null);
     }
   }, [bank]);
 
+  useEffect(() => {
+    if (index == 0) {
+      setMargin("mt-[20vh]  z-0");
+    } else if (index == 1) {
+      setMargin("mt-[28vh] z-10");
+    } else if (index == 2) {
+      setMargin("mt-[36vh] z-20");
+    } else if (index == 3) {
+      setMargin("mt-[44vh] z-30");
+    } else if (index == 4) {
+      setMargin("mt-[52vh] z-40");
+    }
+  }, [index]);
+
   return (
-    <View
+    <Animated.View
+      style={[animatedStyle]}
       className={`w-full h-56 ${bgColor} ${
         fixedCard ? "mt-[30vh]" : margin
       } rounded-xl absolute shadow-md shadow-gray-500 border-2 border-white/20 transition-transform transform hover:scale-110`}
@@ -59,7 +92,7 @@ export default function CreditCard({
               style={{ fontSize: 16, fontWeight: "300" }}
             >
               {/* Nombre */}
-              {bank}
+              {bank?.charAt(0).toUpperCase() + bank?.slice(1)}
             </Text>
             <Text
               className="text-white"
@@ -82,7 +115,7 @@ export default function CreditCard({
             className="text-white"
             style={{ fontSize: 18, fontWeight: "600", letterSpacing: 2 }}
           >
-            {"****  ****  ****  " + cardNumber.slice(12, 16)}
+            {"****  ****  ****  " + cardNumber}
           </Text>
         </View>
         <View style={{ paddingTop: 24, paddingRight: 16 }}>
@@ -134,6 +167,6 @@ export default function CreditCard({
           </View>
         </View>
       </View>
-    </View>
+    </Animated.View>
   );
 }
