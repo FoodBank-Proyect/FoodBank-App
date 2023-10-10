@@ -138,6 +138,17 @@ export default function EditProfileScreen() {
         <Text className="text-2xl self-center mt-2">Sus datos personales</Text>
 
         <View className="flex-col justify-center items-center mt-6">
+          {/* User image */}
+          <View className="bg-gray-300 w-24 h-24 rounded-full shadow-lg shadow-gray-300">
+            <Image
+              source={{
+                uri:
+                  auth.currentUser.photoURL ||
+                  "https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png",
+              }}
+              className="w-24 h-24 rounded-full"
+            />
+          </View>
           {/* User name */}
           <Text className="font-bold text-base self-start mt-5 ml-10">
             Nombre de usuario
