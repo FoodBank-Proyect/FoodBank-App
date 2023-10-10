@@ -168,7 +168,9 @@ export default function EditProfileScreen() {
               marginTop: 10,
               width: "80%",
               borderRadius: 10,
+              color: "black", // Set the text color to black
             }}
+            placeholderTextColor="black" // Set the placeholder text color to black
           />
         </View>
 
