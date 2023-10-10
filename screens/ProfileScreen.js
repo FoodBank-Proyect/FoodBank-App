@@ -7,14 +7,35 @@ import {
   Dimensions,
   Alert,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as Icon from "react-native-feather";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
 import updateFirestore from "../utils/updateFirestore";
+import { doc, getDoc } from "firebase/firestore";
+import db from "../firebaseConfig"; // Assuming you have a Firebase configuration file
 
 export default function ProfileSCcreen() {
+  const [displayName, setDisplayName] = useState(""); // Add this state variable
   const navigation = useNavigation();
+  useEffect(() => {
+    const fetchDisplayNameFromFirestore = async () => {
+      try {
+        const userUid = auth.currentUser.uid;
+        const userRef = doc(db, "userPermissions", userUid);
+
+        const docSnap = await getDoc(userRef);
+        if (docSnap.exists()) {
+          const updatedDisplayName = docSnap.data().displayName;
+          setDisplayName(updatedDisplayName); // Update the state with the new display name
+        }
+      } catch (error) {
+        console.error("Error fetching display name from Firestore:", error);
+      }
+    };
+
+    fetchDisplayNameFromFirestore(); // Fetch the updated display name when the component mounts
+  }, []);
   return (
     <View
       style={{
@@ -48,8 +69,7 @@ export default function ProfileSCcreen() {
             {/* User name */}
             <Text className="text-xl mt-3">Hola</Text>
             <Text className="text-2xl font-extrabold mt-2">
-              {auth.currentUser.displayName ||
-                auth.currentUser.email.split("@")[0]}
+              {displayName || auth.currentUser.email.split("@")[0]}
             </Text>
             {/* Button to upload the db */}
             {auth.currentUser.type === "admin" && (
