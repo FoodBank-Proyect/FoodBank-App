@@ -38,15 +38,19 @@ app.post("/create-customer", async (req, res) => {
   }
 });
 
-app.get("/payment-methods", async (req, res) => {
+app.post("/payment-methods", async (req, res) => {
   try {
-    const { customerID } = req.body;
+    const { email } = req.body;
+    const customer = await stripe.customers.list({
+      email: email,
+    });
+    const customerID = customer.data[0].id;
     const paymentMethods = await stripe.paymentMethods.list({
       customer: customerID,
       type: "card",
     });
     res.json({ paymentMethods });
-    console.log("Payment Methods: ", { ...paymentMethods.data });
+    console.log("Payment Methods Sent!");
   } catch (error) {
     console.log(error);
   }
