@@ -38,6 +38,20 @@ app.post("/create-customer", async (req, res) => {
   }
 });
 
+app.get("/payment-methods", async (req, res) => {
+  try {
+    const { customerID } = req.body;
+    const paymentMethods = await stripe.paymentMethods.list({
+      customer: customerID,
+      type: "card",
+    });
+    res.json({ paymentMethods });
+    console.log("Payment Methods: ", { ...paymentMethods.data });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.post("/payment", async (req, res) => {
   try {
     const { email, amount } = req.body;
@@ -59,12 +73,6 @@ app.post("/payment", async (req, res) => {
 
     const clientSecret = paymentIntent.client_secret;
     res.json({ clientSecret });
-    const paymentMethods = await stripe.paymentMethods.list({
-      customer: customerID,
-      type: "card",
-    });
-    console.log("Payment Methods: ", { ...paymentMethods.data });
-    console.log("Payment Intent Created!");
   } catch (error) {
     console.log(error);
   }
