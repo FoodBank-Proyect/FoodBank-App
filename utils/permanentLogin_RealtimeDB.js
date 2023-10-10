@@ -17,17 +17,17 @@ export default function PermanentLogin() {
   useEffect(() => {
     // Permanent login
     onAuthStateChanged(auth, (user) => {
-      const readOnRealtime = onSnapshot(
-        collection(db, "products"),
-        (querySnapshot) => {
-          const products = [];
-          querySnapshot.forEach((doc) => {
-            products.push(doc.data());
-          });
-          dispatch(setDB(products.reverse()));
-        }
-      );
       if (user) {
+        const readOnRealtime = onSnapshot(
+          collection(db, "products"),
+          (querySnapshot) => {
+            const products = [];
+            querySnapshot.forEach((doc) => {
+              products.push(doc.data());
+            });
+            dispatch(setDB(products.reverse()));
+          }
+        );
         navigation.navigate("Home");
         showToast();
         getPermissions();

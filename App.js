@@ -66,11 +66,7 @@ export default function App() {
       logoWidth={200}
     >
       <Provider store={store}>
-        <StripeProvider
-          publishableKey="pk_test_51KOZh6FdnCXohRp9VBt2xN8tznUqyorgUVyXDZxuTgL8LaCyOCl1FjbGxX1UXOl7KUZhBiigOTamG7SmtpI0QqA300dQwmgauG"
-          merchantIdentifier="merchant.identifier" // required for Apple Pay
-          urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
-        >
+        <StripeProvider publishableKey="pk_test_51KOZh6FdnCXohRp9VBt2xN8tznUqyorgUVyXDZxuTgL8LaCyOCl1FjbGxX1UXOl7KUZhBiigOTamG7SmtpI0QqA300dQwmgauG">
           <Navigation currentLocation={currentLocation} />
           <Toast />
         </StripeProvider>

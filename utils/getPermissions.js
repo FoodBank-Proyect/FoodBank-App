@@ -15,12 +15,33 @@ export default getPermissions = async () => {
         auth.currentUser.displayName || auth.currentUser.email.split("@")[0],
       gender: "",
       bornDate: "",
-    });
-    auth.currentUser.type = "user";
-    auth.currentUser.gender = "";
-    auth.currentUser.bornDate = "";
-    auth.currentUser.name =
-      auth.currentUser.displayName || auth.currentUser.email.split("@")[0];
+    })
+      .then(() => {
+        auth.currentUser = {
+          ...auth.currentUser,
+          type: "user",
+          name:
+            auth.currentUser.displayName ||
+            auth.currentUser.email.split("@")[0],
+          gender: "",
+          bornDate: "",
+        };
+      })
+      .finally(async () => {
+        console.log("Creating customer...");
+        const response = await fetch(
+          "http://192.168.100.11:8000/create-customer",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              email: auth.currentUser.email,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      });
   }
 
   console.log("User Permission: ", auth.currentUser.type);

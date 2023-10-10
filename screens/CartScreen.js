@@ -1,10 +1,10 @@
 import {
   View,
   Text,
-  StatusBar,
   TouchableOpacity,
   Image,
   ScrollView,
+  Alert,
 } from "react-native";
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -19,10 +19,14 @@ import {
   selectCartTotal,
   selectCartTotalQuantity,
 } from "../slices/cartSlice";
+import { useStripe } from "@stripe/stripe-react-native";
+import { StatusBar } from "expo-status-bar";
+import { auth } from "../firebaseConfig";
 
 export default function CartScreen() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const stripe = useStripe();
   const cartItems = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
   const deliveryFee = 2;
@@ -31,8 +35,38 @@ export default function CartScreen() {
     if (!cartItems.length) navigation.goBack();
   }, [cartItems]);
 
+  const proceedToPayment = async () => {
+    const response = await fetch("http://192.168.100.11:8000/payment", {
+      method: "POST",
+      body: JSON.stringify({
+        email: auth.currentUser.email,
+        amount: (cartTotal + deliveryFee) * 100,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+    if (!response.ok) return Alert.alert(data.message);
+    const clientSecret = data.clientSecret;
+    const initSheet = await stripe.initPaymentSheet({
+      paymentIntentClientSecret: clientSecret,
+    });
+    if (initSheet.error) return Alert.alert(initSheet.error.message);
+    const presentSheet = await stripe.presentPaymentSheet({
+      clientSecret,
+    });
+    if (presentSheet.error) return Alert.alert(presentSheet.error.message);
+    else {
+      console.log("Payment successful");
+      navigation.navigate("OrderPreparing");
+    }
+  };
+
   return (
     <View className=" bg-white flex-1">
+      <StatusBar barStyle="dark-content" />
       {/* top button */}
       <View className="relative py-4">
         <TouchableOpacity
@@ -116,11 +150,12 @@ export default function CartScreen() {
         </View>
         <View>
           <TouchableOpacity
-            onPress={() => navigation.navigate("OrderPreparing")}
+            // () => navigation.navigate("OrderPreparing")
+            onPress={proceedToPayment}
             className="p-3 rounded-full bg-emerald-500 shadow-lg shadow-gray-400"
           >
             <Text className="text-white text-center font-bold text-lg">
-              Place Order
+              Proceder al pago
             </Text>
           </TouchableOpacity>
         </View>
