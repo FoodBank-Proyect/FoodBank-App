@@ -465,7 +465,8 @@ export const accesorios = {
   items: [
     {
       name: "Pulseras",
-      image: "",
+      image:
+        "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/pulsera_roja.png",
       description: "Pulseras de tela para apoyar a nuestra causa",
       stars: 4,
       reviews: "4.4k",
@@ -475,27 +476,31 @@ export const accesorios = {
           name: "Color rojo",
           description: "Pulsera de tela color rojo",
           price: 10,
-          image: "", //pulsera_roja.png
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/pulsera_roja.png",
         },
         {
           id: 38,
           name: "Color azul",
           description: "Pulsera de tela color azul",
           price: 10,
-          image: "", //pulsera_azul.png
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/pulsera_azul.png",
         },
         {
           id: 39,
           name: "Color negro",
           description: "Pulsera de tela color negro",
           price: 10,
-          image: "", //pulsera_negra.png
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/pulsera_negra.png",
         },
       ],
     },
     {
       name: "Collares",
-      image: "",
+      image:
+        "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/collar_rojo.png",
       description: "Collares de tela para apoyar a nuestra causa",
 
       stars: 4,
@@ -506,27 +511,31 @@ export const accesorios = {
           name: "Color rojo",
           description: "Collar rojo de tela",
           price: 10,
-          image: "", //collar_rojo.png
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/collar_rojo.png",
         },
         {
           id: 41,
           name: "Color blanco",
           description: "Collar blanco",
           price: 10,
-          image: "", // collar_blanco
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/collar_blanco.png", // collar_blanco
         },
         {
           id: 42,
           name: "Color negro",
           description: "Collar negro",
           price: 10,
-          image: "", //collar_negro.png
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/collar_negro.png", //
         },
       ],
     },
     {
       name: "Bolsas",
-      image: "", //portada_bolsas
+      image:
+        "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/portada_bolsas.png", //
       description: "Bolsas de tela",
 
       stars: 4,
@@ -537,21 +546,24 @@ export const accesorios = {
           name: "Color blanco",
           description: "Bolsa de tela blanca ideal para ir a hacer las compras",
           price: 10,
-          image: "", //bolsa_blanca
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/bolsa_blanca.png", //
         },
         {
           id: 44,
           name: "Color naranja",
           description: "Bolsa de tela naranja ideal para hacer las compras",
           price: 10,
-          image: "", //bolsa_naranja
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/bolsa_naranja.png", //
         },
         {
           id: 45,
           name: "Color verde",
           description: "Bolsa de tela verde ideal para hacer las compras",
           price: 10,
-          image: "", //bolsa verde
+          image:
+            "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/bolsa_verde.png", //bolsa verde
         },
       ],
     },
