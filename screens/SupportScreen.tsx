@@ -11,7 +11,7 @@ import CustomButton from "../components/CustomButton";
 import RenderItem from "../components/RenderItem";
 
 const SupportScreen = () => {
-  const flatListRef = useAnimatedRef<FlatList<OnboardingData>>();
+  const flatListRef = useAnimatedRef<FlatList<OnboardingData>>() as any;
   const x = useSharedValue(0);
   const flatListIndex = useSharedValue(0);
 
@@ -20,8 +20,9 @@ const SupportScreen = () => {
   }: {
     viewableItems: ViewToken[];
   }) => {
-    if (viewableItems[0].index !== null) {
-      flatListIndex.value = viewableItems[0].index;
+    if (viewableItems.length > 0) {
+      if (viewableItems[0].index !== null)
+        flatListIndex.value = viewableItems[0].index;
     }
   };
 
@@ -40,7 +41,7 @@ const SupportScreen = () => {
         renderItem={({ item, index }) => {
           return <RenderItem item={item} index={index} x={x} />;
         }}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         scrollEventThrottle={16}
         horizontal={true}
         bounces={false}

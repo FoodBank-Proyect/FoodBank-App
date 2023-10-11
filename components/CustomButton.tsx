@@ -3,31 +3,29 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   useWindowDimensions,
-} from 'react-native';
-import React from 'react';
+} from "react-native";
+import React from "react";
 import Animated, {
-  AnimatedRef,
+  useAnimatedRef,
   SharedValue,
   interpolateColor,
   useAnimatedStyle,
   withSpring,
   withTiming,
-} from 'react-native-reanimated';
-import {useNavigation} from '@react-navigation/native';
-import {OnboardingData} from '../data/data';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../../navigator/RootNavigator';
+} from "react-native-reanimated";
+import { useNavigation } from "@react-navigation/native";
+import { OnboardingData } from "../utils/data";
 
 type Props = {
   dataLength: number;
   flatListIndex: SharedValue<number>;
-  flatListRef: AnimatedRef<FlatList<OnboardingData>>;
+  flatListRef: React.RefObject<FlatList<OnboardingData>>;
   x: SharedValue<number>;
 };
 
-const CustomButton = ({flatListRef, flatListIndex, dataLength, x}: Props) => {
-  const {width: SCREEN_WIDTH} = useWindowDimensions();
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+const CustomButton = ({ flatListRef, flatListIndex, dataLength, x }: Props) => {
+  const { width: SCREEN_WIDTH } = useWindowDimensions();
+  const navigation = useNavigation() as any;
 
   const buttonAnimationStyle = useAnimatedStyle(() => {
     return {
@@ -53,7 +51,7 @@ const CustomButton = ({flatListRef, flatListIndex, dataLength, x}: Props) => {
               : withTiming(0),
         },
       ],
-    };
+    } as any;
   });
 
   const textAnimationStyle = useAnimatedStyle(() => {
@@ -68,13 +66,13 @@ const CustomButton = ({flatListRef, flatListIndex, dataLength, x}: Props) => {
               : withTiming(-100),
         },
       ],
-    };
+    } as any;
   });
   const animatedColor = useAnimatedStyle(() => {
     const backgroundColor = interpolateColor(
       x.value,
       [0, SCREEN_WIDTH, 2 * SCREEN_WIDTH],
-      ['#005b4f', '#1e2169', '#F15937'],
+      ["#005b4f", "#1e2169", "#F15937"]
     );
 
     return {
@@ -86,18 +84,22 @@ const CustomButton = ({flatListRef, flatListIndex, dataLength, x}: Props) => {
     <TouchableWithoutFeedback
       onPress={() => {
         if (flatListIndex.value < dataLength - 1) {
-          flatListRef.current?.scrollToIndex({index: flatListIndex.value + 1});
+          flatListRef.current?.scrollToIndex({
+            index: flatListIndex.value + 1,
+          });
         } else {
-          navigation.navigate('Home');
+          navigation.navigate("HomeScreen");
         }
-      }}>
+      }}
+    >
       <Animated.View
-        style={[styles.container, buttonAnimationStyle, animatedColor]}>
+        style={[styles.container, buttonAnimationStyle, animatedColor]}
+      >
         <Animated.Text style={[styles.textButton, textAnimationStyle]}>
           Get Started
         </Animated.Text>
         <Animated.Image
-          source={require('../assets/images/ArrowIcon.png')}
+          source={require("../assets/images/ArrowIcon.png")}
           style={[styles.arrow, arrowAnimationStyle]}
         />
       </Animated.View>
@@ -109,15 +111,15 @@ export default CustomButton;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#1e2169',
+    backgroundColor: "#1e2169",
     padding: 10,
     borderRadius: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
   },
   arrow: {
-    position: 'absolute',
+    position: "absolute",
   },
-  textButton: {color: 'white', fontSize: 16, position: 'absolute'},
+  textButton: { color: "white", fontSize: 16, position: "absolute" },
 });
