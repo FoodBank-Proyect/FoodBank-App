@@ -90,9 +90,10 @@ export default RenderItem;
 const styles = StyleSheet.create({
   itemContainer: {
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: "center",
     alignItems: "center",
-    marginBottom: 120,
+    marginBottom: 20,
+    gap: 50,
   },
   itemText: {
     textAlign: "center",

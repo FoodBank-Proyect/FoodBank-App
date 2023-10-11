@@ -1,20 +1,20 @@
-import {StyleSheet, useWindowDimensions} from 'react-native';
-import React from 'react';
+import { StyleSheet, useWindowDimensions } from "react-native";
+import React from "react";
 import Animated, {
   Extrapolate,
   SharedValue,
   interpolate,
   interpolateColor,
   useAnimatedStyle,
-} from 'react-native-reanimated';
+} from "react-native-reanimated";
 
 type Props = {
   index: number;
   x: SharedValue<number>;
 };
 
-const Dot = ({index, x}: Props) => {
-  const {width: SCREEN_WIDTH} = useWindowDimensions();
+const Dot = ({ index, x }: Props) => {
+  const { width: SCREEN_WIDTH } = useWindowDimensions();
 
   const animatedDotStyle = useAnimatedStyle(() => {
     const widthAnimation = interpolate(
@@ -25,7 +25,7 @@ const Dot = ({index, x}: Props) => {
         (index + 1) * SCREEN_WIDTH,
       ],
       [10, 20, 10],
-      Extrapolate.CLAMP,
+      Extrapolate.CLAMP
     );
 
     const opacityAnimation = interpolate(
@@ -36,7 +36,7 @@ const Dot = ({index, x}: Props) => {
         (index + 1) * SCREEN_WIDTH,
       ],
       [0.5, 1, 0.5],
-      Extrapolate.CLAMP,
+      Extrapolate.CLAMP
     );
     return {
       width: widthAnimation,
@@ -48,7 +48,7 @@ const Dot = ({index, x}: Props) => {
     const backgroundColor = interpolateColor(
       x.value,
       [0, SCREEN_WIDTH, 2 * SCREEN_WIDTH],
-      ['#005b4f', '#1e2169', '#F15937'],
+      ["#EE4B2B", "#1e2169", "#F15937"]
     );
 
     return {
