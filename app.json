@@ -43,7 +43,9 @@
     "owner": "apeiron-dev",
     "currentFullName": "@apeiron-dev/foodbank-app",
     "originalFullName": "@apeiron-dev/foodbank-app",
-    "runtimeVersion": "1.0.0",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
     "updates": {
       "url": "https://u.expo.dev/3bfa1763-4194-4575-a059-4907a809562c"
     }
