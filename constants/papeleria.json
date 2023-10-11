@@ -1,0 +1,101 @@
+{
+  "id": 2,
+  "title": "Papelería",
+  "description": "Utiles escolares",
+  "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/categories/papeleria.png",
+  "items": [
+    {
+      "name": "Libretas",
+      "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/Libretas_1.png",
+      "description": "Hot and spicy pizzas",
+      "stars": 4,
+      "reviews": "4.4k",
+      "products": [
+        {
+          "id": 10,
+          "name": "Libreta amarila",
+          "description": "Libreta amarilla con diseño integrado",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/Libretas_1.png"
+        },
+        {
+          "id": 11,
+          "name": "Libreta blanca",
+          "description": "Libreta blanca con diseño integrado",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/Libretas_2.png"
+        },
+        {
+          "id": 12,
+          "name": "Libreta cafe claro",
+          "description": "Libreta color cafe claro con diseño integrado",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/Libretas_3.png"
+        }
+      ]
+    },
+    {
+      "name": "Agendas",
+      "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/portada_agendas.png",
+      "description": "Hot and spicy pizzas",
+
+      "stars": 4,
+      "reviews": "4.4k",
+
+      "products": [
+        {
+          "id": 13,
+          "name": "Color azul",
+          "description": "Agenda mini color azul 80 hojas",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/agenda_azul.png"
+        },
+        {
+          "id": 14,
+          "name": "Color rosa",
+          "description": "Agenda mini color azul 80 hojas",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/agenda_rosa.png"
+        },
+        {
+          "id": 15,
+          "name": "Color verde lima",
+          "description": "Agenda mini color verde lima 80 hojas",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/agenda_verde.png"
+        }
+      ]
+    },
+    {
+      "name": "Plumas",
+      "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/portada_plumas.png",
+      "description": "Hot and spicy pizzas",
+
+      "stars": 4,
+      "reviews": "4.4k",
+      "products": [
+        {
+          "id": 16,
+          "name": "pizza",
+          "description": "cheezy garlic pizza",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/pizzaDish.png"
+        },
+        {
+          "id": 17,
+          "name": "pizza",
+          "description": "cheezy garlic pizza",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/pizzaDish.png"
+        },
+        {
+          "id": 18,
+          "name": "pizza",
+          "description": "cheezy garlic pizza",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/pizzaDish.png"
+        }
+      ]
+    }
+  ]
+}

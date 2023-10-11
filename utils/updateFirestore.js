@@ -1,7 +1,13 @@
 import { auth } from "../firebaseConfig";
 import db from "../firebaseConfig";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
-import currentJsonDb from "../constants";
+import accesorios from "../constants/accesorios.json";
+import electronicos from "../constants/electronicos.json";
+import hogar from "../constants/hogar.json";
+import papeleria from "../constants/papeleria.json";
+import ropa from "../constants/ropa.json";
+
+const currentJsonDb = [accesorios, electronicos, hogar, papeleria, ropa];
 
 export default uploadToFirestore = async () => {
   for (const category of currentJsonDb) {

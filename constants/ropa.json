@@ -1,0 +1,100 @@
+{
+  "id": 1,
+  "title": "Ropa",
+  "description": "Ropa de vestir",
+  "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/categories/ropa.png",
+  "items": [
+    {
+      "name": "Playeras",
+      "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/playerasFoodBank.png",
+      "description": "Playeras de algodón hechas en México",
+      "stars": 4,
+      "reviews": "4.4k",
+      "products": [
+        {
+          "id": 1,
+          "name": "Color azul marino",
+          "description": "Playera con diseño integral azul marino",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/playera_disenio.png"
+        },
+        {
+          "id": 2,
+          "name": "Color rosa",
+          "description": "Playera color rosa",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/playera_rosa.png"
+        },
+        {
+          "id": 3,
+          "name": "Color naranja",
+          "description": "Playera color naranja",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/playera_naranja.png"
+        }
+      ]
+    },
+    {
+      "name": "Sudaderas",
+      "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/SudaderaFoodBank.png",
+      "description": "Hot and spicy pizzas",
+
+      "stars": 4,
+      "reviews": "4.4k",
+      "products": [
+        {
+          "id": 4,
+          "name": "Color rojo",
+          "description": "Sudadera color rojo",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/sudadera_roja.png"
+        },
+        {
+          "id": 5,
+          "name": "Color azul",
+          "description": "Sudadera color azul marino",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/sudadera_azul.png"
+        },
+        {
+          "id": 6,
+          "name": "Color gris",
+          "description": "Sudadra color gris",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/sudadera_gris.png"
+        }
+      ]
+    },
+    {
+      "name": "Gorras",
+      "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/logo_gorras_v4.png",
+      "description": "Hot and spicy pizzas",
+
+      "stars": 4,
+      "reviews": "4.4k",
+      "products": [
+        {
+          "id": 7,
+          "name": "Color negro",
+          "description": "Gorra color negro mate",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/gorra_negra_v2.png"
+        },
+        {
+          "id": 8,
+          "name": "Color rojo",
+          "description": "Gorra color rojo avivado",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/gorra_roja_frontal.png"
+        },
+        {
+          "id": 9,
+          "name": "Color blanco",
+          "description": "Gorra color blanco nieve",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/gorra_blanca_frontal.png"
+        }
+      ]
+    }
+  ]
+}
