@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import TextField from "../components/TextField";
 import CreditCard from "../components/creditCard";
-import { metodosPago } from "../constants";
+// import { metodosPago } from "../constants";
 import { useNavigation } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
 

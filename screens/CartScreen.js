@@ -10,7 +10,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as Icon from "react-native-feather";
 import { themeColors } from "../theme";
-import { featured } from "../constants";
+// import { featured } from "../constants";
 import { useSelector, useDispatch } from "react-redux";
 import { selectProduct } from "../slices/productSlice";
 import {
