@@ -115,7 +115,12 @@ export default function ProfileSCcreen() {
               <Text className="text-gray-500 text-sm mt-1">Datos</Text>
               <Text className="text-gray-500 text-sm">personales</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="flex flex-col items-center w-1/4 mr-6 ">
+            <TouchableOpacity
+              className="flex flex-col items-center w-1/4 mr-6 "
+              onPress={() => {
+                navigation.navigate("OrdersHistory");
+              }}
+            >
               <View
                 style={{
                   width: 50,
