@@ -10,7 +10,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as Icon from "react-native-feather";
 import { themeColors } from "../theme";
+<<<<<<< HEAD
 // import { featured } from "../constants";
+=======
+>>>>>>> 525d82ede4b6361d6981b71a19c57a4df1b47663
 import { useSelector, useDispatch } from "react-redux";
 import { selectProduct } from "../slices/productSlice";
 import {
