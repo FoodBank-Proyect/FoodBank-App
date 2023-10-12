@@ -1,16 +1,6 @@
 import { View, Text } from "react-native";
 import React, { useEffect } from "react";
-<<<<<<< HEAD
-// import {
-//   accesorios,
-//   papeleria,
-//   ropa,
-//   hogar,
-//   electronicos,
-//   misterios,
-// } from "../constants";
-=======
->>>>>>> 525d82ede4b6361d6981b71a19c57a4df1b47663
+
 import FeaturedRow from "./featuredRow";
 import { useSelector } from "react-redux";
 import { selectDB } from "../slices/dbSlice";

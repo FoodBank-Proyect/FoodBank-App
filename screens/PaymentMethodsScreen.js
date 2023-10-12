@@ -3,10 +3,6 @@ import React, { useEffect } from "react";
 import * as Icon from "react-native-feather";
 import { useNavigation } from "@react-navigation/native";
 import CreditCard from "../components/creditCard";
-<<<<<<< HEAD
-// import { metodosPago } from "../constants";
-=======
->>>>>>> 525d82ede4b6361d6981b71a19c57a4df1b47663
 import { auth } from "../firebaseConfig";
 
 export default function PaymentMethodsScreen() {

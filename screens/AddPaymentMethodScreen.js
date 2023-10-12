@@ -3,11 +3,9 @@ import React, { useEffect, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import TextField from "../components/TextField";
 import CreditCard from "../components/creditCard";
-<<<<<<< HEAD
-// import { metodosPago } from "../constants";
-=======
+
 import { metodosPago } from "../constants/metodosPago.json";
->>>>>>> 525d82ede4b6361d6981b71a19c57a4df1b47663
+
 import { useNavigation } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
 
