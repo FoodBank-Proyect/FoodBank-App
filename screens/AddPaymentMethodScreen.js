@@ -3,15 +3,36 @@ import React, { useEffect, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import TextField from "../components/TextField";
 import CreditCard from "../components/creditCard";
-import { metodosPago } from "../constants/metodosPago.json";
 import { useNavigation } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
+import { auth } from "../firebaseConfig";
+import db from "../firebaseConfig";
+import { doc, updateDoc } from "firebase/firestore";
 
 export default function AddPaymentMethodScreen() {
+  const [paymentMethods, setPaymentMethods] = React.useState(
+    auth.currentUser.paymentMethods || []
+  );
   const navigation = useNavigation();
   const [cardNumber, setCardNumber] = useState("");
   const [cardNumberError, setCardNumberError] = useState(null);
   const [bank, setBank] = useState();
+
+  const addMethodToFirestore = async () => {
+    auth.currentUser.paymentMethods.push({
+      banco: bank,
+      numeroTarjeta: cardNumber,
+    });
+
+    const docRef = doc(db, "userPermissions", auth.currentUser?.uid);
+
+    // Update the methods
+    await updateDoc(docRef, {
+      paymentMethods: auth.currentUser.paymentMethods,
+    });
+
+    console.log("Payment method added to firestore");
+  };
 
   useEffect(() => {
     if (cardNumber[0] == "4") {
@@ -28,14 +49,10 @@ export default function AddPaymentMethodScreen() {
   const addCard = () => {
     if (
       cardNumberError == null &&
-      metodosPago.filter((metodo) => metodo.banco == bank).length == 0 &&
+      paymentMethods.filter((metodo) => metodo.banco == bank).length == 0 &&
       bank != "Banco desconocido"
     ) {
-      metodosPago.push({
-        id: metodosPago.length + 1,
-        banco: bank,
-        numeroTarjeta: cardNumber,
-      });
+      addMethodToFirestore();
       navigation.navigate("Profile");
       navigation.navigate("PaymentMethods");
     } else if (bank == "Banco desconocido") {
@@ -45,7 +62,7 @@ export default function AddPaymentMethodScreen() {
         text2: "Banco desconocido",
       });
     } else if (
-      metodosPago.filter((metodo) => metodo.banco == bank).length > 0
+      paymentMethods.filter((metodo) => metodo.banco == bank).length > 0
     ) {
       Toast.show({
         type: "error",

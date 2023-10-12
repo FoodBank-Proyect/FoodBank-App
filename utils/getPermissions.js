@@ -8,6 +8,10 @@ export default getPermissions = async () => {
 
   if (docSnap.exists()) {
     auth.currentUser.type = docSnap.data().type;
+    auth.currentUser.name = docSnap.data().name;
+    auth.currentUser.gender = docSnap.data().gender;
+    auth.currentUser.bornDate = docSnap.data().bornDate;
+    auth.currentUser.paymentMethods = docSnap.data().paymentMethods;
   } else {
     setDoc(doc(db, "userPermissions", auth.currentUser?.uid), {
       type: "user",
@@ -15,6 +19,7 @@ export default getPermissions = async () => {
         auth.currentUser.displayName || auth.currentUser.email.split("@")[0],
       gender: "",
       bornDate: "",
+      paymentMethods: [],
     })
       .then(() => {
         auth.currentUser = {
@@ -25,22 +30,11 @@ export default getPermissions = async () => {
             auth.currentUser.email.split("@")[0],
           gender: "",
           bornDate: "",
+          paymentMethods: [],
         };
       })
-      .finally(async () => {
-        console.log("Creating customer...");
-        const response = await fetch(
-          "http://10.43.45.204:8000/create-customer",
-          {
-            method: "POST",
-            body: JSON.stringify({
-              email: auth.currentUser.email,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+      .catch((error) => {
+        console.error("Error writing document: ", error);
       });
   }
 

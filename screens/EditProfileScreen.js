@@ -17,25 +17,9 @@ import { Image } from "expo-image";
 
 export default function EditProfileScreen() {
   const halfScreen = Math.round(Dimensions.get("window").height / 1.2);
-  const [newDisplayName, setNewDisplayName] = useState("");
-  const [selectedGender, setSelectedGender] = useState(""); // Género seleccionado
+  const [newDisplayName, setNewDisplayName] = useState(auth.currentUser.name); // Nuevo nombre de usuario
+  const [selectedGender, setSelectedGender] = useState(auth.currentUser.gender); // Género seleccionado
   const [isEditingDisplayName, setIsEditingDisplayName] = useState(false); // Estado para habilitar la edición del nombre
-
-  // Obtener el género almacenado en Firestore al cargar el componente
-  const fetchGenderFromFirestore = async () => {
-    try {
-      const userUid = auth.currentUser.uid; // Obtiene el UID del usuario actual
-      const userRef = doc(db, "userPermissions", userUid); // Referencia al documento del usuario en Firestore
-
-      const docSnap = await getDoc(userRef);
-      if (docSnap.exists()) {
-        const gender = docSnap.data().gender;
-        setSelectedGender(gender); // Establece el género en el estado
-      }
-    } catch (error) {
-      console.error("Error al obtener el género desde Firestore:", error);
-    }
-  };
 
   // Guardar el género en la base de datos
   const saveGenderToFirestore = async (gender) => {
@@ -55,25 +39,6 @@ export default function EditProfileScreen() {
     }
   };
 
-  // Obtener el nombre de usuario almacenado en Firestore al cargar el componente
-  const fetchDisplayNameFromFirestore = async () => {
-    try {
-      const userUid = auth.currentUser.uid; // Obtiene el UID del usuario actual
-      const userRef = doc(db, "userPermissions", userUid); // Referencia al documento del usuario en Firestore
-
-      const docSnap = await getDoc(userRef);
-      if (docSnap.exists()) {
-        const displayName = docSnap.data().displayName;
-        setNewDisplayName(displayName); // Establece el nombre de usuario en el estado
-      }
-    } catch (error) {
-      console.error(
-        "Error al obtener el nombre de usuario desde Firestore:",
-        error
-      );
-    }
-  };
-
   // Guardar el nombre de usuario en la base de datos
   const saveDisplayNameToFirestore = async () => {
     try {
@@ -90,12 +55,6 @@ export default function EditProfileScreen() {
       console.error("Error al actualizar el nombre en Firestore:", error);
     }
   };
-
-  // Obtener el género desde Firestore al cargar la página
-  useEffect(() => {
-    fetchDisplayNameFromFirestore();
-    fetchGenderFromFirestore();
-  }, []); // La lista de dependencias está vacía para que se ejecute solo una vez al montar el componente
 
   const navigation = useNavigation();
   return (

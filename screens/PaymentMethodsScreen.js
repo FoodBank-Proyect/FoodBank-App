@@ -4,48 +4,15 @@ import * as Icon from "react-native-feather";
 import { useNavigation } from "@react-navigation/native";
 import CreditCard from "../components/creditCard";
 import { auth } from "../firebaseConfig";
+import uploadToFirestore from "../utils/uploadToFirestore";
+import dataToUpload from "../constants/metodosPago.json";
 
 export default function PaymentMethodsScreen() {
-  const [paymentMethods, setPaymentMethods] = React.useState(null);
-  const [loading, setLoading] = React.useState(true);
+  const [paymentMethods, setPaymentMethods] = React.useState(
+    auth.currentUser.paymentMethods || []
+  );
 
-  useEffect(() => {
-    const fetchPaymentMethods = async () => {
-      try {
-        const response = await fetch(
-          "http://10.43.45.204:8000/payment-methods",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: auth.currentUser.email,
-            }),
-          }
-        );
-        const paymentMethods = await response.json();
-        // Convert it to an array to be mapped, but delete duplicates (same last4 and same brand)
-        const paymentMethodsArray = [];
-        paymentMethods.paymentMethods.data.forEach((paymentMethod) => {
-          if (
-            paymentMethodsArray.filter(
-              (metodo) =>
-                metodo.card.last4 == paymentMethod.card.last4 &&
-                metodo.card.brand == paymentMethod.card.brand
-            ).length == 0
-          ) {
-            paymentMethodsArray.push(paymentMethod);
-          }
-        });
-        setPaymentMethods(paymentMethodsArray);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchPaymentMethods();
-  }, []);
+  const [loading, setLoading] = React.useState(false);
 
   const navigation = useNavigation();
   return (
@@ -63,32 +30,34 @@ export default function PaymentMethodsScreen() {
       </TouchableOpacity>
       <Text className="text-2xl font-bold mb-10">Tus métodos de pago</Text>
 
-      {!loading && paymentMethods ? (
+      {!loading && paymentMethods.length > 0 ? (
         paymentMethods.map((metodo, index) => {
           return (
             <CreditCard
               key={index}
               index={index}
-              bank={metodo.card.brand}
-              cardNumber={metodo.card.last4}
+              bank={metodo.banco}
+              cardNumber={metodo.numeroTarjeta}
             />
           );
         })
       ) : !loading && paymentMethods.length === 0 ? (
         <View>
-          <Text className="text-xl font-bold mb-10">
+          <Text className="text-xl font-bold mb-10 text-gray-500 italic">
             No tienes métodos de pago
           </Text>
         </View>
       ) : (
         <View>
-          <Text className="text-xl font-bold mb-10">Cargando...</Text>
+          <Text className="text-xl font-bold mb-10 text-gray-500 italic">
+            Cargando...
+          </Text>
         </View>
       )}
 
-      {/* <TouchableOpacity
+      <TouchableOpacity
         onPress={() => {
-          if (metodosPago.length < 4) {
+          if (paymentMethods.length < 4) {
             navigation.navigate("AddPaymentMethod");
           } else {
             Alert.alert(
@@ -107,7 +76,7 @@ export default function PaymentMethodsScreen() {
         className="flex items-center justify-center bottom-32 absolute p-3 bg-emerald-400 shadow-md shadow-gray-400 rounded-full"
       >
         <Icon.Plus stroke="white" width={30} height={30} strokeWidth={3} />
-      </TouchableOpacity> */}
+      </TouchableOpacity>
     </View>
   );
 }

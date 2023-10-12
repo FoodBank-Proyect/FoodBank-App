@@ -37,16 +37,16 @@ export default function CreditCard({
   });
 
   useEffect(() => {
-    if (bank === "visa") {
+    if (bank === "Visa") {
       setBgColor("bg-blue-600");
       setImageLogo(require("../assets/images/logos/visa.png"));
-    } else if (bank === "mastercard") {
+    } else if (bank === "Mastercard") {
       setBgColor("bg-yellow-500");
       setImageLogo(require("../assets/images/logos/mastercard.png"));
-    } else if (bank === "american express") {
+    } else if (bank === "American Express") {
       setBgColor("bg-gray-800 ");
       setImageLogo(require("../assets/images/logos/american-express.png"));
-    } else if (bank === "paypal") {
+    } else if (bank === "Paypal") {
       setBgColor("bg-violet-500");
       setImageLogo(require("../assets/images/logos/paypal.png"));
     } else {
@@ -115,7 +115,7 @@ export default function CreditCard({
             className="text-white"
             style={{ fontSize: 18, fontWeight: "600", letterSpacing: 2 }}
           >
-            {"****  ****  ****  " + cardNumber}
+            {"****  ****  ****  " + cardNumber?.slice(12, 16)}
           </Text>
         </View>
         <View style={{ paddingTop: 24, paddingRight: 16 }}>
