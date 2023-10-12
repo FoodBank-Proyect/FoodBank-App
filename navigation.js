@@ -9,6 +9,7 @@ import DeliveryScreen from "./screens/DeliveryScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import EditProfileScreen from "./screens/EditProfileScreen";
+import OrdersHistory from "./screens/OrdersHistoryScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import SupportScreen from "./screens/SupportScreen";
 import PaymentMethodsScreen from "./screens/PaymentMethodsScreen";
@@ -76,6 +77,7 @@ export default function Navigation({ currentLocation }) {
           }}
         >
           <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+          <Stack.Screen name="OrdersHistory" component={OrdersHistory} />
         </Stack.Group>
         <Stack.Screen
           name="PaymentMethods"
