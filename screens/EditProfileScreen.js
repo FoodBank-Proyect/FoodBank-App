@@ -17,9 +17,36 @@ import { Image } from "expo-image";
 
 export default function EditProfileScreen() {
   const halfScreen = Math.round(Dimensions.get("window").height / 1.2);
-  const [newDisplayName, setNewDisplayName] = useState(auth.currentUser.name); // Nuevo nombre de usuario
+  const [newDisplayName, setNewDisplayName] = useState(""); // Nuevo nombre de usuario
   const [selectedGender, setSelectedGender] = useState(auth.currentUser.gender); // Género seleccionado
   const [isEditingDisplayName, setIsEditingDisplayName] = useState(false); // Estado para habilitar la edición del nombre
+  const [isEditingGender, setIsEditingGender] = useState(false); // Estado para habilitar la edición del género
+  const [isPendingChanges, setIsPendingChanges] = useState(false); // Estado para verificar si hay cambios pendientes de confirmación
+  const [isChangesConfirmed, setIsChangesConfirmed] = useState(false); // Nuevo estado para controlar si los cambios se han confirmado
+
+  const fetchDisplayNameFromFirestore = async () => {
+    try {
+      const userUid = auth.currentUser.uid;
+      const userRef = doc(db, "userPermissions", userUid);
+      const userDoc = await getDoc(userRef);
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        if (userData.displayName) {
+          setNewDisplayName(userData.displayName);
+        }
+      }
+    } catch (error) {
+      console.error(
+        "Error al obtener el nombre de usuario desde Firestore:",
+        error
+      );
+    }
+  };
+
+  useEffect(() => {
+    fetchDisplayNameFromFirestore();
+  }, []);
 
   // Guardar el género en la base de datos
   const saveGenderToFirestore = async (gender) => {
@@ -54,6 +81,7 @@ export default function EditProfileScreen() {
     } catch (error) {
       console.error("Error al actualizar el nombre en Firestore:", error);
     }
+    setIsPendingChanges(true); // Marcar los cambios como pendientes de confirmación
   };
 
   const navigation = useNavigation();
@@ -109,6 +137,7 @@ export default function EditProfileScreen() {
             />
           </View>
           {/* User name */}
+          {/* User name */}
           <Text className="font-bold text-base self-start mt-5 ml-10">
             Nombre de usuario
           </Text>
@@ -119,7 +148,6 @@ export default function EditProfileScreen() {
             }
             value={newDisplayName}
             onChangeText={(text) => setNewDisplayName(text)}
-            onBlur={saveDisplayNameToFirestore} // Guardar cambios cuando el usuario deje de escribir
             style={{
               borderWidth: 0.5,
               borderColor: "gray",
@@ -127,10 +155,33 @@ export default function EditProfileScreen() {
               marginTop: 10,
               width: "80%",
               borderRadius: 10,
-              color: "black", // Set the text color to black
+              color: "black",
             }}
-            placeholderTextColor="black" // Set the placeholder text color to black
+            placeholderTextColor="black"
           />
+
+          {!isChangesConfirmed && (
+            <TouchableOpacity
+              onPress={() => {
+                saveDisplayNameToFirestore();
+                setIsChangesConfirmed(true); // Marcar los cambios como confirmados
+              }}
+              style={{
+                backgroundColor: "#333",
+                padding: 10,
+                borderRadius: 10,
+                marginTop: 10,
+                width: "80%",
+              }}
+            >
+              <Text style={{ color: "#fff" }}>Guardar Cambios</Text>
+            </TouchableOpacity>
+          )}
+          {isChangesConfirmed && (
+            <Text style={{ color: "green", marginTop: 10 }}>
+              Cambios confirmados
+            </Text>
+          )}
         </View>
 
         <View className="flex-col justify-center items-center mt-3">
