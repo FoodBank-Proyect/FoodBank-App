@@ -6,8 +6,16 @@ import electronicos from "../constants/electronicos.json";
 import hogar from "../constants/hogar.json";
 import papeleria from "../constants/papeleria.json";
 import ropa from "../constants/ropa.json";
+import misterios from "../constants/misterio.json";
 
-const currentJsonDb = [accesorios, electronicos, hogar, papeleria, ropa];
+const currentJsonDb = [
+  accesorios,
+  electronicos,
+  hogar,
+  papeleria,
+  ropa,
+  misterios,
+];
 
 export default uploadToFirestore = async () => {
   for (const category of currentJsonDb) {

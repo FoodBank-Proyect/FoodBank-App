@@ -1,0 +1,39 @@
+{
+  "id": 6,
+  "title": "Misterio",
+  "description": "Caja misteriosa con productos sorpresa de la tienda",
+  "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/categories/electronicos.png",
+  "items": [
+    {
+      "name": "Cajas misteriosas",
+      "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/tapete_negro.png",
+      "description": "Descubre tu suerte!",
+
+      "stars": 4,
+      "reviews": "4.4k",
+      "products": [
+        {
+          "id": 46,
+          "name": "Caja chica",
+          "description": "Caja con 3 productos aleatorios de la tienda",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/taza_negra.png"
+        },
+        {
+          "id": 47,
+          "name": "Caja mediana",
+          "description": "Caja con 6 productos aleatorios de la tienda",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/taza_blanca_sin_fondo.png"
+        },
+        {
+          "id": 48,
+          "name": "Caja grande",
+          "description": "Caja con 9 productos aleatorios de la tienda",
+          "price": 10,
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/taza_azul.png"
+        }
+      ]
+    }
+  ]
+}
