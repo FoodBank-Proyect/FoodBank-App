@@ -1,6 +1,5 @@
 import { View, Text } from "react-native";
 import React, { useEffect } from "react";
-import { accesorios, papeleria, ropa, hogar, electronicos } from "../constants";
 import FeaturedRow from "./featuredRow";
 import { useSelector } from "react-redux";
 import { selectDB } from "../slices/dbSlice";
