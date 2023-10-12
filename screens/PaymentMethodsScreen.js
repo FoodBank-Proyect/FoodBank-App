@@ -38,6 +38,7 @@ export default function PaymentMethodsScreen() {
               index={index}
               bank={metodo.banco}
               cardNumber={metodo.numeroTarjeta}
+              last4={metodo.last4}
             />
           );
         })

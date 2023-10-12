@@ -13,6 +13,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import SupportScreen from "./screens/SupportScreen";
 import PaymentMethodsScreen from "./screens/PaymentMethodsScreen";
 import AddPaymentMethodScreen from "./screens/AddPaymentMethodScreen";
+import PaymentModal from "./screens/PaymentModal";
 
 const Stack = createNativeStackNavigator();
 
@@ -76,6 +77,7 @@ export default function Navigation({ currentLocation }) {
           }}
         >
           <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+          <Stack.Screen name="PaymentModal" component={PaymentModal} />
         </Stack.Group>
         <Stack.Screen
           name="PaymentMethods"

@@ -11,8 +11,7 @@ import Animated, {
 export default function CreditCard({
   bank,
   cardNumber,
-  expiry,
-  cvv,
+  last4,
   fixedCard = false,
   index,
 }) {
@@ -115,7 +114,7 @@ export default function CreditCard({
             className="text-white"
             style={{ fontSize: 18, fontWeight: "600", letterSpacing: 2 }}
           >
-            {"****  ****  ****  " + cardNumber?.slice(12, 16)}
+            {"****  ****  ****  " + last4}
           </Text>
         </View>
         <View style={{ paddingTop: 24, paddingRight: 16 }}>

@@ -25,7 +25,6 @@ import { auth } from "../firebaseConfig";
 export default function CartScreen() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const stripe = useStripe();
   const cartItems = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
   const deliveryFee = 2;
@@ -33,35 +32,6 @@ export default function CartScreen() {
   useEffect(() => {
     if (!cartItems.length) navigation.goBack();
   }, [cartItems]);
-
-  const proceedToPayment = async () => {
-    const response = await fetch("http://10.43.45.204:8000/payment", {
-      method: "POST",
-      body: JSON.stringify({
-        email: auth.currentUser.email,
-        amount: (cartTotal + deliveryFee) * 100,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-    if (!response.ok) return Alert.alert(data.message);
-    const clientSecret = data.clientSecret;
-    const initSheet = await stripe.initPaymentSheet({
-      paymentIntentClientSecret: clientSecret,
-    });
-    if (initSheet.error) return Alert.alert(initSheet.error.message);
-    const presentSheet = await stripe.presentPaymentSheet({
-      clientSecret,
-    });
-    if (presentSheet.error) return Alert.alert(presentSheet.error.message);
-    else {
-      console.log("Payment successful");
-      navigation.navigate("OrderPreparing");
-    }
-  };
 
   return (
     <View className=" bg-white flex-1">
@@ -149,8 +119,7 @@ export default function CartScreen() {
         </View>
         <View>
           <TouchableOpacity
-            // () => navigation.navigate("OrderPreparing")
-            onPress={proceedToPayment}
+            onPress={() => navigation.navigate("PaymentModal")}
             className="p-3 rounded-full bg-emerald-500 shadow-lg shadow-gray-400"
           >
             <Text className="text-white text-center font-bold text-lg">

@@ -8,6 +8,17 @@ import Toast from "react-native-toast-message";
 import { auth } from "../firebaseConfig";
 import db from "../firebaseConfig";
 import { doc, updateDoc } from "firebase/firestore";
+import isaac from "isaac";
+import * as Crypto from "expo-crypto";
+import CryptoES from "crypto-es";
+
+var bcrypt = require("../utils/bcryptjs");
+bcrypt.setRandomFallback((len) => {
+  const buf = new Uint8Array(len);
+
+  return buf.map(() => Math.floor(isaac.random() * 256));
+});
+var salt = bcrypt.genSaltSync(5);
 
 export default function AddPaymentMethodScreen() {
   const [paymentMethods, setPaymentMethods] = React.useState(
@@ -19,18 +30,21 @@ export default function AddPaymentMethodScreen() {
   const [bank, setBank] = useState();
 
   const addMethodToFirestore = async () => {
+    const encrypted = CryptoES.AES.encrypt(cardNumber, "Card");
+    const decrypted = CryptoES.AES.decrypt(encrypted, "Card");
+    // console.log(encrypted.toString());
+    // console.log(decrypted.toString(CryptoES.enc.Utf8));
+
     auth.currentUser.paymentMethods.push({
       banco: bank,
-      numeroTarjeta: cardNumber,
+      numeroTarjeta: encrypted.toString(),
+      last4: cardNumber.slice(12, 16),
     });
-
     const docRef = doc(db, "userPermissions", auth.currentUser?.uid);
-
     // Update the methods
     await updateDoc(docRef, {
       paymentMethods: auth.currentUser.paymentMethods,
     });
-
     console.log("Payment method added to firestore");
   };
 
@@ -104,7 +118,12 @@ export default function AddPaymentMethodScreen() {
         }}
       />
 
-      <CreditCard bank={bank} cardNumber={cardNumber} fixedCard={true} />
+      <CreditCard
+        bank={bank}
+        cardNumber={cardNumber}
+        last4={cardNumber.slice(12, 16)}
+        fixedCard={true}
+      />
 
       <TouchableOpacity
         className="flex items-center justify-center bottom-32 absolute py-4 px-5 bg-emerald-400 shadow-md shadow-gray-400 rounded-full"
