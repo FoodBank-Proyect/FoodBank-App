@@ -7,7 +7,7 @@ import {
   Dimensions,
   TextInput,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as Icon from "react-native-feather";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
@@ -20,8 +20,12 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSelector } from "react-redux";
 import { selectCartTotal } from "../slices/cartSlice";
+import LottieView from "lottie-react-native";
+const Lottie = require("../assets/animations/Lottie4.json");
+import { StyleSheet } from "react-native";
 
 export default function PaymentModal() {
+  const [processingPayment, setProcessingPayment] = useState(false);
   const halfScreen = Math.round(Dimensions.get("window").height / 1.2);
 
   const navigation = useNavigation();
@@ -62,15 +66,23 @@ export default function PaymentModal() {
           />
         </TouchableOpacity>
         <Text className="font-bold text-2xl self-center">Pago</Text>
-        {auth.currentUser.paymentMethods.length > 0 && (
-          <PaymentWhenExistingMethods />
+        {auth.currentUser.paymentMethods.length > 0 && !processingPayment ? (
+          <PaymentWhenExistingMethods
+            setProcessingPayment={setProcessingPayment}
+          />
+        ) : !processingPayment ? (
+          <Text className="text-sm self-center mt-2 font-semibold">
+            Agrega un método de pago
+          </Text>
+        ) : (
+          <ProcessingPayment />
         )}
       </View>
     </View>
   );
 }
 
-function PaymentWhenExistingMethods() {
+function PaymentWhenExistingMethods({ setProcessingPayment }) {
   const navigation = useNavigation();
   const [selectedCard, setSelectedCard] = useState();
   const total = useSelector(selectCartTotal);
@@ -159,7 +171,11 @@ function PaymentWhenExistingMethods() {
               <TouchableOpacity
                 className="bg-blue-800 rounded-xl px-5 py-4"
                 onPress={() => {
-                  navigation.navigate("OrderPreparing");
+                  setProcessingPayment(true);
+                  // setTimeout(() => {
+                  //   setProcessingPayment(false);
+                  //   navigation.navigate("OrderPlaced");
+                  // }, 2000);
                 }}
               >
                 <Text className="text-white font-bold text-xl">
@@ -199,5 +215,61 @@ function PaymentWhenExistingMethods() {
         )}
       </View>
     </>
+  );
+}
+
+function ProcessingPayment() {
+  const animatedValue = useSharedValue(-300);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateY: withTiming(animatedValue.value, {
+            duration: 1700,
+            easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+          }),
+        },
+      ],
+    };
+  });
+
+  const animation = useRef(null);
+  useEffect(() => {
+    setTimeout(() => {
+      animation.current?.play();
+    }, 1600);
+
+    setTimeout(() => {
+      animatedValue.value = -100;
+    }, 1000);
+  }, []);
+
+  const navigation = useNavigation();
+
+  return (
+    <View className="flex-col justify-center items-center bottom-16 w-full h-full">
+      <LottieView
+        autoPlay
+        ref={animation}
+        style={{
+          width: 300,
+          height: 300,
+        }}
+        source={Lottie}
+        loop={false}
+        onAnimationFinish={() => {
+          navigation.navigate("Delivery");
+        }}
+      />
+      <Animated.View
+        style={[animatedStyle]}
+        className="flex-row justify-center items-center self-center top-36 w-full"
+      >
+        <Text className="text-gray-500 font-bold text-3xl">
+          Procesando pago...
+        </Text>
+      </Animated.View>
+    </View>
   );
 }
