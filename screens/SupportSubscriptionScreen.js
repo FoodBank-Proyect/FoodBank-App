@@ -60,7 +60,7 @@ export default function SupportSubscriptionScreen() {
           height: "100%",
           width: "100%",
         }}
-        className="rounded-2xl bg-white pt-10"
+        className="rounded-2xl bg-white"
       >
         <TouchableOpacity
           onPress={() => navigation.navigate("Home")}
@@ -80,20 +80,20 @@ export default function SupportSubscriptionScreen() {
           style={{
             width: 400,
             height: 400,
+            marginBottom: -20,
           }}
           source={Lottie}
           loop
-          className="mx-auto"
         />
 
         {/* Header */}
         <View className="flex flex-col items-center">
-          <Text className="text-3xl font-extrabold text-center text-blue-500 w-4/5">
+          <Text className="text-3xl font-extrabold text-center text-blue-500 w-11/12">
             Ayuda a una persona y recibe beneficios
           </Text>
 
           {/* Lista con beneficios */}
-          <View className="flex flex-col items-left mx-auto mt-10 w-2/3">
+          <View className="flex flex-col items-left mx-auto mt-10 w-4/5">
             <View className="flex flex-row items-center gap-x-2">
               <Icon.User strokeWidth={2.5} width={25} height={25} />
               <Text className="text-xl text-gray-500">
