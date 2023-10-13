@@ -25,6 +25,8 @@ import LottieView from "lottie-react-native";
 const Lottie = require("../assets/animations/Lottie4.json");
 import { StyleSheet } from "react-native";
 import { useFocus } from "../utils/useFocus";
+import db from "../firebaseConfig";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 export default function PaymentModal() {
   const [processingPayment, setProcessingPayment] = useState(false);
@@ -247,6 +249,7 @@ function PaymentWhenExistingMethods({ setProcessingPayment }) {
 function ProcessingPayment() {
   const animatedValue = useSharedValue(-300);
   const opacity = useSharedValue(0);
+  const total = useSelector(selectCartTotal);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -292,6 +295,7 @@ function ProcessingPayment() {
         source={Lottie}
         loop={false}
         onAnimationFinish={() => {
+          confirmPaymentOnFirestore(total);
           navigation.navigate("Delivery");
         }}
       />
@@ -306,3 +310,27 @@ function ProcessingPayment() {
     </View>
   );
 }
+
+const confirmPaymentOnFirestore = async (total) => {
+  // Update the collection orders on the document: auth.currentUser.uid
+  const docRef = doc(db, "orders", auth.currentUser.uid);
+  const date = new Date();
+  const order = {
+    date: date,
+    total: total,
+    status: "pending",
+  };
+
+  // If the document exists, update it, if not, create it
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    await updateDoc(docRef, {
+      orders: [...docSnap.data().orders, order],
+    });
+  } else {
+    await setDoc(docRef, {
+      orders: [order],
+    });
+  }
+  console.log("Order placed for user: ", auth.currentUser.uid);
+};
