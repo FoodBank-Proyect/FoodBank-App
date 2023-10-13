@@ -16,6 +16,7 @@ import PaymentMethodsScreen from "./screens/PaymentMethodsScreen";
 import AddPaymentMethodScreen from "./screens/AddPaymentMethodScreen";
 import PaymentModal from "./screens/PaymentModal";
 import SupportSubscriptionScreen from "./screens/SupportSubscriptionScreen";
+import ThankYouScreen from "./screens/ThankYouScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -96,6 +97,11 @@ export default function Navigation({ currentLocation }) {
           name="AddPaymentMethod"
           component={AddPaymentMethodScreen}
           options={{ presentation: "modal" }}
+        />
+        <Stack.Screen
+          name="ThankYou"
+          component={ThankYouScreen}
+          options={{ presentation: "fullScreenModal" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

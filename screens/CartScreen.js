@@ -11,7 +11,6 @@ import { useNavigation } from "@react-navigation/native";
 import * as Icon from "react-native-feather";
 import { themeColors } from "../theme";
 import { useSelector, useDispatch } from "react-redux";
-import { selectProduct } from "../slices/productSlice";
 import {
   removeFromCart,
   selectCartItems,

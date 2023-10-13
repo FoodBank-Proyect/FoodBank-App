@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addToCart, emptyCart } from "../slices/cartSlice";
 const Lottie = require("../assets/animations/Crown.json");
 
-export default function SupportSubscriptionScreen() {
+export default function ThankYouScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -65,18 +65,6 @@ export default function SupportSubscriptionScreen() {
         }}
         className="rounded-2xl bg-white"
       >
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Home")}
-          className="absolute z-10 rounded-full p-2 top-3 left-3 bg-gray-200 "
-        >
-          <Icon.ArrowLeft
-            strokeWidth={2.5}
-            stroke="black"
-            width={25}
-            height={25}
-          />
-        </TouchableOpacity>
-
         <View className="flex-col justify-center items-center w-full">
           <LottieView
             autoPlay
@@ -95,30 +83,13 @@ export default function SupportSubscriptionScreen() {
         {/* Header */}
         <View className="flex flex-col items-center">
           <Text className="text-3xl font-extrabold text-center text-blue-500 w-11/12">
-            Ayuda a una persona y recibe beneficios
+            Gracias por tu ayuda!
           </Text>
 
-          {/* Lista con beneficios */}
-          <View className="flex flex-col items-left mx-auto mt-10 w-4/5">
-            <View className="flex flex-row items-center gap-x-2">
-              <Icon.User strokeWidth={2.5} width={25} height={25} />
-              <Text className="text-xl text-gray-500">
-                Una persona mensualmente
-              </Text>
-            </View>
-            <View className="flex flex-row items-center gap-x-2">
-              <Icon.Percent strokeWidth={2.5} width={25} height={25} />
-              <Text className="text-xl text-gray-500">
-                Descuentos especiales
-              </Text>
-            </View>
-            <View className="flex flex-row items-center gap-x-2">
-              <Icon.Box strokeWidth={2.5} width={25} height={25} />
-              <Text className="text-xl text-gray-500">
-                Caja misteriosa gratis mensual
-              </Text>
-            </View>
-          </View>
+          <Text className="text-xl text-gray-500 font-semibold text-center mt-2 w-11/12">
+            Tu apoyo es muy importante para nosotros, y hoy, gracias a ti,
+            alguien más mejorará su calidad de vida.
+          </Text>
 
           <TouchableOpacity
             onPress={() => {
@@ -135,23 +106,17 @@ export default function SupportSubscriptionScreen() {
                 type: "Subscription",
               });
             }}
-            className="rounded-full px-6 py-4 mt-10 bg-green-500"
+            className="rounded-full flex-row justify-center items-center px-6 py-4 mt-10 bg-blue-500"
           >
-            <Text className="text-white text-xl font-bold">Subscribirme</Text>
+            <Text className="text-white text-xl font-bold">Continuar</Text>
+            {/* Arrow right icon */}
+            <Icon.ArrowRight
+              className="ml-1"
+              stroke="white"
+              width={25}
+              height={25}
+            />
           </TouchableOpacity>
-
-          <View className="flex flex-col items-center mt-10">
-            <Text className="text-gray-500">
-              Al subscribirte aceptas los{" "}
-              <Text className="text-blue-500 underline">
-                términos y condiciones
-              </Text>
-            </Text>
-
-            <Text className="text-gray-500">
-              Cobro mensual de <Text className="text-blue-500">$20</Text>
-            </Text>
-          </View>
         </View>
       </View>
     </View>

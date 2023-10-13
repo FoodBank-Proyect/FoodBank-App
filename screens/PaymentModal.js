@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import * as Icon from "react-native-feather";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
 import CreditCard from "../components/creditCard";
 import Animated, {
@@ -251,6 +251,10 @@ function ProcessingPayment() {
   const opacity = useSharedValue(0);
   const total = useSelector(selectCartTotal);
 
+  // Get params from navigation
+  const { params } = useRoute();
+  let parameters = params;
+
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -296,7 +300,11 @@ function ProcessingPayment() {
         loop={false}
         onAnimationFinish={() => {
           confirmPaymentOnFirestore(total);
-          navigation.navigate("Delivery");
+          if (parameters?.type) {
+            navigation.navigate("ThankYou");
+          } else {
+            navigation.navigate("Delivery");
+          }
         }}
       />
       <Animated.View

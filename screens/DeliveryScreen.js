@@ -12,7 +12,6 @@ import MapView, { Marker } from "react-native-maps";
 import { themeColors } from "../theme";
 import * as Icon from "react-native-feather";
 import { useSelector } from "react-redux";
-import { selectProduct } from "../slices/productSlice";
 import { useDispatch } from "react-redux";
 import { emptyCart } from "../slices/cartSlice";
 
