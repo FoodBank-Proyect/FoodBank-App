@@ -2,11 +2,11 @@
   "id": 6,
   "title": "Misterio",
   "description": "Caja misteriosa con productos sorpresa de la tienda",
-  "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/categories/electronicos.png",
+  "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/categories/package.png",
   "items": [
     {
       "name": "Cajas misteriosas",
-      "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/tapete_negro.png",
+      "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/caja_misteriosa_grande.webp",
       "description": "Descubre tu suerte!",
 
       "stars": 4,
@@ -17,21 +17,21 @@
           "name": "Caja chica",
           "description": "Caja con 3 productos aleatorios de la tienda",
           "price": 10,
-          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/taza_negra.png"
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/caja_misteriosa_chica.jpg"
         },
         {
           "id": 47,
           "name": "Caja mediana",
           "description": "Caja con 6 productos aleatorios de la tienda",
           "price": 10,
-          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/taza_blanca_sin_fondo.png"
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/caja_misteriosa_mediana.jpg"
         },
         {
           "id": 48,
           "name": "Caja grande",
           "description": "Caja con 9 productos aleatorios de la tienda",
           "price": 10,
-          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/taza_azul.png"
+          "image": "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/caja_misteriosa_grande.webp"
         }
       ]
     }
