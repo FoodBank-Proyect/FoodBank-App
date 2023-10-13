@@ -92,32 +92,20 @@ export default function DeliveryScreen({ currentLocation }) {
               2 - 3 días
             </Text>
             <Text className="mt-2 text-gray-700 font-semibold">
-              {location.address.name}
+              {location.address.name.length > 35
+                ? location.address.name.slice(0, 35) + "..."
+                : location.address.name}
             </Text>
           </View>
           <Image
-            className="h-24 w-24"
-            source={require("../assets/images/bikeGuy2.gif")}
+            className="h-16 w-16"
+            source={{
+              uri: "https://aws-webdemo-bucket.s3.us-west-2.amazonaws.com/foodbank-app/categories/package.png",
+            }}
           />
         </View>
 
         <View className="p-2 flex-row justify-between items-center rounded-full my-5 mx-2 bg-gray-400/20">
-          {/* <View
-            style={{ backgroundColor: "rgba(255,255,255,0.4)" }}
-            className="p-1 rounded-full"
-          >
-            <Image
-              style={{ backgroundColor: "rgba(255,255,255,0.4)" }}
-              className="w-16 h-16 rounded-full"
-              source={require("../assets/images/deliveryGuy.png")}
-            />
-          </View> */}
-
-          {/* <View className="flex-1 ml-3">
-            <Text className="text-lg font-bold text-gray-700">Syed Noman</Text>
-            <Text className="text-gray-700 font-semibold">Your Rider</Text>
-          </View> */}
-
           <TouchableOpacity
             className="bg-white p-5 rounded-full w-28 items-center"
             onPress={() => navigation.navigate("Home")}
