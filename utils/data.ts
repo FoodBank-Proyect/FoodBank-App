@@ -18,15 +18,15 @@ const data: OnboardingData[] = [
   },
   {
     id: 2,
-    animation: require("../assets//animations/Lottie2.json"),
+    animation: require("../assets//animations/Lottie7.json"),
     text: "Juntos, podemos hacer la diferencia",
     textColor: "#1e2169",
     backgroundColor: "#bae4fd",
   },
   {
     id: 3,
-    animation: require("../assets//animations/Lottie3.json"),
-    text: "Ayuda a un niño a tener un mejor futuro",
+    animation: require("../assets//animations/Lottie6.json"),
+    text: "Ayuda a una persona en una situación complicada",
     textColor: "#F15937",
     backgroundColor: "#faeb8a",
   },

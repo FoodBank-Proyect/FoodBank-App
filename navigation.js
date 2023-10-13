@@ -15,6 +15,7 @@ import SupportScreen from "./screens/SupportScreen";
 import PaymentMethodsScreen from "./screens/PaymentMethodsScreen";
 import AddPaymentMethodScreen from "./screens/AddPaymentMethodScreen";
 import PaymentModal from "./screens/PaymentModal";
+import SupportSubscriptionScreen from "./screens/SupportSubscriptionScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -62,6 +63,11 @@ export default function Navigation({ currentLocation }) {
         <Stack.Screen
           name="Support"
           component={SupportScreen}
+          options={{ presentation: "fullScreenModal" }}
+        />
+        <Stack.Screen
+          name="SupportSuscription"
+          component={SupportSubscriptionScreen}
           options={{ presentation: "fullScreenModal" }}
         />
         <Stack.Screen

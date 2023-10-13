@@ -88,7 +88,7 @@ const CustomButton = ({ flatListRef, flatListIndex, dataLength, x }: Props) => {
             index: flatListIndex.value + 1,
           });
         } else {
-          navigation.navigate("Home");
+          navigation.navigate("SupportSuscription");
         }
       }}
     >
@@ -96,7 +96,7 @@ const CustomButton = ({ flatListRef, flatListIndex, dataLength, x }: Props) => {
         style={[styles.container, buttonAnimationStyle, animatedColor]}
       >
         <Animated.Text style={[styles.textButton, textAnimationStyle]}>
-          Get Started
+          Empezar
         </Animated.Text>
         <Animated.Image
           source={require("../assets/images/ArrowIcon.png")}
