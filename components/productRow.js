@@ -44,7 +44,7 @@ export default function DishRow({ item }) {
             <TouchableOpacity
               onPress={handleDecrease}
               disabled={!cartItem}
-              className="p-1 rounded-full"
+              className="p-2 rounded-full"
               style={{ backgroundColor: themeColors.bgColor(1) }}
             >
               <Icon.Minus
@@ -58,7 +58,7 @@ export default function DishRow({ item }) {
 
             <TouchableOpacity
               onPress={handleIncrease}
-              className="p-1 rounded-full"
+              className="p-2 rounded-full"
               style={{ backgroundColor: themeColors.bgColor(1) }}
             >
               <Icon.Plus

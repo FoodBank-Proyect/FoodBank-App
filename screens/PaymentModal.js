@@ -17,16 +17,34 @@ import Animated, {
   withTiming,
   useAnimatedStyle,
   Easing,
+  set,
 } from "react-native-reanimated";
 import { useSelector } from "react-redux";
 import { selectCartTotal } from "../slices/cartSlice";
 import LottieView from "lottie-react-native";
 const Lottie = require("../assets/animations/Lottie4.json");
 import { StyleSheet } from "react-native";
+import { useFocus } from "../utils/useFocus";
 
 export default function PaymentModal() {
   const [processingPayment, setProcessingPayment] = useState(false);
   const halfScreen = Math.round(Dimensions.get("window").height / 1.2);
+  const { focusCount, isFocused } = useFocus();
+  const [paymentMethods, setPaymentMethods] = React.useState(
+    auth.currentUser.paymentMethods || []
+  );
+
+  useEffect(() => {
+    if (focusCount > 1 && isFocused) {
+      setPaymentMethods(auth.currentUser.paymentMethods);
+    }
+
+    if (paymentMethods.length === 0) {
+      setTimeout(() => {
+        navigation.navigate("AddPaymentMethod");
+      }, 1000);
+    }
+  });
 
   const navigation = useNavigation();
   return (
@@ -66,14 +84,16 @@ export default function PaymentModal() {
           />
         </TouchableOpacity>
         <Text className="font-bold text-2xl self-center">Pago</Text>
-        {auth.currentUser.paymentMethods.length > 0 && !processingPayment ? (
+        {paymentMethods.length > 0 && !processingPayment ? (
           <PaymentWhenExistingMethods
             setProcessingPayment={setProcessingPayment}
           />
         ) : !processingPayment ? (
-          <Text className="text-sm self-center mt-2 font-semibold">
-            Agrega un método de pago
-          </Text>
+          <View className="flex-col justify-center items-center absolute w-full bottom-96 px-4 gap-y-28">
+            <Text className="text-2xl text-center text-gray-500 self-center mt-2 font-semibold">
+              Agrega un método de pago para continuar...
+            </Text>
+          </View>
         ) : (
           <ProcessingPayment />
         )}
@@ -120,7 +140,7 @@ function PaymentWhenExistingMethods({ setProcessingPayment }) {
 
   useEffect(() => {
     if (selectedCard) {
-      animatedValue.value = -100;
+      animatedValue.value = -120;
     } else {
       animatedValue.value = 0;
     }
@@ -132,7 +152,7 @@ function PaymentWhenExistingMethods({ setProcessingPayment }) {
         Selecciona un método o agrega uno nuevo
       </Text>
 
-      <View className="flex-col justify-center items-center absolute w-full bottom-64 px-4 gap-y-28">
+      <View className="flex-col justify-center items-center absolute w-full top-60 px-4 gap-y-28">
         {selectedCard ? (
           <>
             <Animated.View
@@ -172,10 +192,6 @@ function PaymentWhenExistingMethods({ setProcessingPayment }) {
                 className="bg-blue-800 rounded-xl px-5 py-4"
                 onPress={() => {
                   setProcessingPayment(true);
-                  // setTimeout(() => {
-                  //   setProcessingPayment(false);
-                  //   navigation.navigate("OrderPlaced");
-                  // }, 2000);
                 }}
               >
                 <Text className="text-white font-bold text-xl">
@@ -196,22 +212,32 @@ function PaymentWhenExistingMethods({ setProcessingPayment }) {
             </Animated.View>
           </>
         ) : (
-          auth.currentUser.paymentMethods.map((metodo, index) => {
-            return (
-              <TouchableOpacity
-                key={index}
-                className="flex-row justify-between items-center w-full"
-                onPress={() => setSelectedCard(metodo)}
-              >
-                <CreditCard
-                  index={index}
-                  bank={metodo.banco}
-                  cardNumber={metodo.numeroTarjeta}
-                  last4={metodo.last4}
-                />
-              </TouchableOpacity>
-            );
-          })
+          <>
+            {auth.currentUser.paymentMethods.map((metodo, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  className="flex-row justify-between items-center w-full"
+                  onPress={() => setSelectedCard(metodo)}
+                >
+                  <CreditCard
+                    index={index}
+                    bank={metodo.banco}
+                    cardNumber={metodo.numeroTarjeta}
+                    last4={metodo.last4}
+                  />
+                </TouchableOpacity>
+              );
+            })}
+            <TouchableOpacity
+              className="flex-row justify-center items-center self-center top-10 w-full"
+              onPress={() => navigation.navigate("AddPaymentMethod")}
+            >
+              <Text className="text-blue-900 font-bold text-xl">
+                Agregar método de pago
+              </Text>
+            </TouchableOpacity>
+          </>
         )}
       </View>
     </>
@@ -220,6 +246,7 @@ function PaymentWhenExistingMethods({ setProcessingPayment }) {
 
 function ProcessingPayment() {
   const animatedValue = useSharedValue(-300);
+  const opacity = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -231,11 +258,17 @@ function ProcessingPayment() {
           }),
         },
       ],
+      opacity: opacity.value,
     };
   });
 
   const animation = useRef(null);
   useEffect(() => {
+    opacity.value = withTiming(1, {
+      duration: 500,
+      easing: Easing.ease,
+    });
+
     setTimeout(() => {
       animation.current?.play();
     }, 1600);

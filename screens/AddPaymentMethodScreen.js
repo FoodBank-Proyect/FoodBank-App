@@ -67,8 +67,7 @@ export default function AddPaymentMethodScreen() {
       bank != "Banco desconocido"
     ) {
       addMethodToFirestore();
-      navigation.navigate("Profile");
-      navigation.navigate("PaymentMethods");
+      navigation.goBack();
     } else if (bank == "Banco desconocido") {
       Toast.show({
         type: "error",

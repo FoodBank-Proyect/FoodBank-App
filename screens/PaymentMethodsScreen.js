@@ -6,11 +6,20 @@ import CreditCard from "../components/creditCard";
 import { auth } from "../firebaseConfig";
 import uploadToFirestore from "../utils/uploadToFirestore";
 import dataToUpload from "../constants/metodosPago.json";
+import { useFocus } from "../utils/useFocus";
 
 export default function PaymentMethodsScreen() {
   const [paymentMethods, setPaymentMethods] = React.useState(
     auth.currentUser.paymentMethods || []
   );
+
+  const { focusCount, isFocused } = useFocus();
+
+  useEffect(() => {
+    if (focusCount > 1 && isFocused) {
+      setPaymentMethods(auth.currentUser.paymentMethods);
+    }
+  });
 
   const [loading, setLoading] = React.useState(false);
 
@@ -30,7 +39,7 @@ export default function PaymentMethodsScreen() {
       </TouchableOpacity>
       <Text className="text-2xl font-bold mb-10">Tus métodos de pago</Text>
 
-      {!loading && paymentMethods.length > 0 ? (
+      {!loading && paymentMethods?.length > 0 ? (
         paymentMethods.map((metodo, index) => {
           return (
             <CreditCard
@@ -42,7 +51,7 @@ export default function PaymentMethodsScreen() {
             />
           );
         })
-      ) : !loading && paymentMethods.length === 0 ? (
+      ) : !loading && paymentMethods?.length === 0 ? (
         <View>
           <Text className="text-xl font-bold mb-10 text-gray-500 italic">
             No tienes métodos de pago
