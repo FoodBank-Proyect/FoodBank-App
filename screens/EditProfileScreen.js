@@ -14,45 +14,19 @@ import { auth } from "../firebaseConfig";
 import db from "../firebaseConfig";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { Image } from "expo-image";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Importa AsyncStorage
 
 export default function EditProfileScreen() {
-  const halfScreen = Math.round(Dimensions.get("window").height / 1.2);
-  const [newDisplayName, setNewDisplayName] = useState(""); // Nuevo nombre de usuario
+  const halfScreen = Math.round(Dimensions.get("window").height / 1.3);
+  const [newDisplayName, setNewDisplayName] = useState(auth.currentUser.name); // Nuevo estado para el nombre de usuario
   const [selectedGender, setSelectedGender] = useState(auth.currentUser.gender); // Género seleccionado
-  const [isEditingDisplayName, setIsEditingDisplayName] = useState(false); // Estado para habilitar la edición del nombre
-  const [isEditingGender, setIsEditingGender] = useState(false); // Estado para habilitar la edición del género
   const [isPendingChanges, setIsPendingChanges] = useState(false); // Estado para verificar si hay cambios pendientes de confirmación
   const [isChangesConfirmed, setIsChangesConfirmed] = useState(false); // Nuevo estado para controlar si los cambios se han confirmado
 
-  const fetchDisplayNameFromFirestore = async () => {
-    try {
-      const userUid = auth.currentUser.uid;
-      const userRef = doc(db, "userPermissions", userUid);
-      const userDoc = await getDoc(userRef);
-
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        if (userData.displayName) {
-          setNewDisplayName(userData.displayName);
-        }
-      }
-    } catch (error) {
-      console.error(
-        "Error al obtener el nombre de usuario desde Firestore:",
-        error
-      );
-    }
-  };
-
-  useEffect(() => {
-    fetchDisplayNameFromFirestore();
-  }, []);
-
-  // Guardar el género en la base de datos
   const saveGenderToFirestore = async (gender) => {
     try {
-      const userUid = auth.currentUser.uid;
-      const userRef = doc(db, "userPermissions", userUid);
+      auth.currentUser.gender = gender;
+      const userRef = doc(db, "userPermissions", auth.currentUser.uid);
 
       await updateDoc(userRef, {
         gender: gender,
@@ -69,20 +43,27 @@ export default function EditProfileScreen() {
   // Guardar el nombre de usuario en la base de datos
   const saveDisplayNameToFirestore = async () => {
     try {
-      const userUid = auth.currentUser.uid; // Obtiene el UID del usuario actual
-      const userRef = doc(db, "userPermissions", userUid); // Referencia al documento del usuario en Firestore
+      auth.currentUser.name = newDisplayName; // Actualiza el nombre de usuario en el objeto de autenticación
+      const userRef = doc(db, "userPermissions", auth.currentUser.uid); // Referencia al documento del usuario en Firestore
 
-      // Actualiza el campo 'displayName' en Firestore
       await updateDoc(userRef, {
-        displayName: newDisplayName,
+        name: newDisplayName,
       });
 
       console.log("Nombre de usuario actualizado exitosamente en Firestore.");
     } catch (error) {
       console.error("Error al actualizar el nombre en Firestore:", error);
     }
-    setIsPendingChanges(true); // Marcar los cambios como pendientes de confirmación
+    setIsPendingChanges(true);
   };
+
+  useEffect(() => {
+    if (isChangesConfirmed) {
+      setTimeout(() => {
+        navigation.goBack();
+      }, 1000);
+    }
+  }, [isChangesConfirmed]);
 
   const navigation = useNavigation();
   return (
@@ -137,15 +118,11 @@ export default function EditProfileScreen() {
             />
           </View>
           {/* User name */}
-          {/* User name */}
           <Text className="font-bold text-base self-start mt-5 ml-10">
             Nombre de usuario
           </Text>
           <TextInput
-            placeholder={
-              auth.currentUser.displayName ||
-              auth.currentUser.email.split("@")[0]
-            }
+            placeholder="Nombre de usuario"
             value={newDisplayName}
             onChangeText={(text) => setNewDisplayName(text)}
             style={{
@@ -159,29 +136,6 @@ export default function EditProfileScreen() {
             }}
             placeholderTextColor="black"
           />
-
-          {!isChangesConfirmed && (
-            <TouchableOpacity
-              onPress={() => {
-                saveDisplayNameToFirestore();
-                setIsChangesConfirmed(true); // Marcar los cambios como confirmados
-              }}
-              style={{
-                backgroundColor: "#333",
-                padding: 10,
-                borderRadius: 10,
-                marginTop: 10,
-                width: "80%",
-              }}
-            >
-              <Text style={{ color: "#fff" }}>Guardar Cambios</Text>
-            </TouchableOpacity>
-          )}
-          {isChangesConfirmed && (
-            <Text style={{ color: "green", marginTop: 10 }}>
-              Cambios confirmados
-            </Text>
-          )}
         </View>
 
         <View className="flex-col justify-center items-center mt-3">
@@ -203,7 +157,7 @@ export default function EditProfileScreen() {
           />
         </View>
 
-        <View className="flex-col justify-center items-center mt-6">
+        <View className="flex-col justify-center items-center mt-6 mb-6">
           <Text className="font-bold text-base self-start mt-3 ml-10">
             Sexo
           </Text>
@@ -211,7 +165,6 @@ export default function EditProfileScreen() {
             <TouchableOpacity
               onPress={() => {
                 setSelectedGender("Hombre");
-                saveGenderToFirestore("Hombre");
               }}
               style={{
                 marginRight: 20,
@@ -221,9 +174,7 @@ export default function EditProfileScreen() {
               }}
             >
               <Text
-                style={{
-                  color: selectedGender === "Hombre" ? "#fff" : "#000",
-                }}
+                style={{ color: selectedGender === "Hombre" ? "#fff" : "#000" }}
               >
                 Hombre
               </Text>
@@ -231,7 +182,6 @@ export default function EditProfileScreen() {
             <TouchableOpacity
               onPress={() => {
                 setSelectedGender("Mujer");
-                saveGenderToFirestore("Mujer");
               }}
               style={{
                 backgroundColor: selectedGender === "Mujer" ? "#333" : "#fff",
@@ -240,9 +190,7 @@ export default function EditProfileScreen() {
               }}
             >
               <Text
-                style={{
-                  color: selectedGender === "Mujer" ? "#fff" : "#000",
-                }}
+                style={{ color: selectedGender === "Mujer" ? "#fff" : "#000" }}
               >
                 Mujer
               </Text>
@@ -250,21 +198,34 @@ export default function EditProfileScreen() {
           </View>
         </View>
 
-        {/* Sign Out Button at the bottom */}
-        {/* <View className="flex-1 mt-6 items-center">
+        {!isChangesConfirmed && (
           <TouchableOpacity
             onPress={() => {
-              auth.signOut();
-              auth.currentUser = null;
-              navigation.navigate("Login");
+              saveDisplayNameToFirestore();
+              saveGenderToFirestore(selectedGender);
+              setIsChangesConfirmed(true);
             }}
-            className="bg-red-500 rounded-md p-3 w-1/2"
+            style={{
+              backgroundColor: "#333",
+              borderRadius: 10,
+              marginTop: 10,
+              width: "80%",
+            }}
+            className="flex-row justify-center items-center self-center py-3"
           >
-            <Text className="text-white text-center font-bold text-lg">
-              Cerrar sesión
+            <Text style={{ color: "#fff" }} className="text-lg">
+              Guardar Cambios
             </Text>
           </TouchableOpacity>
-        </View> */}
+        )}
+        {isChangesConfirmed && (
+          <Text
+            style={{ color: "green", marginTop: 10 }}
+            className="flex-row justify-center items-center self-center py-3"
+          >
+            Cambios confirmados
+          </Text>
+        )}
       </View>
     </View>
   );

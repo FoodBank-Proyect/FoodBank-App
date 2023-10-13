@@ -13,29 +13,37 @@ import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
 import updateFirestore from "../utils/updateFirestore";
 import { doc, getDoc } from "firebase/firestore";
-import db from "../firebaseConfig"; // Assuming you have a Firebase configuration file
+import db from "../firebaseConfig";
+import { useFocus } from "../utils/useFocus";
 
 export default function ProfileSCcreen() {
   const [displayName, setDisplayName] = useState(""); // Add this state variable
   const navigation = useNavigation();
-  useEffect(() => {
-    const fetchDisplayNameFromFirestore = async () => {
-      try {
-        const userUid = auth.currentUser.uid;
-        const userRef = doc(db, "userPermissions", userUid);
 
-        const docSnap = await getDoc(userRef);
-        if (docSnap.exists()) {
-          const updatedDisplayName = docSnap.data().displayName;
-          setDisplayName(updatedDisplayName); // Update the state with the new display name
-        }
-      } catch (error) {
-        console.error("Error fetching display name from Firestore:", error);
-      }
-    };
+  const { focusCount, isFocused } = useFocus();
 
-    fetchDisplayNameFromFirestore(); // Fetch the updated display name when the component mounts
-  }, []);
+  // const fetchDisplayNameFromFirestore = async () => {
+  //   try {
+  //     const userRef = doc(db, "userPermissions", auth.currentUser.uid);
+
+  //     const docSnap = await getDoc(userRef);
+  //     if (docSnap.exists()) {
+  //       const updatedDisplayName = docSnap.data().name;
+  //       setDisplayName(updatedDisplayName); // Update the state with the new display name
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching display name from Firestore:", error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (focusCount > 1 && isFocused) {
+  //     console.log("ProfileScreen focused");
+  //     fetchDisplayNameFromFirestore();
+  //   }
+
+  //   fetchDisplayNameFromFirestore(); // Fetch the updated display name when the component mounts
+  // }, []);
   return (
     <View
       style={{
@@ -69,9 +77,7 @@ export default function ProfileSCcreen() {
             {/* User name */}
             <Text className="text-xl mt-3">Hola</Text>
             <Text className="text-2xl font-extrabold mt-2">
-              {displayName ||
-                auth.currentUser.displayName ||
-                auth.currentUser.email.split("@")[0]}
+              {auth.currentUser.name || auth.currentUser.email.split("@")[0]}
             </Text>
             {/* Button to upload the db */}
             {auth.currentUser.type === "admin" && (

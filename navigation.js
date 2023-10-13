@@ -84,6 +84,7 @@ export default function Navigation({ currentLocation }) {
           }}
         >
           <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+          <Stack.Screen name="OrdersHistory" component={OrdersHistory} />
           <Stack.Screen name="PaymentModal" component={PaymentModal} />
         </Stack.Group>
         <Stack.Screen
