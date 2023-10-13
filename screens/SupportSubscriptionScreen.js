@@ -60,7 +60,7 @@ export default function SupportSubscriptionScreen() {
           height: "100%",
           width: "100%",
         }}
-        className="rounded-2xl bg-white absolute bottom-10"
+        className="rounded-2xl bg-white"
       >
         <TouchableOpacity
           onPress={() => navigation.navigate("Home")}
