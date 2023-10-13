@@ -21,8 +21,7 @@ export default function ProfileSCcreen() {
   useEffect(() => {
     const fetchDisplayNameFromFirestore = async () => {
       try {
-        const userUid = auth.currentUser.uid;
-        const userRef = doc(db, "userPermissions", userUid);
+        const userRef = doc(db, "userPermissions", auth.currentUser.uid);
 
         const docSnap = await getDoc(userRef);
         if (docSnap.exists()) {

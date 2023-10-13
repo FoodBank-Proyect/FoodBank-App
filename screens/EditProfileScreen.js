@@ -14,26 +14,23 @@ import { auth } from "../firebaseConfig";
 import db from "../firebaseConfig";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { Image } from "expo-image";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Importa AsyncStorage
 
 export default function EditProfileScreen() {
   const halfScreen = Math.round(Dimensions.get("window").height / 1.2);
   const [newDisplayName, setNewDisplayName] = useState(""); // Nuevo nombre de usuario
   const [selectedGender, setSelectedGender] = useState(auth.currentUser.gender); // Género seleccionado
-  const [isEditingDisplayName, setIsEditingDisplayName] = useState(false); // Estado para habilitar la edición del nombre
-  const [isEditingGender, setIsEditingGender] = useState(false); // Estado para habilitar la edición del género
-  const [isPendingChanges, setIsPendingChanges] = useState(false); // Estado para verificar si hay cambios pendientes de confirmación
+  const [setIsPendingChanges] = useState(false); // Estado para verificar si hay cambios pendientes de confirmación
   const [isChangesConfirmed, setIsChangesConfirmed] = useState(false); // Nuevo estado para controlar si los cambios se han confirmado
 
   const fetchDisplayNameFromFirestore = async () => {
     try {
-      const userUid = auth.currentUser.uid;
-      const userRef = doc(db, "userPermissions", userUid);
+      const userRef = doc(db, "userPermissions", auth.currentUser.uid);
       const userDoc = await getDoc(userRef);
 
       if (userDoc.exists()) {
-        const userData = userDoc.data();
-        if (userData.displayName) {
-          setNewDisplayName(userData.displayName);
+        if (userDoc.data().displayName) {
+          setNewDisplayName(userDoc.data().displayName);
         }
       }
     } catch (error) {
@@ -43,16 +40,10 @@ export default function EditProfileScreen() {
       );
     }
   };
-
-  useEffect(() => {
-    fetchDisplayNameFromFirestore();
-  }, []);
-
   // Guardar el género en la base de datos
   const saveGenderToFirestore = async (gender) => {
     try {
-      const userUid = auth.currentUser.uid;
-      const userRef = doc(db, "userPermissions", userUid);
+      const userRef = doc(db, "userPermissions", auth.currentUser.uid);
 
       await updateDoc(userRef, {
         gender: gender,
@@ -66,13 +57,39 @@ export default function EditProfileScreen() {
     }
   };
 
+  useEffect(() => {
+    fetchDisplayNameFromFirestore();
+
+    // Obtener el género del usuario desde Firestore
+    async function loadSelectedGender() {
+      try {
+        const savedGender = await AsyncStorage.getItem("selectedGender");
+        if (savedGender) {
+          setSelectedGender(savedGender);
+        }
+      } catch (error) {
+        console.error("Error al cargar el género desde AsyncStorage:", error);
+      }
+    }
+
+    loadSelectedGender();
+  }, []);
+
+  // Guardar el género en la base de datos
+  const saveGenderToAsyncStorage = async (gender) => {
+    try {
+      await AsyncStorage.setItem("selectedGender", gender);
+      setSelectedGender(gender);
+    } catch (error) {
+      console.error("Error al guardar el género en AsyncStorage:", error);
+    }
+  };
+
   // Guardar el nombre de usuario en la base de datos
   const saveDisplayNameToFirestore = async () => {
     try {
-      const userUid = auth.currentUser.uid; // Obtiene el UID del usuario actual
-      const userRef = doc(db, "userPermissions", userUid); // Referencia al documento del usuario en Firestore
+      const userRef = doc(db, "userPermissions", auth.currentUser.uid); // Referencia al documento del usuario en Firestore
 
-      // Actualiza el campo 'displayName' en Firestore
       await updateDoc(userRef, {
         displayName: newDisplayName,
       });
@@ -81,7 +98,7 @@ export default function EditProfileScreen() {
     } catch (error) {
       console.error("Error al actualizar el nombre en Firestore:", error);
     }
-    setIsPendingChanges(true); // Marcar los cambios como pendientes de confirmación
+    setIsPendingChanges(true);
   };
 
   const navigation = useNavigation();
@@ -210,7 +227,7 @@ export default function EditProfileScreen() {
           <View className="flex-row ml-1">
             <TouchableOpacity
               onPress={() => {
-                setSelectedGender("Hombre");
+                saveGenderToAsyncStorage("Hombre");
                 saveGenderToFirestore("Hombre");
               }}
               style={{
@@ -221,16 +238,14 @@ export default function EditProfileScreen() {
               }}
             >
               <Text
-                style={{
-                  color: selectedGender === "Hombre" ? "#fff" : "#000",
-                }}
+                style={{ color: selectedGender === "Hombre" ? "#fff" : "#000" }}
               >
                 Hombre
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                setSelectedGender("Mujer");
+                saveGenderToAsyncStorage("Mujer");
                 saveGenderToFirestore("Mujer");
               }}
               style={{
@@ -240,9 +255,7 @@ export default function EditProfileScreen() {
               }}
             >
               <Text
-                style={{
-                  color: selectedGender === "Mujer" ? "#fff" : "#000",
-                }}
+                style={{ color: selectedGender === "Mujer" ? "#fff" : "#000" }}
               >
                 Mujer
               </Text>
