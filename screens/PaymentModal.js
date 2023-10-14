@@ -1,12 +1,4 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Button,
-  TouchableOpacity,
-  Dimensions,
-  TextInput,
-} from "react-native";
+import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import * as Icon from "react-native-feather";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -17,16 +9,15 @@ import Animated, {
   withTiming,
   useAnimatedStyle,
   Easing,
-  set,
 } from "react-native-reanimated";
 import { useSelector } from "react-redux";
 import { selectCartTotal } from "../slices/cartSlice";
 import LottieView from "lottie-react-native";
 const Lottie = require("../assets/animations/Lottie4.json");
-import { StyleSheet } from "react-native";
 import { useFocus } from "../utils/useFocus";
 import db from "../firebaseConfig";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { BlurView } from "expo-blur";
 
 export default function PaymentModal() {
   const [processingPayment, setProcessingPayment] = useState(false);
@@ -70,23 +61,38 @@ export default function PaymentModal() {
         style={{
           height: halfScreen,
           width: "100%",
-          backgroundColor: "#fff",
+          backgroundColor: "transparent",
           justifyContent: "start",
+          overflow: "hidden",
         }}
         className=" rounded-2xl py-6"
       >
+        <BlurView
+          tint="dark"
+          intensity={80}
+          style={{
+            position: "absolute",
+            height: halfScreen,
+            width: "100%",
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            zIndex: -1,
+          }}
+        />
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           className="absolute z-10 rounded-full p-3 top-3 left-1 bg-transparent"
         >
           <Icon.ArrowLeft
             strokeWidth={2.5}
-            stroke="black"
+            stroke="white"
             width={25}
             height={25}
           />
         </TouchableOpacity>
-        <Text className="font-bold text-2xl self-center">Pago</Text>
+        <Text className="font-bold text-2xl self-center text-white">Pago</Text>
         {paymentMethods.length > 0 && !processingPayment ? (
           <PaymentWhenExistingMethods
             setProcessingPayment={setProcessingPayment}
@@ -95,7 +101,7 @@ export default function PaymentModal() {
           />
         ) : !processingPayment ? (
           <View className="flex-col justify-center items-center absolute w-full bottom-96 px-4 gap-y-28">
-            <Text className="text-2xl text-center text-gray-500 self-center mt-2 font-semibold">
+            <Text className="text-2xl text-center text-white self-center mt-2 font-semibold">
               Agrega un método de pago para continuar...
             </Text>
           </View>
@@ -157,7 +163,7 @@ function PaymentWhenExistingMethods({
 
   return (
     <>
-      <Text className="text-sm self-center mt-2 font-semibold">
+      <Text className="text-sm self-center mt-2 font-semibold text-white/70">
         Selecciona un método o agrega uno nuevo
       </Text>
 
@@ -192,10 +198,12 @@ function PaymentWhenExistingMethods({
               style={[animatedStyleOpacity]}
             >
               <View className="flex flex-row">
-                <Text className="font-bold text-gray-500 text-4xl">
+                <Text className="font-bold text-gray-200 text-4xl">
                   Total:{" "}
                 </Text>
-                <Text className="font-bold  text-4xl">${total + 2}</Text>
+                <Text className="font-bold text-white  text-4xl">
+                  ${(total + 2).toFixed(2)}
+                </Text>
               </View>
               <TouchableOpacity
                 className="bg-blue-800 rounded-xl px-5 py-4"
@@ -214,7 +222,7 @@ function PaymentWhenExistingMethods({
                   navigation.goBack();
                 }}
               >
-                <Text className="text-gray-500 font-bold text-xl">
+                <Text className="text-gray-300 font-bold text-xl">
                   Cancelar
                 </Text>
               </TouchableOpacity>
@@ -242,9 +250,15 @@ function PaymentWhenExistingMethods({
               className="flex-row justify-center items-center self-center top-10 w-full"
               onPress={() => navigation.navigate("AddPaymentMethod")}
             >
-              <Text className="text-blue-900 font-bold text-xl">
+              <Text className="text-gray-300 font-bold text-xl">
                 Agregar método de pago
               </Text>
+              <Icon.ArrowRight
+                className="ml-1"
+                stroke="gray"
+                width={25}
+                height={25}
+              />
             </TouchableOpacity>
           </>
         )}
