@@ -343,7 +343,7 @@ function ProcessingPayment({ selectedCard }) {
         style={[animatedStyle]}
         className="flex-row justify-center items-center self-center top-36 w-full"
       >
-        <Text className="text-gray-500 font-bold text-3xl">
+        <Text className="text-white font-bold text-3xl">
           Procesando pago...
         </Text>
       </Animated.View>
