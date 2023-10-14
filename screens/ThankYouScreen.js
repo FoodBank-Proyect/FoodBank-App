@@ -93,18 +93,7 @@ export default function ThankYouScreen() {
 
           <TouchableOpacity
             onPress={() => {
-              dispatch(emptyCart());
-              dispatch(
-                addToCart({
-                  id: 100,
-                  name: "Subscripción",
-                  price: 20,
-                  quantity: 1,
-                })
-              );
-              navigation.navigate("PaymentModal", {
-                type: "Subscription",
-              });
+              navigation.navigate("Home");
             }}
             className="rounded-full flex-row justify-center items-center px-6 py-4 mt-10 bg-blue-500"
           >

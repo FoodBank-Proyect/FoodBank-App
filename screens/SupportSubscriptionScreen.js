@@ -131,6 +131,7 @@ export default function SupportSubscriptionScreen() {
                   quantity: 1,
                 })
               );
+              navigation.navigate("Home");
               navigation.navigate("PaymentModal", {
                 type: "Subscription",
               });
