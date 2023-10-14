@@ -33,8 +33,20 @@ export default getPermissions = async () => {
           paymentMethods: [],
         };
       })
-      .catch((error) => {
-        console.error("Error writing document: ", error);
+      .finally(async () => {
+        console.log("Creating customer...");
+        const response = await fetch(
+          "http://192.168.100.11:8000/create-customer",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              email: auth.currentUser.email,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
       });
   }
 

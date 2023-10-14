@@ -24,6 +24,8 @@ import { auth } from "../firebaseConfig";
 export default function CartScreen() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const { initPaymentSheet, presentPaymentSheet, confirmPayment } = useStripe();
+  const [loading, setLoading] = useState(false);
   const cartItems = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
   const deliveryFee = 2;
@@ -39,25 +41,25 @@ export default function CartScreen() {
       <View className="relative py-4">
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          className="absolute z-10 rounded-full p-1 bg-blue-500 shadow top-5 left-2"
+          className="absolute z-10 rounded-full p-1 bg-emerald-500 shadow top-5 left-2"
         >
           <Icon.ArrowLeft strokeWidth={3} stroke="white" />
         </TouchableOpacity>
         <View>
-          <Text className="text-center font-bold text-xl">Tu carrito</Text>
+          <Text className="text-center font-bold text-xl">Your cart</Text>
           <Text className="text-center text-gray-500">FoodBank E-Shop</Text>
         </View>
       </View>
 
       {/* delivery time */}
-      <View className="flex-row px-4 py-2 mx-3 rounded-xl items-center justify-between bg-blue-500/30">
+      <View className="flex-row px-4 py-2 mx-3 rounded-xl items-center justify-between bg-emerald-500/30">
         <Image
           source={require("../assets/images/bikeGuy.png")}
           className="w-14 h-14 rounded-full"
         />
         <Text>Entrega de 2-3 días</Text>
         <TouchableOpacity>
-          <Text className="font-bold text-blue-700">Change</Text>
+          <Text className="font-bold text-teal-700">Change</Text>
         </TouchableOpacity>
       </View>
 
@@ -75,7 +77,7 @@ export default function CartScreen() {
               key={key}
               className="flex-row items-center space-x-3 py-2 px-4 bg-white rounded-3xl mx-2 mb-3 shadow-md"
             >
-              <Text className="font-bold text-blue-500">
+              <Text className="font-bold text-emerald-500">
                 {item.quantity} x{" "}
               </Text>
               <Image
@@ -103,7 +105,7 @@ export default function CartScreen() {
         })}
       </ScrollView>
       {/* totals */}
-      <View className=" p-6 px-8 rounded-t-3xl space-y-4 bg-blue-500/30">
+      <View className=" p-6 px-8 rounded-t-3xl space-y-4 bg-emerald-500/30">
         <View className="flex-row justify-between">
           <Text className="text-gray-700">Subtotal</Text>
           <Text className="text-gray-700">${cartTotal}</Text>
@@ -119,7 +121,7 @@ export default function CartScreen() {
         <View>
           <TouchableOpacity
             onPress={() => navigation.navigate("PaymentModal")}
-            className="p-3 rounded-full bg-blue-500 shadow-lg shadow-gray-400"
+            className="p-3 rounded-full bg-emerald-500 shadow-lg shadow-gray-400"
           >
             <Text className="text-white text-center font-bold text-lg">
               Proceder al pago
@@ -130,3 +132,17 @@ export default function CartScreen() {
     </View>
   );
 }
+
+// const clientSecret = data.clientSecret;
+// const initSheet = await initPaymentSheet({
+//   paymentIntentClientSecret: clientSecret,
+// });
+// if (initSheet.error) return Alert.alert(initSheet.error.message);
+// const presentSheet = await presentPaymentSheet({
+//   clientSecret,
+// });
+// if (presentSheet.error) return Alert.alert(presentSheet.error.message);
+// else {
+//   console.log("Payment successful");
+//   navigation.navigate("OrderPreparing");
+// }

@@ -48,6 +48,30 @@ export default function AddPaymentMethodScreen() {
     console.log("Payment method added to firestore");
   };
 
+  const addMethodToStripe = async () => {
+    // Fetch to the api
+    try {
+      const response = await fetch(
+        "http://192.168.100.11:8000/add-payment-method",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: auth.currentUser.email,
+            cardNumber: cardNumber,
+          }),
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      if (!response.ok) return Alert.alert(data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (cardNumber[0] == "4") {
       setBank("Visa");

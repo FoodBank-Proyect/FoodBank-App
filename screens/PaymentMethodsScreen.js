@@ -7,21 +7,20 @@ import { auth } from "../firebaseConfig";
 import uploadToFirestore from "../utils/uploadToFirestore";
 import dataToUpload from "../constants/metodosPago.json";
 import { useFocus } from "../utils/useFocus";
+import { useStripe } from "@stripe/stripe-react-native";
 
 export default function PaymentMethodsScreen() {
   const [paymentMethods, setPaymentMethods] = React.useState(
     auth.currentUser.paymentMethods || []
   );
-
+  const [loading, setLoading] = React.useState(false);
   const { focusCount, isFocused } = useFocus();
 
   useEffect(() => {
     if (focusCount > 1 && isFocused) {
-      setPaymentMethods(auth.currentUser.paymentMethods);
+      setPaymentMethods(auth.currentUser.paymentMethods || []);
     }
-  });
-
-  const [loading, setLoading] = React.useState(false);
+  }, []);
 
   const navigation = useNavigation();
   return (
@@ -46,7 +45,6 @@ export default function PaymentMethodsScreen() {
               key={index}
               index={index}
               bank={metodo.banco}
-              cardNumber={metodo.numeroTarjeta}
               last4={metodo.last4}
             />
           );
@@ -90,3 +88,81 @@ export default function PaymentMethodsScreen() {
     </View>
   );
 }
+
+// const { initPaymentSheet, presentPaymentSheet, confirmPayment } = useStripe();
+
+// const fetchPaymentSheetParams = async () => {
+//   const response = await fetch(`http://192.168.100.11:8000/getKeys`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   });
+//   const { setupIntent, ephemeralKey, customer } = await response.json();
+
+//   return {
+//     setupIntent,
+//     ephemeralKey,
+//     customer,
+//   };
+// };
+
+// const initializePaymentSheet = async () => {
+//   const { setupIntent, ephemeralKey, customer } =
+//     await fetchPaymentSheetParams();
+
+//   const { error } = await initPaymentSheet({
+//     merchantDisplayName: "Example, Inc.",
+//     customerId: customer,
+//     customerEphemeralKeySecret: ephemeralKey,
+//     setupIntentClientSecret: setupIntent,
+//   });
+// };
+
+// const openPaymentSheet = async () => {
+//   const { error } = await presentPaymentSheet();
+
+//   if (error) {
+//     Alert.alert(`Error code: ${error.code}`, error.message);
+//   } else {
+//     Alert.alert(
+//       "Success",
+//       "Your payment method is successfully set up for future payments!"
+//     );
+//   }
+// };
+
+// const fetchPaymentMethods = async () => {
+//   try {
+//     const response = await fetch(
+//       "http://192.168.100.11:8000/payment-methods",
+//       {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           email: auth.currentUser.email,
+//         }),
+//       }
+//     );
+//     const paymentMethods = await response.json();
+//     // Convert it to an array to be mapped, but delete duplicates (same last4 and same brand)
+//     const paymentMethodsArray = [];
+//     paymentMethods.paymentMethods.data.forEach((paymentMethod) => {
+//       if (
+//         paymentMethodsArray.filter(
+//           (metodo) =>
+//             metodo.card.last4 == paymentMethod.card.last4 &&
+//             metodo.card.brand == paymentMethod.card.brand
+//         ).length == 0
+//       ) {
+//         paymentMethodsArray.push(paymentMethod);
+//       }
+//     });
+//     setPaymentMethods(paymentMethodsArray);
+//     setLoading(false);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

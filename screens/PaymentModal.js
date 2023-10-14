@@ -35,6 +35,7 @@ export default function PaymentModal() {
   const [paymentMethods, setPaymentMethods] = React.useState(
     auth.currentUser.paymentMethods || []
   );
+  const [selectedCard, setSelectedCard] = useState();
 
   useEffect(() => {
     if (focusCount > 1 && isFocused) {
@@ -89,6 +90,8 @@ export default function PaymentModal() {
         {paymentMethods.length > 0 && !processingPayment ? (
           <PaymentWhenExistingMethods
             setProcessingPayment={setProcessingPayment}
+            selectedCard={selectedCard}
+            setSelectedCard={setSelectedCard}
           />
         ) : !processingPayment ? (
           <View className="flex-col justify-center items-center absolute w-full bottom-96 px-4 gap-y-28">
@@ -97,16 +100,20 @@ export default function PaymentModal() {
             </Text>
           </View>
         ) : (
-          <ProcessingPayment />
+          <ProcessingPayment selectedCard={selectedCard} />
         )}
       </View>
     </View>
   );
 }
 
-function PaymentWhenExistingMethods({ setProcessingPayment }) {
+function PaymentWhenExistingMethods({
+  setProcessingPayment,
+  selectedCard,
+  setSelectedCard,
+}) {
   const navigation = useNavigation();
-  const [selectedCard, setSelectedCard] = useState();
+
   const total = useSelector(selectCartTotal);
 
   const animatedValue = useSharedValue(50);
@@ -246,10 +253,21 @@ function PaymentWhenExistingMethods({ setProcessingPayment }) {
   );
 }
 
-function ProcessingPayment() {
+function ProcessingPayment({ selectedCard }) {
   const animatedValue = useSharedValue(-300);
   const opacity = useSharedValue(0);
   const total = useSelector(selectCartTotal);
+  const [method, setMethod] = useState();
+
+  useEffect(() => {
+    if (selectedCard.banco == "Visa") {
+      setMethod("pm_card_visa");
+    } else if (selectedCard.banco == "Mastercard") {
+      setMethod("pm_card_mastercard");
+    } else if (selectedCard.banco == "American Express") {
+      setMethod("pm_card_amex");
+    }
+  }, [selectedCard]);
 
   // Get params from navigation
   const { params } = useRoute();
@@ -299,7 +317,7 @@ function ProcessingPayment() {
         source={Lottie}
         loop={false}
         onAnimationFinish={() => {
-          confirmPaymentOnFirestore(total);
+          confirmPaymentOnFirestore(total, method);
           if (parameters?.type) {
             navigation.navigate("ThankYou");
           } else {
@@ -319,7 +337,27 @@ function ProcessingPayment() {
   );
 }
 
-const confirmPaymentOnFirestore = async (total) => {
+const proceedToPayment = async (total, method) => {
+  const response = await fetch("http://192.168.100.11:8000/payment", {
+    method: "POST",
+    body: JSON.stringify({
+      email: auth.currentUser.email,
+      amount: (total + 2) * 100,
+      method: method,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) return Alert.alert(data.message);
+};
+
+const confirmPaymentOnFirestore = async (total, method) => {
+  proceedToPayment(total, method).catch((error) => {
+    console.log(error);
+    return Alert.alert("Error", "Ocurrió un error al procesar el pago");
+  });
   // Update the collection orders on the document: auth.currentUser.uid
   const docRef = doc(db, "orders", auth.currentUser.uid);
   const date = new Date();

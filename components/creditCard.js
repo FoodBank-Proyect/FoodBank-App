@@ -8,13 +8,7 @@ import Animated, {
   useAnimatedStyle,
   Easing,
 } from "react-native-reanimated";
-export default function CreditCard({
-  bank,
-  cardNumber,
-  last4,
-  fixedCard = false,
-  index,
-}) {
+export default function CreditCard({ bank, last4, fixedCard = false, index }) {
   const [margin, setMargin] = useState();
   const [bgColor, setBgColor] = useState("bg-white");
   const [imageLogo, setImageLogo] = useState();
@@ -36,16 +30,16 @@ export default function CreditCard({
   });
 
   useEffect(() => {
-    if (bank === "Visa") {
+    if (bank === "Visa" || bank === "visa") {
       setBgColor("bg-blue-600");
       setImageLogo(require("../assets/images/logos/visa.png"));
-    } else if (bank === "Mastercard") {
+    } else if (bank === "Mastercard" || bank === "mastercard") {
       setBgColor("bg-yellow-500");
       setImageLogo(require("../assets/images/logos/mastercard.png"));
-    } else if (bank === "American Express") {
+    } else if (bank === "American Express" || bank === "american express") {
       setBgColor("bg-gray-800 ");
       setImageLogo(require("../assets/images/logos/american-express.png"));
-    } else if (bank === "Paypal") {
+    } else if (bank === "Paypal" || bank === "paypal") {
       setBgColor("bg-violet-500");
       setImageLogo(require("../assets/images/logos/paypal.png"));
     } else {
