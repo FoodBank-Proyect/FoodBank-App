@@ -52,7 +52,7 @@ export default function AddPaymentMethodScreen() {
     // Fetch to the api
     try {
       const response = await fetch(
-        "http://192.168.100.11:8000/add-payment-method",
+        "https://foodbank-stripe-api.onrender.com/add-payment-method",
         {
           method: "POST",
           headers: {

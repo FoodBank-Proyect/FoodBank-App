@@ -338,17 +338,20 @@ function ProcessingPayment({ selectedCard }) {
 }
 
 const proceedToPayment = async (total, method) => {
-  const response = await fetch("http://192.168.100.11:8000/payment", {
-    method: "POST",
-    body: JSON.stringify({
-      email: auth.currentUser.email,
-      amount: (total + 2) * 100,
-      method: method,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await fetch(
+    "https://foodbank-stripe-api.onrender.com/payment",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        email: auth.currentUser.email,
+        amount: (total + 2) * 100,
+        method: method,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
   const data = await response.json();
   if (!response.ok) return Alert.alert(data.message);
 };

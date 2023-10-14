@@ -92,7 +92,7 @@ export default function PaymentMethodsScreen() {
 // const { initPaymentSheet, presentPaymentSheet, confirmPayment } = useStripe();
 
 // const fetchPaymentSheetParams = async () => {
-//   const response = await fetch(`http://192.168.100.11:8000/getKeys`, {
+//   const response = await fetch(`https://foodbank-stripe-api.onrender.com/getKeys`, {
 //     method: "POST",
 //     headers: {
 //       "Content-Type": "application/json",
@@ -135,7 +135,7 @@ export default function PaymentMethodsScreen() {
 // const fetchPaymentMethods = async () => {
 //   try {
 //     const response = await fetch(
-//       "http://192.168.100.11:8000/payment-methods",
+//       "https://foodbank-stripe-api.onrender.com/payment-methods",
 //       {
 //         method: "POST",
 //         headers: {

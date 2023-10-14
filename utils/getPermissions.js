@@ -36,7 +36,7 @@ export default getPermissions = async () => {
       .finally(async () => {
         console.log("Creating customer...");
         const response = await fetch(
-          "http://192.168.100.11:8000/create-customer",
+          "https://foodbank-stripe-api.onrender.com/create-customer",
           {
             method: "POST",
             body: JSON.stringify({
