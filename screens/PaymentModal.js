@@ -47,25 +47,27 @@ export default function PaymentModal() {
         flex: 1,
         flexDirection: "column",
         justifyContent: "flex-end",
+        alignItems: "center",
+        paddingBottom: 17,
       }}
       className="bg-transparent"
     >
       {/* View for the first half of the screen */}
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={{ height: halfScreen }}
         className="bg-transparent"
-      ></TouchableOpacity>
+      ></TouchableOpacity> */}
 
       <View
         style={{
           height: halfScreen,
-          width: "100%",
+          width: "97%",
           backgroundColor: "transparent",
-          justifyContent: "start",
+          justifyContent: "flex-start",
           overflow: "hidden",
         }}
-        className=" rounded-2xl py-6"
+        className="rounded-3xl pt-6"
       >
         <BlurView
           tint="dark"
@@ -247,7 +249,7 @@ function PaymentWhenExistingMethods({
               );
             })}
             <TouchableOpacity
-              className="flex-row justify-center items-center self-center top-10 w-full"
+              className="flex-row justify-center items-center self-center top-14 w-full"
               onPress={() => navigation.navigate("AddPaymentMethod")}
             >
               <Text className="text-gray-300 font-bold text-xl">
