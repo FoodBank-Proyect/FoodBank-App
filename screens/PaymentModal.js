@@ -26,7 +26,7 @@ export default function PaymentModal() {
   const [paymentMethods, setPaymentMethods] = React.useState(
     auth.currentUser.paymentMethods || []
   );
-  const [selectedCard, setSelectedCard] = useState();
+  const [selectedCard, setSelectedCard] = useState(null);
 
   useEffect(() => {
     if (focusCount > 1 && isFocused) {
@@ -124,14 +124,14 @@ function PaymentWhenExistingMethods({
 
   const total = useSelector(selectCartTotal);
 
-  const animatedValue = useSharedValue(50);
+  const animatedValue = useSharedValue(0);
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
         {
           translateY: withTiming(animatedValue.value, {
             duration: 700,
-            easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+            easing: Easing.bezier(0.25, 0.1, 0.25, 1), // this is a bezier animation, it means that it will start slow, then it will go fast and then it will slow down again
           }),
         },
       ],
@@ -139,6 +139,7 @@ function PaymentWhenExistingMethods({
   });
 
   const opacity = useSharedValue(0);
+  const opacitFromFullToZero = useSharedValue(1);
 
   const animatedStyleOpacity = useAnimatedStyle(() => {
     return {
@@ -146,20 +147,24 @@ function PaymentWhenExistingMethods({
     };
   });
 
-  useEffect(() => {
-    if (selectedCard) {
-      opacity.value = withTiming(1, {
-        duration: 700,
-        easing: Easing.ease,
-      });
-    }
-  }, [selectedCard]);
+  const animatedStyleOpacityFromFullToZero = useAnimatedStyle(() => {
+    return {
+      opacity: opacitFromFullToZero.value,
+    };
+  });
 
   useEffect(() => {
-    if (selectedCard) {
-      animatedValue.value = -120;
-    } else {
-      animatedValue.value = 0;
+    if (selectedCard !== null) {
+      setTimeout(() => {
+        opacity.value = withTiming(1, {
+          duration: 500,
+          easing: Easing.ease,
+        });
+      }, 600);
+      opacitFromFullToZero.value = withTiming(0, {
+        duration: 500,
+        easing: Easing.ease,
+      });
     }
   }, [selectedCard]);
 
@@ -169,101 +174,126 @@ function PaymentWhenExistingMethods({
         Selecciona un método o agrega uno nuevo
       </Text>
 
-      <View className="flex-col justify-center items-center absolute w-full top-60 px-4 gap-y-28">
-        {selectedCard ? (
-          <>
-            <Animated.View
-              style={[animatedStyle]}
-              className="flex-row justify-between absolute self-center bottom-24 items-center w-full"
-            >
-              <CreditCard
-                bank={selectedCard.banco}
-                cardNumber={selectedCard.numeroTarjeta}
-                last4={selectedCard.last4}
-                fixedCard={true}
-              />
-
-              <TouchableOpacity
-                className="bg-gray-200 rounded-full top-[88px] ml-1 p-2"
-                onPress={() => setSelectedCard(null)}
-              >
-                <Icon.Grid
-                  strokeWidth={2.5}
-                  stroke="black"
-                  width={20}
-                  height={20}
-                />
-              </TouchableOpacity>
-            </Animated.View>
-            <Animated.View
-              className="flex-col justify-center items-center w-full top-44 gap-y-8"
-              style={[animatedStyleOpacity]}
-            >
-              <View className="flex flex-row">
-                <Text className="font-bold text-gray-200 text-4xl">
-                  Total:{" "}
-                </Text>
-                <Text className="font-bold text-white  text-4xl">
-                  ${(total + 2).toFixed(2)}
-                </Text>
-              </View>
-              <TouchableOpacity
-                className="bg-blue-800 rounded-xl px-5 py-4"
-                onPress={() => {
-                  setProcessingPayment(true);
-                }}
-              >
-                <Text className="text-white font-bold text-xl">
-                  Pagar con {selectedCard.banco}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                className="rounded-xl px-5 py-4"
-                onPress={() => {
-                  setSelectedCard(null);
-                  navigation.goBack();
-                }}
-              >
-                <Text className="text-gray-300 font-bold text-xl">
-                  Cancelar
-                </Text>
-              </TouchableOpacity>
-            </Animated.View>
-          </>
-        ) : (
-          <>
-            {auth.currentUser.paymentMethods.map((metodo, index) => {
-              return (
-                <TouchableOpacity
-                  key={index}
-                  className="flex-row justify-between items-center w-full"
-                  onPress={() => setSelectedCard(metodo)}
-                >
-                  <CreditCard
-                    index={index}
-                    bank={metodo.banco}
-                    cardNumber={metodo.numeroTarjeta}
-                    last4={metodo.last4}
-                  />
-                </TouchableOpacity>
-              );
-            })}
+      <View className="flex-col justify-center items-center absolute w-full -top-12 px-4 gap-y-12">
+        {auth.currentUser.paymentMethods.map((metodo, index) => {
+          return (
             <TouchableOpacity
-              className="flex-row justify-center items-center self-center top-14 w-full"
-              onPress={() => navigation.navigate("AddPaymentMethod")}
+              activeOpacity={1}
+              key={index}
+              className={`flex-row justify-between items-center w-full`}
+              onPress={() => {
+                setSelectedCard(metodo);
+                // Animate it to the top
+                if (index === 0) {
+                  animatedValue.value = 4;
+                } else if (index === 1) {
+                  animatedValue.value = -112;
+                } else if (index === 2) {
+                  animatedValue.value = -224;
+                }
+              }}
             >
-              <Text className="text-gray-300 font-bold text-xl">
-                Agregar método de pago
-              </Text>
-              <Icon.ArrowRight
-                className="ml-1"
-                stroke="gray"
-                width={25}
-                height={25}
+              <Animated.View
+                style={
+                  selectedCard === metodo
+                    ? [animatedStyle]
+                    : [animatedStyleOpacityFromFullToZero]
+                }
+              >
+                <CreditCard
+                  index={index}
+                  bank={metodo.banco}
+                  cardNumber={metodo.numeroTarjeta}
+                  last4={metodo.last4}
+                />
+              </Animated.View>
+            </TouchableOpacity>
+          );
+        })}
+        {selectedCard && (
+          <Animated.View
+            // If the card is equal to the selected card, show the close button, else, hide it
+            style={[animatedStyleOpacity]}
+            className="absolute flex-row justify-between items-center w-full top-[42vh]"
+          >
+            <TouchableOpacity
+              className="bg-gray-200 rounded-full ml-2 p-2"
+              onPress={() => {
+                // restart opacity and animated value
+                opacitFromFullToZero.value = withTiming(1, {
+                  duration: 300,
+                  easing: Easing.ease,
+                });
+
+                animatedValue.value = animatedValue.value * -0.04;
+
+                opacity.value = 0;
+
+                setTimeout(() => {
+                  setSelectedCard(null);
+                }, 500);
+              }}
+            >
+              <Icon.Grid
+                strokeWidth={2.5}
+                stroke="black"
+                width={20}
+                height={20}
               />
             </TouchableOpacity>
-          </>
+          </Animated.View>
         )}
+        {selectedCard ? (
+          <Animated.View
+            className="flex-col justify-center items-center w-full top-72 gap-y-8"
+            style={[animatedStyleOpacity]}
+          >
+            <View className="flex flex-row">
+              <Text className="font-bold text-gray-300 text-4xl">Total: </Text>
+              <Text className="font-bold text-white  text-4xl">
+                ${(total + 2).toFixed(2)}
+              </Text>
+            </View>
+            <TouchableOpacity
+              className="bg-blue-800 rounded-xl px-5 py-4"
+              onPress={() => {
+                setProcessingPayment(true);
+              }}
+            >
+              <Text className="text-white font-bold text-xl">
+                Pagar con {selectedCard.banco}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              className="rounded-xl px-5 py-4"
+              onPress={() => {
+                setSelectedCard(null);
+                navigation.goBack();
+              }}
+            >
+              <Text className="text-gray-300 font-bold text-xl">Cancelar</Text>
+            </TouchableOpacity>
+          </Animated.View>
+        ) : null}
+        <Animated.View
+          style={[animatedStyleOpacityFromFullToZero]}
+          className="absolute flex-row justify-center items-center w-full top-[80vh] "
+        >
+          <TouchableOpacity
+            className="flex-row justify-center items-center self-center w-full"
+            onPress={() => navigation.navigate("AddPaymentMethod")}
+          >
+            <Text className="text-gray-300 font-bold text-xl">
+              Agregar método de pago
+            </Text>
+            <Icon.ArrowRight
+              className="ml-1"
+              stroke="gray"
+              width={25}
+              height={25}
+            />
+          </TouchableOpacity>
+        </Animated.View>
       </View>
     </>
   );
