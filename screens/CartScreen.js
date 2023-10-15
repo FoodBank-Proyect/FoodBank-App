@@ -46,7 +46,7 @@ export default function CartScreen() {
           <Icon.ArrowLeft strokeWidth={3} stroke="white" />
         </TouchableOpacity>
         <View>
-          <Text className="text-center font-bold text-xl">Your cart</Text>
+          <Text className="text-center font-bold text-xl">Tu carrito</Text>
           <Text className="text-center text-gray-500">FoodBank E-Shop</Text>
         </View>
       </View>
