@@ -29,31 +29,32 @@ export default function LoginScreen() {
   const [passError, setPassError] = useState(null);
 
   const handleSignIn = () => {
-    try {
-      signInWithEmailAndPassword(auth, email, pass);
+    console.log("handleSignIn")
+    signInWithEmailAndPassword(auth, email, pass).then(() => {
       navigation.navigate("Home");
-    } catch (error) {
-      if (error.code == "auth/user-not-found") {
-        Toast.show({
-          type: "error",
-          text1: "Error",
-          text2: "Usuario no encontrado",
-        });
-      } else if (error.code == "auth/wrong-password") {
-        Toast.show({
-          type: "error",
-          text1: "Error",
-          text2: "Contraseña incorrecta",
-        });
-      } else {
-        console.log(error);
-        Toast.show({
-          type: "error",
-          text1: "Error",
-          text2: "Ocurrió un error",
-        });
-      }
+    })
+    .catch((error) => {
+    if (error.code == "auth/user-not-found") {
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Usuario no encontrado",
+      });
+    } else if (error.code == "auth/wrong-password") {
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Contraseña incorrecta",
+      });
+    } else {
+      console.log(error);
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Ocurrió un error, revise su correo y contraseña",
+      });
     }
+    });
   };
 
   return (
@@ -215,3 +216,8 @@ export default function LoginScreen() {
     </View>
   );
 }
+
+
+// Correos de prueba
+// Diegopartida8@gmail.com
+// Diego123
