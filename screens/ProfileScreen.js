@@ -50,14 +50,7 @@ export default function ProfileSCcreen() {
       console.error("Error fetching display name from Firestore:", error);
     }
   };
-  useEffect(() => {
-    if (focusCount > 1 && isFocused) {
-      console.log("ProfileScreen focused");
-      fetchDisplayNameFromFirestore();
-    }
-
-    fetchDisplayNameFromFirestore();
-  }, []);
+  fetchDisplayNameFromFirestore();
 
   return (
     <View
