@@ -15,6 +15,8 @@ import db from "../firebaseConfig";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { Image } from "expo-image";
 import AsyncStorage from "@react-native-async-storage/async-storage"; // Importa AsyncStorage
+import CryptoES from "crypto-es";
+import { useFocus } from "../utils/useFocus";
 
 export default function EditProfileScreen() {
   const halfScreen = Math.round(Dimensions.get("window").height / 1.3);
@@ -22,6 +24,44 @@ export default function EditProfileScreen() {
   const [selectedGender, setSelectedGender] = useState(auth.currentUser.gender); // Género seleccionado
   const [isPendingChanges, setIsPendingChanges] = useState(false); // Estado para verificar si hay cambios pendientes de confirmación
   const [isChangesConfirmed, setIsChangesConfirmed] = useState(false); // Nuevo estado para controlar si los cambios se han confirmado
+  const [displayName, setDisplayName] = useState(""); // Add this state variable
+
+  const { focusCount, isFocused } = useFocus();
+  const fetchDisplayNameFromFirestore = async () => {
+    try {
+      const userRef = doc(db, "userPermissions", auth.currentUser.uid);
+
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        const encryptedName = docSnap.data().name;
+        console.log("encryptedName: ", encryptedName);
+        const key = "c5156ec39e8bb1e7940f8dbfd53fd89c";
+
+        // Verifica que encryptedName no sea undefined u otro valor no válido
+        if (encryptedName) {
+          const decryptedBytes = CryptoES.AES.decrypt(encryptedName, key);
+
+          // Convierte los bytes en una cadena UTF-8
+          const decryptedName = decryptedBytes.toString(CryptoES.enc.Utf8);
+
+          console.log("decryptedName: ", decryptedName);
+          setDisplayName(decryptedName);
+        } else {
+          console.error("Encrypted name is invalid.");
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching display name from Firestore:", error);
+    }
+  };
+  useEffect(() => {
+    if (focusCount > 1 && isFocused) {
+      console.log("ProfileScreen focused");
+      fetchDisplayNameFromFirestore();
+    }
+
+    fetchDisplayNameFromFirestore();
+  }, []);
 
   const saveGenderToFirestore = async (gender) => {
     try {
@@ -43,11 +83,14 @@ export default function EditProfileScreen() {
   // Guardar el nombre de usuario en la base de datos
   const saveDisplayNameToFirestore = async () => {
     try {
-      auth.currentUser.name = newDisplayName; // Actualiza el nombre de usuario en el objeto de autenticación
+      // Encriptar el nombre de usuario antes de guardarlo
+      const key = "c5156ec39e8bb1e7940f8dbfd53fd89c";
+      const encryptedName = CryptoES.AES.encrypt(displayName, key).toString();
+
       const userRef = doc(db, "userPermissions", auth.currentUser.uid); // Referencia al documento del usuario en Firestore
 
       await updateDoc(userRef, {
-        name: newDisplayName,
+        name: encryptedName, // Guarda el nombre encriptado en Firestore
       });
 
       console.log("Nombre de usuario actualizado exitosamente en Firestore.");
@@ -56,14 +99,6 @@ export default function EditProfileScreen() {
     }
     setIsPendingChanges(true);
   };
-
-  useEffect(() => {
-    if (isChangesConfirmed) {
-      setTimeout(() => {
-        navigation.goBack();
-      }, 1000);
-    }
-  }, [isChangesConfirmed]);
 
   const navigation = useNavigation();
   return (
@@ -123,8 +158,8 @@ export default function EditProfileScreen() {
           </Text>
           <TextInput
             placeholder="Nombre de usuario"
-            value={newDisplayName}
-            onChangeText={(text) => setNewDisplayName(text)}
+            value={displayName}
+            onChangeText={(text) => setDisplayName(text)}
             style={{
               borderWidth: 0.5,
               borderColor: "gray",

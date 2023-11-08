@@ -15,6 +15,7 @@ import updateFirestore from "../utils/updateFirestore";
 import { doc, getDoc } from "firebase/firestore";
 import db from "../firebaseConfig";
 import { useFocus } from "../utils/useFocus";
+import CryptoES from "crypto-es";
 
 export default function ProfileSCcreen() {
   const [displayName, setDisplayName] = useState(""); // Add this state variable
@@ -22,28 +23,42 @@ export default function ProfileSCcreen() {
 
   const { focusCount, isFocused } = useFocus();
 
-  // const fetchDisplayNameFromFirestore = async () => {
-  //   try {
-  //     const userRef = doc(db, "userPermissions", auth.currentUser.uid);
+  const fetchDisplayNameFromFirestore = async () => {
+    try {
+      const userRef = doc(db, "userPermissions", auth.currentUser.uid);
 
-  //     const docSnap = await getDoc(userRef);
-  //     if (docSnap.exists()) {
-  //       const updatedDisplayName = docSnap.data().name;
-  //       setDisplayName(updatedDisplayName); // Update the state with the new display name
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching display name from Firestore:", error);
-  //   }
-  // };
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        const encryptedName = docSnap.data().name;
+        console.log("encryptedName: ", encryptedName);
+        const key = "c5156ec39e8bb1e7940f8dbfd53fd89c";
 
-  // useEffect(() => {
-  //   if (focusCount > 1 && isFocused) {
-  //     console.log("ProfileScreen focused");
-  //     fetchDisplayNameFromFirestore();
-  //   }
+        // Verifica que encryptedName no sea undefined u otro valor no válido
+        if (encryptedName) {
+          const decryptedBytes = CryptoES.AES.decrypt(encryptedName, key);
 
-  //   fetchDisplayNameFromFirestore(); // Fetch the updated display name when the component mounts
-  // }, []);
+          // Convierte los bytes en una cadena UTF-8
+          const decryptedName = decryptedBytes.toString(CryptoES.enc.Utf8);
+
+          console.log("decryptedName: ", decryptedName);
+          setDisplayName(decryptedName);
+        } else {
+          console.error("Encrypted name is invalid.");
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching display name from Firestore:", error);
+    }
+  };
+  useEffect(() => {
+    if (focusCount > 1 && isFocused) {
+      console.log("ProfileScreen focused");
+      fetchDisplayNameFromFirestore();
+    }
+
+    fetchDisplayNameFromFirestore();
+  }, []);
+
   return (
     <View
       style={{
@@ -76,9 +91,7 @@ export default function ProfileSCcreen() {
           <View className="flex-col justify-center ml-4">
             {/* User name */}
             <Text className="text-xl mt-3">Hola</Text>
-            <Text className="text-2xl font-extrabold mt-2">
-              {auth.currentUser.name || auth.currentUser.email.split("@")[0]}
-            </Text>
+            <Text className="text-2xl font-extrabold mt-2">{displayName}</Text>
             {/* Button to upload the db */}
             {auth.currentUser.type === "admin" && (
               <TouchableOpacity
