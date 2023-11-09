@@ -12,11 +12,9 @@ export default getPermissions = async () => {
     "c5156ec39e8bb1e7940f8dbfd53fd89c"
   );
   var encryptedNameBase64 = encryptedName.toString();
-  console.log("encryptedNameBase64: ", encryptedNameBase64);
 
   const key = "c5156ec39e8bb1e7940f8dbfd53fd89c";
   const decryptedName = CryptoES.AES.decrypt(encryptedNameBase64, key);
-  console.log("decryptedName: ", decryptedName.toString(CryptoES.enc.Utf8));
 
   if (docSnap.exists()) {
     auth.currentUser.type = docSnap.data().type;

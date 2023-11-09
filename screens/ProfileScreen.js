@@ -14,14 +14,11 @@ import { auth } from "../firebaseConfig";
 import updateFirestore from "../utils/updateFirestore";
 import { doc, getDoc } from "firebase/firestore";
 import db from "../firebaseConfig";
-import { useFocus } from "../utils/useFocus";
 import CryptoES from "crypto-es";
 
 export default function ProfileSCcreen() {
   const [displayName, setDisplayName] = useState(""); // Add this state variable
   const navigation = useNavigation();
-
-  const { focusCount, isFocused } = useFocus();
 
   const fetchDisplayNameFromFirestore = async () => {
     try {
@@ -30,7 +27,6 @@ export default function ProfileSCcreen() {
       const docSnap = await getDoc(userRef);
       if (docSnap.exists()) {
         const encryptedName = docSnap.data().name;
-        console.log("encryptedName: ", encryptedName);
         const key = "c5156ec39e8bb1e7940f8dbfd53fd89c";
 
         // Verifica que encryptedName no sea undefined u otro valor no válido
@@ -40,7 +36,6 @@ export default function ProfileSCcreen() {
           // Convierte los bytes en una cadena UTF-8
           const decryptedName = decryptedBytes.toString(CryptoES.enc.Utf8);
 
-          console.log("decryptedName: ", decryptedName);
           setDisplayName(decryptedName);
         } else {
           console.error("Encrypted name is invalid.");
