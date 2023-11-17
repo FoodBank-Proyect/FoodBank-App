@@ -17,6 +17,7 @@ import AddPaymentMethodScreen from "./screens/AddPaymentMethodScreen";
 import PaymentModal from "./screens/PaymentModal";
 import SupportSubscriptionScreen from "./screens/SupportSubscriptionScreen";
 import ThankYouScreen from "./screens/ThankYouScreen";
+import EmailVerication from "./screens/EmailVerification";
 
 const Stack = createNativeStackNavigator();
 
@@ -87,6 +88,11 @@ export default function Navigation({ currentLocation }) {
           <Stack.Screen name="EditProfile" component={EditProfileScreen} />
           <Stack.Screen name="OrdersHistory" component={OrdersHistory} />
           <Stack.Screen name="PaymentModal" component={PaymentModal} />
+          <Stack.Screen
+            name="EmailVerificationModal"
+            component={EmailVerication}
+            initialParams={{ email: "", password: "" }}
+          />
         </Stack.Group>
         <Stack.Screen
           name="PaymentMethods"

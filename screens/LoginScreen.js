@@ -13,12 +13,17 @@ import TextField from "../components/TextField";
 import { StatusBar } from "expo-status-bar";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
-import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import Toast from "react-native-toast-message";
 import getPermissions from "../utils/getPermissions";
 import GoogleAuth from "../utils/googleAuth";
 import { useDispatch, useSelector } from "react-redux";
 import PermanentLogin_RealtimeDB from "../utils/permanentLogin_RealtimeDB";
+import { Alert } from "react-native";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -27,34 +32,52 @@ export default function LoginScreen() {
   const [emailError, setEmailError] = useState(null);
   const [pass, setPass] = useState("");
   const [passError, setPassError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(false);
 
-  const handleSignIn = () => {
-    console.log("handleSignIn")
-    signInWithEmailAndPassword(auth, email, pass).then(() => {
-      navigation.navigate("Home");
-    })
-    .catch((error) => {
-    if (error.code == "auth/user-not-found") {
-      Toast.show({
-        type: "error",
-        text1: "Error",
-        text2: "Usuario no encontrado",
-      });
-    } else if (error.code == "auth/wrong-password") {
-      Toast.show({
-        type: "error",
-        text1: "Error",
-        text2: "Contraseña incorrecta",
-      });
+  const handleVerifyEmail = () => {
+    setSuccessMessage(false);
+    console.log("handleVerifyEmail");
+    navigation.navigate("EmailVerificationModal");
+    if (successMessage) {
+      handleSignIn();
     } else {
-      console.log(error);
       Toast.show({
-        type: "error",
-        text1: "Error",
-        text2: "Ocurrió un error, revise su correo y contraseña",
+        type: "info",
+        text1: "Verifica tu correo electrónico",
+        text2: "Por favor, verifica tu correo electrónico",
       });
     }
-    });
+  };
+
+  const handleSignIn = () => {
+    console.log("handleSignIn");
+
+    signInWithEmailAndPassword(auth, email, pass)
+      .then(() => {
+        navigation.navigate("Home");
+      })
+      .catch((error) => {
+        if (error.code == "auth/user-not-found") {
+          Toast.show({
+            type: "error",
+            text1: "Error",
+            text2: "Usuario no encontrado",
+          });
+        } else if (error.code == "auth/wrong-password") {
+          Toast.show({
+            type: "error",
+            text1: "Error",
+            text2: "Contraseña incorrecta",
+          });
+        } else {
+          console.log(error);
+          Toast.show({
+            type: "error",
+            text1: "Error",
+            text2: "Ocurrió un error, revise su correo y contraseña",
+          });
+        }
+      });
   };
 
   return (
@@ -85,7 +108,7 @@ export default function LoginScreen() {
             FoodBank E-Shop
           </Text>
 
-          <Text className="text-white text-base">Please login to continue</Text>
+          <Text className="text-white text-base">Por favor, inicia sesión</Text>
         </View>
       </SafeAreaView>
 
@@ -100,17 +123,17 @@ export default function LoginScreen() {
         <View className="p-9">
           <Text
             style={{ color: "#D70040", fontSize: 34 }}
-            className="font-bold"
+            className="font-bold mb-2"
           >
-            Welcome
+            Bienvenido
           </Text>
           <Text>
-            Don't have an account?{" "}
+            ¿No tienes una cuenta?{" "}
             <Text
               onPress={() => navigation.navigate("Register")}
               className="text-blue-500 italic underline"
             >
-              Register Now
+              Registrar
             </Text>
           </Text>
           <View style={{ marginTop: 15 }}>
@@ -122,9 +145,9 @@ export default function LoginScreen() {
               errorText={emailError}
               onBlur={() => {
                 if (email.length == 0) {
-                  setEmailError("Email is required");
+                  setEmailError("El email es requerido");
                 } else if (!email.includes("@")) {
-                  setEmailError("Email is not valid");
+                  setEmailError("El email no es válido");
                 } else {
                   setEmailError(null);
                 }
@@ -132,16 +155,14 @@ export default function LoginScreen() {
             />
             <TextField
               className="font-bold mt-5 text-gray-500"
-              label="Password*"
+              label="Contraseña*"
               secureTextEntry={true}
               value={pass}
               onChangeText={(text) => setPass(text)}
               errorText={passError}
               onBlur={() => {
                 if (pass.length == 0) {
-                  setPassError("Password is required");
-                } else if (pass.length < 6) {
-                  setPassError("Password must be at least 6 characters");
+                  setPassError("La contraseña es requerida");
                 } else {
                   setPassError(null);
                 }
@@ -153,18 +174,21 @@ export default function LoginScreen() {
               className="text-blue-500 italic underline mb-10"
               onPress={() => {
                 if (!email) {
-                  setEmailError("Email is required");
-                  Alert.alert("Reset Password", "Email is required");
+                  setEmailError("El email es requerido");
+                  Alert.alert("Reiniciar contraseña", "El email es requerido");
                 } else if (!email.includes("@")) {
-                  setEmailError("Email is not valid");
-                  Alert.alert("Reset Password", "Email is not valid");
+                  setEmailError("El email no es válido");
+                  Alert.alert("Reiniciar contraseña", "El email no es válido");
                 } else if (emailError == null && email.length > 0) {
-                  Alert.alert("Reset Password", `Email sent to ${email}`);
+                  Alert.alert(
+                    "Reiniciar contraseña",
+                    `Correo enviado a ${email}`
+                  );
                   sendPasswordResetEmail(auth, email);
                 }
               }}
             >
-              Forgot Password?
+              Olvidé mi contraseña
             </Text>
           </View>
 
@@ -192,7 +216,7 @@ export default function LoginScreen() {
                   email.length > 0 &&
                   pass.length > 0
                 ) {
-                  handleSignIn();
+                  handleVerifyEmail();
                 }
               }}
               style={{ width: "100%" }}
@@ -201,11 +225,11 @@ export default function LoginScreen() {
               className="flex justify-center items-center rounded-full w-3/4 mx-0 mt-10 bg-[#D70040]"
             >
               <Text className="text-white self-center font-bold p-3 text-lg">
-                Login
+                Iniciar sesión
               </Text>
             </TouchableOpacity>
             <View className="justify-center mt-7">
-              <Text className="text-gray-500 mb-4">Or Login with</Text>
+              <Text className="text-gray-500 mb-4">O inicia sesión con</Text>
               <View className="flex-row justify-center">
                 <GoogleAuth />
               </View>
@@ -216,7 +240,6 @@ export default function LoginScreen() {
     </View>
   );
 }
-
 
 // Correos de prueba
 // Diegopartida8@gmail.com
