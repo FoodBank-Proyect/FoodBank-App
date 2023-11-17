@@ -16,6 +16,7 @@ export default function PermanentLogin() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [decryptedName, setDecryptedName] = useState("");
+
   const fetchDisplayNameFromFirestore = async () => {
     try {
       const userRef = doc(db, "userPermissions", auth.currentUser.uid);
@@ -29,7 +30,6 @@ export default function PermanentLogin() {
 
           const decryptedName = decryptedBytes.toString(CryptoES.enc.Utf8);
           setDecryptedName(decryptedName);
-          showToast(decryptedName);
         } else {
           console.error("Encrypted name is invalid.");
         }
@@ -41,15 +41,9 @@ export default function PermanentLogin() {
 
   useEffect(() => {
     // Permanent login
-    const fetchData = async () => {
-      await fetchDisplayNameFromFirestore();
-      // Resto de tu lógica dentro de useEffect...
-    };
-
-    fetchData();
-
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        fetchDisplayNameFromFirestore();
         const readOnRealtime = onSnapshot(
           collection(db, "products"),
           (querySnapshot) => {

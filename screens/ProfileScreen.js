@@ -15,37 +15,47 @@ import updateFirestore from "../utils/updateFirestore";
 import { doc, getDoc } from "firebase/firestore";
 import db from "../firebaseConfig";
 import CryptoES from "crypto-es";
+import { useFocus } from "../utils/useFocus";
 
 export default function ProfileSCcreen() {
   const [displayName, setDisplayName] = useState(""); // Add this state variable
   const navigation = useNavigation();
 
+  const { focusCount, isFocused } = useFocus();
+
   const fetchDisplayNameFromFirestore = async () => {
-    try {
-      const userRef = doc(db, "userPermissions", auth.currentUser.uid);
+      try {
+        const userRef = doc(db, "userPermissions", auth.currentUser.uid);
 
-      const docSnap = await getDoc(userRef);
-      if (docSnap.exists()) {
-        const encryptedName = docSnap.data().name;
-        const key = "c5156ec39e8bb1e7940f8dbfd53fd89c";
+        const docSnap = await getDoc(userRef);
+        if (docSnap.exists()) {
+          const encryptedName = docSnap.data().name;
+          const key = "c5156ec39e8bb1e7940f8dbfd53fd89c";
 
-        // Verifica que encryptedName no sea undefined u otro valor no válido
-        if (encryptedName) {
-          const decryptedBytes = CryptoES.AES.decrypt(encryptedName, key);
+          // Verifica que encryptedName no sea undefined u otro valor no válido
+          if (encryptedName) {
+            const decryptedBytes = CryptoES.AES.decrypt(encryptedName, key);
 
-          // Convierte los bytes en una cadena UTF-8
-          const decryptedName = decryptedBytes.toString(CryptoES.enc.Utf8);
+            // Convierte los bytes en una cadena UTF-8
+            const decryptedName = decryptedBytes.toString(CryptoES.enc.Utf8);
 
-          setDisplayName(decryptedName);
-        } else {
-          console.error("Encrypted name is invalid.");
+            setDisplayName(decryptedName);
+          } else {
+            console.error("Encrypted name is invalid.");
+          }
         }
+      } catch (error) {
+        console.error("Error fetching display name from Firestore:", error);
       }
-    } catch (error) {
-      console.error("Error fetching display name from Firestore:", error);
-    }
-  };
-  fetchDisplayNameFromFirestore();
+    };
+
+    useEffect(() => {
+      if (focusCount > 1 && isFocused) {
+        fetchDisplayNameFromFirestore();
+      }
+
+      fetchDisplayNameFromFirestore(); // Fetch the updated display name when the component mounts
+    }, [focusCount, isFocused]);
 
   return (
     <View
