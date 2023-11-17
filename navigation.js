@@ -91,7 +91,7 @@ export default function Navigation({ currentLocation }) {
           <Stack.Screen
             name="EmailVerificationModal"
             component={EmailVerication}
-            initialParams={{ email: "", password: "" }}
+            initialParams={{ email: "email" }}
           />
         </Stack.Group>
         <Stack.Screen

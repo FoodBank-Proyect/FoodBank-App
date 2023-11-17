@@ -19,7 +19,7 @@ import CryptoES from "crypto-es";
 import { useFocus } from "../utils/useFocus";
 import emailjs from "@emailjs/browser";
 
-export default function EmailVerication() {
+export default function EmailVerication(route) {
   const halfScreen = Math.round(Dimensions.get("window").height / 1.3);
   const [successMessage, setSuccessMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
@@ -34,11 +34,14 @@ export default function EmailVerication() {
     const code = generateCode();
     setCode(code);
     console.log("code: ", code);
+    const user_email = route["route"]["params"]["email"];
+
+    // console.log("user_email: ", user_email);
 
     const templateParams = {
       to_name: "",
       code: code,
-      user_email: "",
+      user_email: user_email,
     };
 
     emailjs

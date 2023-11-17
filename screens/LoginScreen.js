@@ -34,10 +34,13 @@ export default function LoginScreen() {
   const [passError, setPassError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(false);
 
-  const handleVerifyEmail = () => {
+  const handleVerifyEmail = (email) => {
     setSuccessMessage(false);
+    console.log(email);
     console.log("handleVerifyEmail");
-    navigation.navigate("EmailVerificationModal");
+    navigation.navigate("EmailVerificationModal", {
+      email,
+    });
     if (successMessage) {
       handleSignIn();
     } else {
@@ -216,7 +219,7 @@ export default function LoginScreen() {
                   email.length > 0 &&
                   pass.length > 0
                 ) {
-                  handleVerifyEmail();
+                  handleVerifyEmail(email);
                 }
               }}
               style={{ width: "100%" }}
