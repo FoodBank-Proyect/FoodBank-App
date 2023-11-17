@@ -174,9 +174,9 @@ export default function RegisterScreen() {
               errorText={emailError}
               onBlur={() => {
                 if (email.length == 0) {
-                  setEmailError("Email is required");
+                  setEmailError("El email es requerido");
                 } else if (!email.includes("@")) {
-                  setEmailError("Email is not valid");
+                  setEmailError("El email no es válido");
                 } else {
                   setEmailError(null);
                 }
