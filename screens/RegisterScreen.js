@@ -7,8 +7,9 @@ import {
   Button,
   Alert,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
-import { Card, Icon, Image } from "@rneui/themed";
+import { Card, Icon, Image, ListItem } from "@rneui/themed";
 import React, { useCallback, useEffect, useState } from "react";
 import TextField from "../components/TextField";
 import { StatusBar } from "expo-status-bar";
@@ -23,6 +24,8 @@ import {
 } from "firebase/auth";
 import getPermissions from "../utils/getPermissions";
 import GoogleAuth from "../utils/googleAuth";
+import { List } from "react-native-feather";
+import { set } from "react-native-reanimated";
 
 export default function RegisterScreen() {
   const navigation = useNavigation();
@@ -33,23 +36,80 @@ export default function RegisterScreen() {
   const [passError, setPassError] = useState(null);
   const [confirmPass, setConfirmPass] = useState("");
   const [confirmPassError, setConfirmPassError] = useState(null);
+  const [error, setError] = useState(null);
 
-  const handleSignUp = () => {
+  const haleSignUp = () => {
     createUserWithEmailAndPassword(auth, email, pass)
       .then(() => {
         navigation.navigate("Home");
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
-          setEmailError("That email address is already in use!");
+          setEmailError("El email ya está en uso!");
         } else if (error.code === "auth/invalid-email") {
-          setEmailError("That email address is invalid!");
+          setEmailError("El email no es válido");
         } else if (error.code === "auth/weak-password") {
-          setPassError("Password must be at least 6 characters");
+          setPassError("La contraseña es muy débil");
         } else {
           Alert.alert("Error", error.message);
         }
       });
+  };
+
+  const isStrongPassword = (password) => {
+    const passwordRequirements = [
+      { label: "Al menos 8 caracteres", regex: /.{8,}/ },
+      { label: "Al menos 1 mayúscula", regex: /.*[A-Z].*/ },
+      { label: "Al menos 1 minúscula", regex: /.*[a-z].*/ },
+      { label: "Al menos 1 número", regex: /.*[0-9].*/ },
+      { label: "Al menos 1 símbolo", regex: /.*[^A-Za-z0-9].*/ },
+    ];
+
+    const missingRequirements = passwordRequirements.filter(
+      (requirement) => !requirement.regex.test(password)
+    );
+
+    if (missingRequirements.length === 0) {
+      return true;
+    } else {
+      return missingRequirements.map((requirement) => requirement.label);
+    }
+  };
+
+  const handleSignUp = () => {
+    try {
+      setError(null); // Clear any previous error
+      if (pass !== confirmPass) {
+        setError("Las contraseñas no coinciden");
+        return;
+      }
+
+      const missingRequirements = isStrongPassword(pass);
+      // if (missingRequirements !== true) {
+      //   setError(
+      //     <div>
+      //       <p className="text-red-500">La contraseña debe contener:</p>
+      //       <ul className="list-disc list-inside">
+      //         {missingRequirements.map((req, index) => (
+      //           <li key={index}>{req}</li>
+      //         ))}
+      //       </ul>
+      //     </div>
+      //   );
+      //   return;
+      // }
+
+      createUserWithEmailAndPassword(auth, email, pass).then(() => {
+        navigation.navigate("Home");
+      });
+
+      setEmail("");
+      setPass("");
+      setConfirmPass("");
+    } catch (error) {
+      setError("Error al crear la cuenta");
+      console.log("error: ", error);
+    }
   };
 
   return (
@@ -94,15 +154,15 @@ export default function RegisterScreen() {
             style={{ color: "#D70040", fontSize: 34 }}
             className="font-bold"
           >
-            Register
+            Registrar
           </Text>
           <Text>
-            Already have an account?{" "}
+            Ya tienes una cuenta?{" "}
             <Text
               onPress={() => navigation.goBack()}
               className="text-blue-500 italic underline"
             >
-              Login
+              Iniciar sesión
             </Text>
           </Text>
           <View style={{ marginTop: 15 }}>
@@ -124,16 +184,32 @@ export default function RegisterScreen() {
             />
             <TextField
               className="font-bold mt-5 text-gray-500"
-              label="Password*"
+              label="Contraseña*"
               secureTextEntry={true}
               value={pass}
               onChangeText={(text) => setPass(text)}
               errorText={passError}
               onBlur={() => {
-                if (pass.length == 0) {
-                  setPassError("Password is required");
-                } else if (pass.length < 6) {
-                  setPassError("Password must be at least 6 characters");
+                // Show password requirements
+                const missingRequirements = isStrongPassword(pass);
+                if (missingRequirements !== true) {
+                  setPassError(
+                    <View>
+                      <Text className="text-[#B00020] text-[11px]">
+                        La contraseña debe contener:
+                      </Text>
+                      <View className="text-[#B00020]">
+                        {missingRequirements.map((req, index) => (
+                          <Text
+                            key={index}
+                            className="list-disc list-inside text-[#B00020] text-[11px]"
+                          >
+                            · {req}
+                          </Text>
+                        ))}
+                      </View>
+                    </View>
+                  );
                 } else {
                   setPassError(null);
                 }
@@ -141,14 +217,14 @@ export default function RegisterScreen() {
             />
             <TextField
               className="font-bold mt-5 text-gray-500"
-              label="Confirm Password*"
+              label="Confirmar contraseña*"
               secureTextEntry={true}
               value={confirmPass}
               onChangeText={(text) => setConfirmPass(text)}
               errorText={confirmPassError}
               onBlur={() => {
                 if (confirmPass != pass) {
-                  setConfirmPassError("Passwords are not the same");
+                  setConfirmPassError("Las contraseñas no coinciden");
                 } else {
                   setConfirmPassError(null);
                 }
@@ -167,18 +243,19 @@ export default function RegisterScreen() {
               onPress={() => {
                 if (!email || !pass) {
                   if (!email && !pass) {
-                    setEmailError("Email is required");
-                    setPassError("Password is required");
+                    setEmailError("El email es requerido");
+                    setPassError("La contraseña es requerida");
                   } else if (!email) {
-                    setEmailError("Email is required");
+                    setEmailError("El email es requerido");
                   } else if (!pass) {
-                    setPassError("Password is required");
+                    setPassError("La contraseña es requerida");
                   }
                 } else if (
                   emailError == null &&
                   passError == null &&
                   email.length > 0 &&
-                  pass.length > 0
+                  pass.length > 0 &&
+                  pass == confirmPass
                 ) {
                   handleSignUp();
                 }
@@ -189,11 +266,11 @@ export default function RegisterScreen() {
               className="flex justify-center items-center rounded-full w-3/4 mx-0 mt-10 bg-[#D70040]"
             >
               <Text className="text-white self-center font-bold p-3 text-lg">
-                Register
+                Registrar
               </Text>
             </TouchableOpacity>
             <View className="justify-center mt-7">
-              <Text className="text-gray-500 mb-4">Or Login with</Text>
+              <Text className="text-gray-500 mb-4">O registrate con</Text>
               <View className="flex-row justify-center">
                 <GoogleAuth />
               </View>
