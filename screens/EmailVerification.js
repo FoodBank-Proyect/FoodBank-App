@@ -26,6 +26,14 @@ export default function EmailVerication(route) {
   const [inputCode, setInputCode] = useState("");
   const [code, setCode] = useState("");
 
+  // Input code is a 6 digit number list
+  // Add the numbers to the list function
+  const addNumber = (number) => {
+    if (inputCode.length < 6) {
+      setInputCode(inputCode + number);
+    }
+  };
+
   const generateCode = () => {
     return Math.floor(100000 + Math.random() * 900000);
   };
@@ -123,6 +131,7 @@ export default function EmailVerication(route) {
             marginTop: 20,
             alignSelf: "center",
             textAlign: "center",
+            fontSize: 30,
           }}
           keyboardType="numeric"
           maxLength={6}
@@ -131,6 +140,130 @@ export default function EmailVerication(route) {
             setInputCode(text);
           }}
         />
+
+        {/* 6 boxes for the code
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            marginTop: 10,
+          }}
+        >
+          <TextInput
+            placeholder="0"
+            style={{
+              backgroundColor: "#F3F3F3",
+              width: 48,
+              height: 80,
+              borderRadius: 10,
+              marginRight: 10,
+              alignSelf: "center",
+              textAlign: "center",
+              fontSize: 30,
+            }}
+            keyboardType="numeric"
+            maxLength={1}
+            minLength={1}
+            onChangeText={(text) => {
+              addNumber(text);
+            }}
+          />
+          <TextInput
+            placeholder="0"
+            style={{
+              backgroundColor: "#F3F3F3",
+              width: 48,
+              height: 80,
+              borderRadius: 10,
+              marginRight: 10,
+              alignSelf: "center",
+              textAlign: "center",
+              fontSize: 30,
+            }}
+            keyboardType="numeric"
+            maxLength={1}
+            minLength={1}
+            onChangeText={(text) => {
+              addNumber(text);
+            }}
+          />
+          <TextInput
+            placeholder="0"
+            style={{
+              backgroundColor: "#F3F3F3",
+              width: 48,
+              height: 80,
+              borderRadius: 10,
+              marginRight: 10,
+              alignSelf: "center",
+              textAlign: "center",
+              fontSize: 30,
+            }}
+            keyboardType="numeric"
+            maxLength={1}
+            minLength={1}
+            onChangeText={(text) => {
+              addNumber(text);
+            }}
+          />
+          <TextInput
+            placeholder="0"
+            style={{
+              backgroundColor: "#F3F3F3",
+              width: 48,
+              height: 80,
+              borderRadius: 10,
+              marginRight: 10,
+              alignSelf: "center",
+              textAlign: "center",
+              fontSize: 30,
+            }}
+            keyboardType="numeric"
+            maxLength={1}
+            minLength={1}
+            onChangeText={(text) => {
+              addNumber(text);
+            }}
+          />
+          <TextInput
+            placeholder="0"
+            style={{
+              backgroundColor: "#F3F3F3",
+              width: 48,
+              height: 80,
+              borderRadius: 10,
+              marginRight: 10,
+              alignSelf: "center",
+              textAlign: "center",
+              fontSize: 30,
+            }}
+            keyboardType="numeric"
+            maxLength={1}
+            minLength={1}
+            onChangeText={(text) => {
+              addNumber(text);
+            }}
+          />
+          <TextInput
+            placeholder="0"
+            style={{
+              backgroundColor: "#F3F3F3",
+              width: 48,
+              height: 80,
+              borderRadius: 10,
+              marginRight: 10,
+              alignSelf: "center",
+              textAlign: "center",
+              fontSize: 30,
+            }}
+            keyboardType="numeric"
+            maxLength={1}
+            minLength={1}
+            onChangeText={(text) => {
+              addNumber(text);
+            }}
+          />
+        </View> */}
 
         {/* Button to continue */}
         <TouchableOpacity

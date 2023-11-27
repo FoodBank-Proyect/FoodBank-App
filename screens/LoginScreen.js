@@ -144,7 +144,7 @@ export default function LoginScreen() {
               label="Email*"
               className="font-bold text-gray-500"
               value={email}
-              onChangeText={(text) => setEmail(text)}
+              onChangeText={(text) => setEmail(text.toLowerCase())}
               errorText={emailError}
               onBlur={() => {
                 if (email.length == 0) {

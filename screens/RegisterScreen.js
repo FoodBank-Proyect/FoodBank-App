@@ -63,6 +63,9 @@ export default function RegisterScreen() {
       { label: "Al menos 1 minúscula", regex: /.*[a-z].*/ },
       { label: "Al menos 1 número", regex: /.*[0-9].*/ },
       { label: "Al menos 1 símbolo", regex: /.*[^A-Za-z0-9].*/ },
+      { label: "No puede contener ;", regex: /^[^;]*$/ },
+      { label: "No puede contener '", regex: /^[^']*$/ },
+      { label: "No puede contener +", regex: /^[^+]*$/ },
     ];
 
     const missingRequirements = passwordRequirements.filter(
