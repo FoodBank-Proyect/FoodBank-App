@@ -115,7 +115,7 @@ export default function SupportSubscriptionScreen() {
             <View className="flex flex-row items-center gap-x-2">
               <Icon.Box strokeWidth={2.5} width={25} height={25} />
               <Text className="text-xl text-gray-500">
-                Caja misteriosa gratis mensual
+                Caja misteriosa gratis cada 6 meses
               </Text>
             </View>
           </View>
@@ -150,7 +150,7 @@ export default function SupportSubscriptionScreen() {
             </Text>
 
             <Text className="text-gray-500">
-              Cobro mensual de <Text className="text-blue-500">$20</Text>
+              Cobro mensual de <Text className="text-blue-500">$499</Text>
             </Text>
           </View>
         </View>
